@@ -1,4 +1,4 @@
-{{- if or .Values.ingress.enabled .Values.global.registry.enabled -}}
+{{- if and .Values.ingress.enabled .Values.enabled -}}
 {{- $serviceName := include "fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
 apiVersion: extensions/v1beta1

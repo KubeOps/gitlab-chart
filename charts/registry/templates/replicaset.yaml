@@ -1,3 +1,4 @@
+{{- if .Values.enabled -}}
 apiVersion: extensions/v1beta1
 kind: ReplicaSet
 metadata:
@@ -63,3 +64,4 @@ spec:
                 - key: {{ .Values.registry.certBundle.bundleName }}
                   path: {{ .Values.registry.certBundle.bundleName }}
             defaultMode: 0400
+{{- end -}}
