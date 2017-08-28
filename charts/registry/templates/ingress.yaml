@@ -1,0 +1,39 @@
+{{- if .Values.registry.ingress.enabled -}}
+{{- $serviceName := include "fullname" . -}}
+{{- $servicePort := .Values.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    {{- range $key, $value := .Values.registry.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  #backend:
+    #serviceName: default-http-backend
+    #servicePort: 80
+  rules:
+    {{- range $host := .Values.registry.ingress.hosts }}
+    - host: {{ $host.name }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+    {{- end -}}
+  {{- if .Values.registry.ingress.tls }}
+  tls:
+    - hosts:
+    {{- range $host := .Values.registry.ingress.hosts }}
+      - "{{ $host.name }}"
+    {{- end -}}
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end -}}
+{{- end -}}
