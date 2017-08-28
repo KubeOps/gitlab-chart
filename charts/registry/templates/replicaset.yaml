@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.registry.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: registry
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ default "" .Values.image.pullPolicy | quote }}
+        env:
+        - name: REGISTRY_LOG_DEBUG
+          value: 'debug'
+        - name: REGISTRY_HTTP_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key: http.addr
+        - name: REGISTRY_HTTP_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key: http.secret
+        - name: REGISTRY_AUTH_TOKEN_REALM
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key:  auth.token.realm
+        - name: REGISTRY_AUTH_TOKEN_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key:  auth.token.service
+        - name: REGISTRY_AUTH_TOKEN_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key:  auth.token.issuer
+        - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "fullname" . }}
+              key: auth.token.rootcertbundle
+        volumeMounts:
+        - name: {{ .Release.Name }}-secret
+          mountPath: '/etc/registry-secret'
+          readOnly: true
+      volumes:
+      - name: {{ .Release.Name }}-secret
+        secret:
+            secretName: {{ .Values.registry.certBundle.secretName }}
+            items:
+                - key: {{ .Values.registry.certBundle.bundleName }}
+                  path: {{ .Values.registry.certBundle.bundleName }}
+            defaultMode: 0400
