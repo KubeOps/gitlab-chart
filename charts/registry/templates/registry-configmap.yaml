@@ -5,8 +5,9 @@ metadata:
   labels:
     app: {{ template "fullname" . }}
 data:
-  http.addr: {{ .Values.service.clusterIP }}:{{ .Values.service.internalPort }}
+  http.addr: :{{ .Values.service.internalPort }}
   http.secret: {{ .Values.registry.httpSecretName | quote }}
   auth.token.realm: {{ .Values.registry.authEndpoint }}/jwt/auth
-  auth.token.service: {{ .Values.registry.httpSecretName | quote }}
-  auth.token.issuer: {{ .Values.registry.httpSecretName | quote }}
+  auth.token.service: {{ .Values.registry.tokenService | quote }}
+  auth.token.issuer: {{ .Values.registry.tokenIssuer | quote }}
+  auth.token.rootcertbundle: "/etc/registry-secret/{{ .Values.registry.certBundle.bundleName }}"
