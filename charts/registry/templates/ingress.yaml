@@ -1,4 +1,4 @@
-{{- if .Values.registry.ingress.enabled -}}
+{{- if or .Values.ingress.enabled .Values.global.registry.enabled -}}
 {{- $serviceName := include "fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
 apiVersion: extensions/v1beta1
@@ -11,7 +11,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
   annotations:
-    {{- range $key, $value := .Values.registry.ingress.annotations }}
+    {{- range $key, $value := .Values.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
@@ -19,7 +19,7 @@ spec:
     #serviceName: default-http-backend
     #servicePort: 80
   rules:
-    {{- range $host := .Values.registry.ingress.hosts }}
+    {{- range $host := .Values.ingress.hosts }}
     - host: {{ $host.name }}
       http:
         paths:
@@ -28,10 +28,10 @@ spec:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
     {{- end -}}
-  {{- if .Values.registry.ingress.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
     - hosts:
-    {{- range $host := .Values.registry.ingress.hosts }}
+    {{- range $host := .Values.ingress.hosts }}
       - "{{ $host.name }}"
     {{- end -}}
 {{ toYaml .Values.ingress.tls | indent 4 }}
