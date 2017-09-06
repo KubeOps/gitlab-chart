@@ -1,4 +1,5 @@
 {{- if .Values.enabled -}}
+{{- $httpSecret := randAlphaNum 128 | b64enc -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +8,7 @@ metadata:
     app: {{ template "fullname" . }}
 data:
   http.addr: :{{ .Values.service.internalPort }}
-  http.secret: {{ .Values.registry.httpSecretName | quote }}
+  http.secret: {{ default $httpSecret .Values.registry.httpSecret | quote }}
   auth.token.realm: {{ .Values.registry.authEndpoint }}/jwt/auth
   auth.token.service: {{ .Values.registry.tokenService | quote }}
   auth.token.issuer: {{ .Values.registry.tokenIssuer | quote }}
