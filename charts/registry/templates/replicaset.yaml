@@ -20,8 +20,6 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ default "" .Values.image.pullPolicy | quote }}
         env:
-        - name: REGISTRY_LOG_DEBUG
-          value: 'debug'
         - name: REGISTRY_HTTP_ADDR
           valueFrom:
             configMapKeyRef:
