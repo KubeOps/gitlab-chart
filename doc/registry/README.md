@@ -64,11 +64,68 @@ By default, the [Service][] is configured as:
 
 ## Configuring the Registry
 
+The `registry` section of this chart pertains to the configuration of the underlying
+[registry][] container. We do not expose every value the container will accept
+as environment variables, but expose the most critical settings for integration
+with GitLab. For this integration, we make use of the `auth.token.x` settings of
+[Docker Distribution][docker-distribution], controlling authentication to the registry via JWT
+ [authentication tokens](https://docs.docker.com/registry/spec/auth/token/).
+
+#### httpSecret
+
+Field `httpSecret` is a string that correclates to the `http.secret` value of [registry][].
+
+If this value is not present, it will be automatically populated with a random
+string of 128 alpha-numeric characters enocded to base64.
+
+It is important that this field is configured as part of the chart so that all
+replicas in the cluster share this secret. See the following note from the [Registry configuration documents][docker-distribution-config-docs]:
+
+> If you are building a cluster of registries behind a load balancer, you MUST ensure the secret is the same for all registries.
+
+#### authEndpoint
+
+Field `authEndpoint` is a string, providing the URL to the GitLab instance(s) that the [registry][] will authenticate to.
+
+The value should include the protocol and hostname only. The chart template will automatically append the necessary request path. The resulting value will be populated to `auth.token.realm` inside the container.
+
+Example: `authEndpoint: "https://gitlab.example.local"`
+
+#### certBundle
+
+Field `certBundle` is a map containing two items: `secretName` and `bundleName`.
+
+`secretName` is a string containing the name of the [Kubernetes Secret][kubernetes-secret] that houses the certificate bundle to be used to verify the tokens created by the GitLab instance(s).
+
+`bundleName` is the name of the `key` in the `Secret` which houses the certificate
+bundle that will be provided to the [registry][] container as `auth.token.rootcertbundle`.
+
+Default Example:
+```
+certBundle:
+  secretName: gitlab-registry-certbundle
+  bundleName: gitlab-registry.crt
+```
+
+#### replicas
+
+Field `replicas` is an integer, controlling the number of [registry][] instances to create as a part of the set. This defaults to `1`.
+
+#### storage
+
+Field `storage` is a map, the value of which is taken directly from [Registry Configuration: `storage`](https://docs.docker.com/registry/configuration/#storage). Please refer to that documentation for extended details.
+
+If you chose to use the `filesystem` driver, you will need to provide persistent volumes for this data.
+
+For the sake of resiliency and simplicity, it is recommended to make use of an
+external service other than the `filesystem` driver, such as `s3`, `gcs` or `azure`.
+
 ## Configuring the Ingress (optional)
 
 This section describes configuring the *optional* dedicated [Ingress][]. By default this is disabled, so you'll have to enable it to make use of the following series of settings. Primarily, these settings will be familiar with [Kubernetes Ingress][kubernetes-ingress] documentation, but slightly simplified thanks to [Helm][helm].
 
 #### enabled
+
 Field `enable:`, boolean
 
 This enables or disables this dedicated [Ingress][].
@@ -77,19 +134,20 @@ Default `false`, set `true` to enable.
 
 #### hosts
 
-Field `hosts:`, a map of items in the form of `name: fqdn`
+Field `hosts:`, a list of items in the form of `name: fqdn`
 
-This controls the hostnames accepted by the [Ingress][]. Note that we do not make use of any other component fields that could be used when defining an `host:`, as we're only linking to the [Service][] contained in the chart.
+This controls the hostnames accepted by the [Ingress][]. Note that we do not make
+use of any other component fields that could be used when defining an `host:`, as
+we're only linking to the [Service][] contained in the chart.
 
 #### tls
 
 Field `tls:`, a map of items, per the [Kubernetes Ingress][kubernetes-ingress] documentation.
 
-As the official documentation shows, this field, if populated, should contain a
-map including a map of `hosts` by hostname, and a `secretName` which contains
-the TLS certificate and key to be used for that hostname. And exmaple is found below
-appear as such:
-
+As the official documentation shows, this field should contain a map including a
+list of `hosts` by hostname, and a `secretName` which names the [Kubernetes Secret][kubernetes-secret]
+that houses the TLS certificate and key to be used for that hostname. And exmaple
+is found below appear as such:
 ```
 tls:
   - hosts:
@@ -120,4 +178,5 @@ to enable automatic Lets Encrypt as a part of the [Ingress][] in combination wit
 [values.yml]: ../../charts/registry/values.yml
 
 [kubernetes-ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+[kubernetes-secret]: https://kubernetes.io/docs/concepts/configuration/secret/
 [helm]: https://helm.sh
