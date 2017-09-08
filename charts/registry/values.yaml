@@ -14,7 +14,7 @@ registry:
   httpSecret: ''
   storage: {}
   # Protocol/Host only. '/jwt/auth' will be appended.
-  authEndpoint: 'https://gitlab.example.com'
+  authEndpoint: 'https://gitlab.example.local'
   # Do not change this
   tokenService: 'container_registry'
   # Is this configurable?
@@ -35,4 +35,6 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   tls:
     # Secrets must be manually created in the namespace.
-    # - secretName: chart-example-tls
+    # - hosts:
+    #   - registry.example.local
+    #   secretName: registry-example-tls

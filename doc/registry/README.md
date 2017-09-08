@@ -66,8 +66,7 @@ By default, the [Service][] is configured as:
 
 ## Configuring the Ingress (optional)
 
-
-This section describes configuring the *optional* dedicated  [Ingress][]. By default this is disabled, so you'll have to enable it to make use of the following series of settings. Primarily, these settings will be familiar with [Kubernetes Ingress][kubernetes-ingress] documentation, but slightly simplified thanks to [Helm][helm].
+This section describes configuring the *optional* dedicated [Ingress][]. By default this is disabled, so you'll have to enable it to make use of the following series of settings. Primarily, these settings will be familiar with [Kubernetes Ingress][kubernetes-ingress] documentation, but slightly simplified thanks to [Helm][helm].
 
 #### enabled
 Field `enable:`, boolean
@@ -84,13 +83,28 @@ This controls the hostnames accepted by the [Ingress][]. Note that we do not mak
 
 #### tls
 
-TODO: needs fleshed out after re-thinking this portion of the template.
+Field `tls:`, a map of items, per the [Kubernetes Ingress][kubernetes-ingress] documentation.
+
+As the official documentation shows, this field, if populated, should contain a
+map including a map of `hosts` by hostname, and a `secretName` which contains
+the TLS certificate and key to be used for that hostname. And exmaple is found below
+appear as such:
+
+```
+tls:
+  - hosts:
+    - registry.example.local
+    secretName: registry-example-tls
+```
+
+*Note:* While you may be able to combine `tls` with ACME, it is not tested.
 
 #### annotations
 
 This field is an exact match to the standard `annotations` for [Kubernetes Ingress][kubernetes-ingress]. The default value includes setting of `kubernetes.io/ingress.class: nginx`. If you need to replace this value, or add additional, you may do so.
 
-One example of an additional `annotation` is `kubernetes.io/tls-acme: "true"` to enable automatic Lets Encrypt as a part of the [Ingress][] via `kube-lego`.
+One example of an additional `annotation` is `kubernetes.io/tls-acme: "true"`
+to enable automatic Lets Encrypt as a part of the [Ingress][] in combination with  `kube-lego`.
 
 
 

@@ -30,10 +30,6 @@ spec:
     {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:
-    - hosts:
-    {{- range $host := .Values.ingress.hosts }}
-      - "{{ $host.name }}"
-    {{- end -}}
 {{ toYaml .Values.ingress.tls | indent 4 }}
   {{- end -}}
 {{- end -}}
