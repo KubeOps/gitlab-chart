@@ -10,8 +10,8 @@ using environment variables provided to the [ReplicaSet][].
 
 ## Design Choices
 
-A Kubernetes `ReplicaSet` was chosen as the deployment method for this chart to
-allow for simple scaling of instances.
+A Kubernetes `Deployment` was chosen as the deployment method for this chart to
+allow for simple scaling of instances, while allowing for [rolling-update](https://kubernetes.io/docs/user-guide/kubectl/v1.7/#rolling-update)s.
 
 This chart makes use of only two secrets:
 - `certBundle`: A secret that will contain the public certificate bundle to verify

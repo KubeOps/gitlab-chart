@@ -1,6 +1,6 @@
 {{- if .Values.enabled -}}
 apiVersion: extensions/v1beta1
-kind: ReplicaSet
+kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
   labels:
