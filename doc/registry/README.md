@@ -6,7 +6,7 @@ GitLab deployment on Kubernetes. This sub-chart makes use of the upstream [regis
 provided to allow separation from the global [Ingress](../README.md#ingress) as provided by the parent chart.
 
 All configuration is handled according to the official [Registry configuration documentation][docker-distribution-config-docs]
-using environment variables provided to the [Deployment][], populated from the [ConfigMap][].
+using `/etc/docker/registry/config.yml` variables provided to the [Deployment][], populated from the [ConfigMap][].
 
 ## Design Choices
 
@@ -66,7 +66,7 @@ By default, the [Service][] is configured as:
 
 The `registry` section of this chart pertains to the configuration of the underlying
 [registry][] container. We do not expose every value the container will accept
-as environment variables, but expose the most critical settings for integration
+as configuration variables, but expose the most critical settings for integration
 with GitLab. For this integration, we make use of the `auth.token.x` settings of
 [Docker Distribution][docker-distribution], controlling authentication to the registry via JWT
  [authentication tokens](https://docs.docker.com/registry/spec/auth/token/).

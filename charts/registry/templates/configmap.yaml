@@ -7,10 +7,35 @@ metadata:
   labels:
     app: {{ template "fullname" . }}
 data:
-  http.addr: :{{ .Values.service.internalPort }}
-  http.secret: {{ default $httpSecret .Values.registry.httpSecret | quote }}
-  auth.token.realm: {{ .Values.registry.authEndpoint }}/jwt/auth
-  auth.token.service: {{ .Values.registry.tokenService | quote }}
-  auth.token.issuer: {{ .Values.registry.tokenIssuer | quote }}
-  auth.token.rootcertbundle: "/etc/registry-secret/{{ .Values.registry.certBundle.bundleName }}"
+  config.yml: |
+    # defaults, from https://github.com/docker/distribution-library-image/blob/registry-v2.6.2/registry/config-example.yml
+    version: 0.1
+    log:
+      level: warn
+      fields:
+        service: registry
+    # health:
+    #   storagedriver:
+    #     enabled: true
+    #     interval: 10s
+    #     threshold: 3
+    http:
+      debug:
+        addr: :5001
+      headers:
+        X-Content-Type-Options: [nosniff]
+    # Filled from chart
+    http:
+      addr: :{{ .Values.service.internalPort }}
+      secret: {{ default $httpSecret .Values.registry.httpSecret }}
+    auth:
+      token:
+        realm: {{ .Values.registry.authEndpoint }}/jwt/auth
+        service: {{ .Values.registry.tokenService }}
+        issuer: {{ .Values.registry.tokenIssuer | quote }}
+        rootcertbundle: /etc/registry-secret/{{ .Values.registry.certBundle.bundleName }}
+    storage:
+      {{- if .Values.registry.storage }}
+{{ toYaml .Values.registry.storage | indent 6}}
+      {{- end }}
 {{- end -}}
