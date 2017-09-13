@@ -6,7 +6,7 @@ GitLab deployment on Kubernetes. This sub-chart makes use of the upstream [regis
 provided to allow separation from the global [Ingress](../README.md#ingress) as provided by the parent chart.
 
 All configuration is handled according to the official [Registry configuration documentation][docker-distribution-config-docs]
-using environment variables provided to the [Deployment][].
+using environment variables provided to the [Deployment][], populated from the [ConfigMap][].
 
 ## Design Choices
 
