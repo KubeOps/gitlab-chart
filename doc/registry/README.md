@@ -2,11 +2,11 @@
 
 The `registry` sub-chart provides the Registry component to a complete cloud-native
 GitLab deployment on Kubernetes. This sub-chart makes use of the upstream [registry][]
-[container][docker-distribution-library] containing [Docker Distribution][docker-distribution]. This chart is composed of 3 primary parts: [Service][], [ReplicaSet][], and [ConfigMap][]. An additional optional [Ingress][] has been
+[container][docker-distribution-library] containing [Docker Distribution][docker-distribution]. This chart is composed of 3 primary parts: [Service][], [Deployment][], and [ConfigMap][]. An additional optional [Ingress][] has been
 provided to allow separation from the global [Ingress](../README.md#ingress) as provided by the parent chart.
 
 All configuration is handled according to the official [Registry configuration documentation][docker-distribution-config-docs]
-using environment variables provided to the [ReplicaSet][].
+using environment variables provided to the [Deployment][].
 
 ## Design Choices
 
@@ -17,7 +17,7 @@ This chart makes use of only two secrets:
 - `certBundle`: A secret that will contain the public certificate bundle to verify
 the authentication tokens provided by the associated GitLab instance(s).
 - *optional*: The secret which will contain the SSL certificates for the HTTPS
-termination by the [Ingress][]. This secrety follows the requirements set forth in
+termination by the [Ingress][]. This secret follows the requirements set forth in
 [Kubernetes Ingress's TLS section][kubernetes-ingress]. If you chose to use
 the global [Ingress](../README.md#ingress) from the parent chart, this will not
 be required at all.
@@ -44,7 +44,7 @@ They way we've chosen to implement compartmentalized sub-charts includes the abi
 
 ## Configuring the `image`
 
-This section dictates the settings for the container image used by this sub-chart's [ReplicaSet][]. You can change the included version and `pullPolicy` but it is *not recommended* to alter the `repository`.
+This section dictates the settings for the container image used by this sub-chart's [Deployment][]. You can change the included version and `pullPolicy` but it is *not recommended* to alter the `repository`.
 
 Default settings:
 - `repository: registry`
@@ -172,7 +172,7 @@ to enable automatic Lets Encrypt as a part of the [Ingress][] in combination wit
 [docker-distribution-config-docs]: https://docs.docker.com/registry/configuration
 
 [Service]: ../../charts/registry/templates/service.yaml
-[ReplicaSet]: ../../charts/registry/templates/replicaset.yaml
+[Deployment]: ../../charts/registry/templates/deployment.yaml
 [ConfigMap]: ../../charts/registry/templates/registry-configmap.yaml
 [Ingress]: ../../charts/registry/templates/ingress.yaml
 [values.yml]: ../../charts/registry/values.yml
