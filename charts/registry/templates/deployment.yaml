@@ -25,6 +25,7 @@ spec:
           readOnly: true
         - name: config-volume
           mountPath: /etc/docker/registry/
+          readOnly: true
       volumes:
       - name: {{ .Release.Name }}-secret
         secret:
