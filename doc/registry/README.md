@@ -159,10 +159,20 @@ tls:
 
 #### annotations
 
-This field is an exact match to the standard `annotations` for [Kubernetes Ingress][kubernetes-ingress]. The default value includes setting of `kubernetes.io/ingress.class: nginx`. If you need to replace this value, or add additional, you may do so.
+This field is an exact match to the standard `annotations` for [Kubernetes Ingress][kubernetes-ingress].
+The default value includes setting of `kubernetes.io/ingress.class: nginx`.
+If you need to replace this value, or add additional, you may do so.
+
+When using `nginx` as the `ingress.class`, it is also recommended to add
+`ingress.kubernetes.io/proxy-body-size: 1024M`. This controls `client_max_body_size`,
+and should be sized appropriately when used in conjunction with the [registry][]
+to allow large images.
 
 One example of an additional `annotation` is `kubernetes.io/tls-acme: "true"`
 to enable automatic Lets Encrypt as a part of the [Ingress][] in combination with  `kube-lego`.
+
+Further details of available `ingress.class: nginx` options can be found
+[in the documentation][kubernetes-ingress-nginx-configuration] for the NGINX Ingress.
 
 
 
@@ -180,3 +190,4 @@ to enable automatic Lets Encrypt as a part of the [Ingress][] in combination wit
 [kubernetes-ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
 [kubernetes-secret]: https://kubernetes.io/docs/concepts/configuration/secret/
 [helm]: https://helm.sh
+[kubernetes-ingress-nginx-configuration]: https://github.com/kubernetes/ingress/blob/master/controllers/nginx/configuration.md
