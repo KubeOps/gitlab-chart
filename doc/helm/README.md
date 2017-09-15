@@ -26,6 +26,8 @@ already had Tiller, run `helm init --upgrade` to ensure that the deployed versio
 
 ## Useful documentation for Helm
 
+The Build Team has a [training presentation for Helm Charts](https://docs.google.com/presentation/d/1CStgh5lbS-xOdKdi3P8N9twaw7ClkvyqFN3oZrM1SNw/present)
+
 ### Templates
 
 Templating in Helm is done via golang's [text/template][] and [sprig][].
@@ -33,6 +35,7 @@ Templating in Helm is done via golang's [text/template][] and [sprig][].
 Some information on how all the inner workings behave:
 - [Functions and Pipelines][helm-func-pipeline]
 - [Subcharts and Globals][helm-subchart-global]
+- [Knoew your template functions](https://docs.helm.sh/developing-charts/#know-your-template-functions)
 
 ### Tips and Tricks
 
