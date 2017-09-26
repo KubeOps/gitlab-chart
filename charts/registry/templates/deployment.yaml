@@ -16,16 +16,18 @@ spec:
         app: {{ template "fullname" . }}
     spec:
       containers:
-      - name: registry
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ default "" .Values.image.pullPolicy | quote }}
-        volumeMounts:
-        - name: {{ .Release.Name }}-secret
-          mountPath: '/etc/registry-secret'
-          readOnly: true
-        - name: config-volume
-          mountPath: /etc/docker/registry/
-          readOnly: true
+        - name: registry
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ default "" .Values.image.pullPolicy | quote }}
+          volumeMounts:
+          - name: {{ .Release.Name }}-secret
+            mountPath: '/etc/registry-secret'
+            readOnly: true
+          - name: config-volume
+            mountPath: /etc/docker/registry/
+            readOnly: true
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
       volumes:
       - name: {{ .Release.Name }}-secret
         secret:
