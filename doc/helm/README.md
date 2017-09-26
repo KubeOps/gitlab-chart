@@ -35,7 +35,6 @@ Templating in Helm is done via golang's [text/template][] and [sprig][].
 Some information on how all the inner workings behave:
 - [Functions and Pipelines][helm-func-pipeline]
 - [Subcharts and Globals][helm-subchart-global]
-- [Knoew your template functions](https://docs.helm.sh/developing-charts/#know-your-template-functions)
 
 ### Tips and Tricks
 
