@@ -15,7 +15,8 @@ allow for simple scaling of instances, while allowing for [rolling-update](https
 
 This chart makes use of only two secrets:
 - `certBundle`: A secret that will contain the public certificate bundle to verify
-the authentication tokens provided by the associated GitLab instance(s).
+the authentication tokens provided by the associated GitLab instance(s). See
+[documentation](https://docs.gitlab.com/ee/administration/container_registry.html#disable-container-registry-but-use-gitlab-as-an-auth-endpoint) on using GitLab as an auth endpoint.
 - *optional*: The secret which will contain the SSL certificates for the HTTPS
 termination by the [Ingress][]. This secret follows the requirements set forth in
 [Kubernetes Ingress's TLS section][kubernetes-ingress]. If you chose to use
@@ -40,43 +41,38 @@ If you should chose to deploy this chart as a standalone, remove the top level `
 
 They way we've chosen to implement compartmentalized sub-charts includes the ability to disable the components that you may not want in a given deployment. For this reason, the first settings you should decided upon is `enabled:`.
 
-`enabled` defaults to `true`, so unless you intentionally disable the Registry, you'll have one out of the box.
+By default, Registry is enabled out of the box. Should you wish to disable it,
+set `enabled: false`.
 
 ## Configuring the `image`
 
-This section dictates the settings for the container image used by this sub-chart's [Deployment][]. You can change the included version and `pullPolicy` but it is *not recommended* to alter the `repository`.
+This section dictates the settings for the container image used by this sub-chart's [Deployment][]. You can change the included version of the Registry and `pullPolicy`.
 
 Default settings:
-- `repository: registry`
 - `tag: '2.6'`
-- `pullPolicy: 'IfNotPreset'`
+- `pullPolicy: 'IfNotPresent'`
 
 ## Configuring the `service`
 
-This section controls the name, type, and internal/external ports used by the
-[Service][]. It is not recommended to edit these values, and allow them to to be
-populated by the [values.yml][].
+This section controls the name and type of the [Service][]. These settings will
+be populated by the [values.yml][].
 
 By default, the [Service][] is configured as:
 - `type: ClusterIP` on `0.0.0.0`, restricting access to the interal network of the Kubernetes cluster.
-- `internalPort` and `externalPort` are set to the Distribution daemon default of `5000`
-- `name:` is set to `registry`. It is *not recommended* to alter `name`
+- `name:` is set to `registry`.
 
 ## Configuring the Registry
 
 The `registry` section of this chart pertains to the configuration of the underlying
-[registry][] container. We do not expose every value the container will accept
-as configuration variables, but expose the most critical settings for integration
-with GitLab. For this integration, we make use of the `auth.token.x` settings of
+[registry][] container. Only most critical values for integration with GitLab are
+exposed. For this integration, we make use of the `auth.token.x` settings of
 [Docker Distribution][docker-distribution], controlling authentication to the registry via JWT
  [authentication tokens](https://docs.docker.com/registry/spec/auth/token/).
 
 #### httpSecret
 
-Field `httpSecret` is a string that correclates to the `http.secret` value of [registry][].
-
-If this value is not present, it will be automatically populated with a random
-string of 128 alpha-numeric characters enocded to base64.
+Field `httpSecret` is a string that correlates to the `http.secret` value of [registry][]. This value will be automatically populated with a random
+string of 128 alpha-numeric characters encoded to base64, if not provided.
 
 It is important that this field is configured as part of the chart so that all
 replicas in the cluster share this secret. See the following note from the [Registry configuration documents][docker-distribution-config-docs]:

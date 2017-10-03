@@ -87,8 +87,8 @@ Further details, and listings of directories that _do_ persist, can be found [in
 
 Minikube handles some features apart from the base configuration. For the development of this project, we'll need access to `Ingress` and `kube-dns` will be helpful.
 
-- `minikube addon enable ingress`
-- `minikube addon enable kube-dns`
+- `minikube addons enable ingress`
+- `minikube addons enable kube-dns`
 
 ### Connecting to the dashboard
 
