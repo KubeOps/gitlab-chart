@@ -28,7 +28,7 @@ registry:
   authEndpoint: 'https://gitlab.example.local'
   # Do not change this
   tokenService: 'container_registry'
-  # Is this configurable?
+  # This must match your GitLab Rails configuration
   tokenIssuer: 'gitlab-registry-issuer'
   # Public side of the certificate bundle used to sign JWT auth requests
   certBundle:
