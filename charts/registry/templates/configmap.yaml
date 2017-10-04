@@ -8,7 +8,6 @@ metadata:
     app: {{ template "fullname" . }}
 data:
   config.yml: |
-    # defaults, from https://github.com/docker/distribution-library-image/blob/registry-v2.6.2/registry/config-example.yml
     version: 0.1
     log:
       level: warn

@@ -6,7 +6,7 @@ GitLab deployment on Kubernetes. This sub-chart makes use of the upstream [regis
 provided to allow separation from the global [Ingress](../README.md#ingress) as provided by the parent chart.
 
 All configuration is handled according to the official [Registry configuration documentation][docker-distribution-config-docs]
-using `/etc/docker/registry/config.yml` variables provided to the [Deployment][], populated from the [ConfigMap][].
+using `/etc/docker/registry/config.yml` variables provided to the [Deployment][], populated from the [ConfigMap][]. The [ConfigMap][] overrides the upstream defaults, but is [based upon them][registry-config].
 
 ## Design Choices
 
@@ -71,11 +71,12 @@ exposed. For this integration, we make use of the `auth.token.x` settings of
 
 #### httpSecret
 
-Field `httpSecret` is a string that correlates to the `http.secret` value of [registry][]. This value will be automatically populated with a random
-string of 128 alpha-numeric characters encoded to base64, if not provided.
+Field `httpSecret` is a string that correlates to the `http.secret` value of [registry][].
+This value will be automatically populated with a random string of 128 alpha-numeric
+characters encoded to base64.
 
-It is important that this field is configured as part of the chart so that all
-replicas in the cluster share this secret. See the following note from the [Registry configuration documents][docker-distribution-config-docs]:
+You should only need to supply this value when using a load balancer across
+multiple clusters. See the following note from the [Registry configuration documents][docker-distribution-config-docs]:
 
 > If you are building a cluster of registries behind a load balancer, you MUST ensure the secret is the same for all registries.
 
@@ -176,6 +177,7 @@ Further details of available `ingress.class: nginx` options can be found
 [docker-distribution]: https://github.com/docker/distribution
 [docker-distribution-library]: https://github.com/docker/distribution-library-image
 [docker-distribution-config-docs]: https://docs.docker.com/registry/configuration
+[registry-config]: https://github.com/docker/distribution-library-image/blob/master/registry/config-example.yml
 
 [Service]: ../../charts/registry/templates/service.yaml
 [Deployment]: ../../charts/registry/templates/deployment.yaml
