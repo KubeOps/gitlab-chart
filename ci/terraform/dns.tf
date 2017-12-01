@@ -4,7 +4,7 @@ data "google_dns_managed_zone" "dns_zone" {
 }
 
 resource "google_compute_address" "default" {
-  name         = "tf${var.environment}-${var.dns_zone_name}"
+  name         = "tf-${var.environment}-${var.dns_zone_name}"
   project      = "${var.project}"
   region       = "${var.region}"
   address_type = "EXTERNAL"
