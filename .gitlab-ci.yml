@@ -85,8 +85,6 @@ review:
 
 stop_review:
   stage: cleanup
-  variables:
-    GIT_STRATEGY: none
   script:
     - terraform_init
     - delete
