@@ -85,8 +85,6 @@ review:
 
 stop_review:
   stage: cleanup
-  variables:
-    GIT_STRATEGY: none
   script:
     - terraform_init
     - delete
@@ -385,7 +383,7 @@ production:
   }
 
   function terraform_down() {
-    push ci/terraform
+    pushd ci/terraform
     terraform destroy -input=false -force -var environment=${CI_ENVIRONMENT_SLUG}
     popd
   }
