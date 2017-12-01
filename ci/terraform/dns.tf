@@ -11,7 +11,7 @@ resource "google_compute_address" "default" {
 }
 
 resource "google_dns_record_set" "gitlab" {
-  name = "gitlab${var.environment}.${data.google_dns_managed_zone.dns_zone.dns_name}"
+  name = "gitlab-${var.environment}.${data.google_dns_managed_zone.dns_zone.dns_name}"
   type = "A"
   ttl  = 60
 
@@ -22,7 +22,7 @@ resource "google_dns_record_set" "gitlab" {
 }
 
 resource "google_dns_record_set" "registry" {
-  name = "registry${var.environment}.${data.google_dns_managed_zone.dns_zone.dns_name}"
+  name = "registry-${var.environment}.${data.google_dns_managed_zone.dns_zone.dns_name}"
   type = "A"
   ttl  = 60
 

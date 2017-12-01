@@ -380,7 +380,6 @@ production:
 
   function terraform_up() {
     pushd ci/terraform/
-    terraform plan -input=false -var environment=${CI_ENVIRONMENT_SLUG}
     terraform apply -input=false -auto-approve -var environment=${CI_ENVIRONMENT_SLUG}
     popd
   }
@@ -398,7 +397,7 @@ production:
     # gcloud config set project $GOOGLE_PROJECT_ID
     terraform init -input=false \
       -backend-config="bucket=${GOOGLE_STORAGE_BUCKET}" \
-      -backend-config="path=terraform/${CI_ENVIRONMENT_SLUG}.tfstate"
+      -backend-config="prefix=terraform/${CI_ENVIRONMENT_SLUG}.tfstate"
     popd
   }
 
