@@ -62,9 +62,9 @@ spec:
           name: {{ template "fullname" . }}
       - name: unicorn-shell
         secret:
-          secretName: {{ .Values.shell.secret }}
+          secretName: {{ template "unicorn.shell.secret" . }}
           items:
-            - key: {{ .Values.shell.key }}
+            - key: {{ default "secret" .Values.shell.key }}
               path: ".gitlab_shell_secret"
           defaultMode: 0400
       - name: unicorn-redis

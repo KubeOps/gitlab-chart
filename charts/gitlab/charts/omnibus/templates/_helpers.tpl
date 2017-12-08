@@ -37,7 +37,7 @@ Else the serviceName will be used
 */}}
 {{- define "unicorn.internal_api_host" -}}
 {{- if .Values.unicorn.internal_api.host -}}
-{{- printf "%s" .Values.unicorn.internal_api.host -}}
+{{- .Values.unicorn.internal_api.host -}}
 {{- else if .Values.unicorn.internal_api.serviceName -}}
 {{- $name := default "omnibus" .Values.unicorn.internal_api.serviceName -}}
 {{- printf "%s-%s" .Release.Name $name -}}
