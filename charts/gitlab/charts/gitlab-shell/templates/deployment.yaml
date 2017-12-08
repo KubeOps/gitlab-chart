@@ -52,9 +52,9 @@ spec:
           name: {{ template "fullname" . }}
       - name: shell-secret
         secret:
-          secretName: {{ template "fullname" . }}-secret
+          secretName: {{ .Values.secret_token.secret }}
           items:
-            - key: secret
+            - key: {{ .Values.secret_token.key }}
               path: ".gitlab_shell_secret"
           defaultMode: 0400
       - name: shell-redis

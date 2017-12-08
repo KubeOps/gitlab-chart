@@ -42,15 +42,3 @@ to the service name
 {{- printf "%s-%s" .Release.Name $name -}}
 {{- end -}}
 {{- end -}}
-
-{{/*
-Return the name for the shell secret
-If the name is provided, use that, otherwise use the shell deployment name
-*/}}
-{{- define "unicorn.shell.secret" -}}
-{{- if .Values.shell.secret -}}
-{{- .Values.shell.secret -}}
-{{- else -}}
-{{- printf "%s-shell-secret" .Release.Name -}}
-{{- end -}}
-{{- end -}}

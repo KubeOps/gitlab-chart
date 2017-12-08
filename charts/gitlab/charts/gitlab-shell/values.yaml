@@ -12,6 +12,9 @@ service:
   externalPort: 22
   internalPort: 22
 enabled: false
+secret_token:
+   secret: gitlab-shell-secret
+   key: secret  
 unicorn: {}
   # host: '0.0.0.0'
   # serviceName: 'unicorn'
