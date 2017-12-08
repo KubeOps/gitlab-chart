@@ -11,7 +11,7 @@ data:
     user: git
 
     # Url to gitlab instance. Used for api calls. Should end with a slash.
-    gitlab_url: "http://{{ template "unicorn.redis.host" . }}:{{ default 8080 .Values.unicorn.port }}/"
+    gitlab_url: "http://{{ template "shell.unicorn.host" . }}:{{ default 8080 .Values.unicorn.port }}/"
 
     secret_file: /etc/gitlab-secrets/.gitlab_shell_secret
 
@@ -23,7 +23,7 @@ data:
 
     # Redis settings used for pushing commit notices to gitlab
     redis:
-      host: {{ template "unicorn.redis.host" . }}
+      host: {{ template "shell.redis.host" . }}
       port: {{ default 6379 .Values.redis.port }}
       pass: "<%= File.read("/etc/gitlab-redis/password") %>"
       database: nil
