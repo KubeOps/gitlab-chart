@@ -262,6 +262,7 @@ production:
       --set gitlab.unicorn.redis.password.key=redis-password \
       --set gitlab.unicorn.psql.serviceName=omnibus \
       --set gitlab.unicorn.psql.password="$ROOT_PASSWORD" \
+      --set gitlab.gitlab-shell.enabled=true \
       --set gitlab.omnibus.enabled=true \
       --set gitlab.omnibus.service.type=NodePort \
       --set gitlab.omnibus.external_url="https://gitlab$DOMAIN" \
