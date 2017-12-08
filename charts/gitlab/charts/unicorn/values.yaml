@@ -28,7 +28,7 @@ psql:
   # database: 'gitlabhq_production'
   # username: 'gitlab'
   # password: nil
-shell:
+shell: {}
   # secret: gitlab-shell
   # key: secret
 resources: {}
