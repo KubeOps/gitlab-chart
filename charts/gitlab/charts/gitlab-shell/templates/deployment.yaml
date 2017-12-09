@@ -16,6 +16,8 @@ spec:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -56,14 +58,14 @@ spec:
           items:
             - key: {{ .Values.secret_token.key }}
               path: ".gitlab_shell_secret"
-          defaultMode: 0400
+          defaultMode: 0440
       - name: shell-redis
         secret:
           secretName: {{ .Values.redis.password.secret }}
           items:
             - key: {{ .Values.redis.password.key }}
               path: password
-          defaultMode: 0400
+          defaultMode: 0440
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
