@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-shell
-  tag: ca5fe50b1162501833a822819b422a7329018024
+  tag: acaaa6be79d93678936bc3a830062f2370e6fcf1
   pullPolicy: IfNotPresent
 service:
   name: gitlab-shell
