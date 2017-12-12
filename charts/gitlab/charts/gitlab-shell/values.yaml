@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-shell
-  tag: 588f4db09b61904211df9e02778985eeb1fde87e
+  tag: ca5fe50b1162501833a822819b422a7329018024
   pullPolicy: IfNotPresent
 service:
   name: gitlab-shell
@@ -14,7 +14,7 @@ service:
 enabled: false
 secret_token:
    secret: gitlab-shell-secret
-   key: secret  
+   key: secret
 unicorn: {}
   # host: '0.0.0.0'
   # serviceName: 'unicorn'

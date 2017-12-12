@@ -29,6 +29,8 @@ spec:
               value: '/etc/gitlab-shell'
             - name: CONFIG_DIRECTORY
               value: '/srv/gitlab-shell'
+            - name: KEYS_DIRECTORY
+              value: '/etc/ssh/keys'
           volumeMounts:
             - name: shell-config
               mountPath: '/etc/gitlab-shell'
@@ -38,10 +40,13 @@ spec:
             - name: shell-redis
               mountPath: '/etc/gitlab-redis'
               readOnly: true
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: {{ .Values.service.internalPort }}
+          livenessProbe:
+            exec:
+              command:
+              - /scripts/healthcheck
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 10
           # readinessProbe:
           #   httpGet:
           #     path: /
