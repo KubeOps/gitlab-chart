@@ -29,6 +29,8 @@ spec:
               value: '/etc/gitaly/templates'
             - name: CONFIG_DIRECTORY
               value: '/etc/gitaly'
+            - name: GITALY_CONFIG_FILE
+              value: '/etc/gitaly/config.toml'
           volumeMounts:
             - name: gitaly-config
               mountPath: '/etc/gitaly/templates'
