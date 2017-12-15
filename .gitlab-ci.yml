@@ -378,7 +378,7 @@ production:
       name="$name-$track"
     fi
 
-    helm delete "$name" || true
+    helm delete --purge "$name" || true
   }
 
   function terraform_up() {
