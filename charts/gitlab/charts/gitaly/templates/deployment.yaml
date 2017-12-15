@@ -34,7 +34,7 @@ spec:
               mountPath: '/etc/gitaly/templates'
             - name: gitaly-secret
               mountPath: '/etc/gitlab-secrets/gitaly_token'
-              subPath: 'gitlab_token'
+              subPath: 'gitaly_token'
               readOnly: true
             - name: gitaly-shell
               mountPath: '/etc/gitlab-secrets/.gitlab_shell_secret'
