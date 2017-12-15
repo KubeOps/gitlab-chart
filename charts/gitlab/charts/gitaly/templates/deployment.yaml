@@ -33,13 +33,16 @@ spec:
             - name: gitaly-config
               mountPath: '/etc/gitaly/templates'
             - name: gitaly-secret
-              mountPath: '/etc/gitlab-secrets'
+              mountPath: '/etc/gitlab-secrets/gitaly_token'
+              subPath: 'gitlab_token'
               readOnly: true
             - name: gitaly-shell
-              mountPath: '/etc/gitlab-secrets'
+              mountPath: '/etc/gitlab-secrets/.gitlab_shell_secret'
+              subPath: '.gitlab_shell_secret'
               readOnly: true
             - name: gitaly-redis
-              mountPath: '/etc/gitlab-secrets'
+              mountPath: '/etc/gitlab-secrets/redis_password'
+              subPath: 'redis_password'
               readOnly: true
           livenessProbe:
             exec:
