@@ -37,6 +37,9 @@ spec:
             - name: unicorn-shell
               mountPath: '/etc/gitlab-shell'
               readOnly: true
+            - name: unicorn-gitaly
+              mountPath: '/etc/gitaly'
+              readOnly: true
             - name: unicorn-redis
               mountPath: '/etc/gitlab-redis'
               readOnly: true

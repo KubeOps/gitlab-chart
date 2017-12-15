@@ -48,16 +48,16 @@ spec:
             exec:
               command:
               - /scripts/healthcheck
-            initialDelaySeconds: 10
-            timeoutSeconds: 3
-            periodSeconds: 10
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
           readinessProbe:
             exec:
               command:
               - /scripts/healthcheck
-            initialDelaySeconds: 10
-            timeoutSeconds: 3
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 30
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
