@@ -34,17 +34,8 @@ spec:
           volumeMounts:
             - name: gitaly-config
               mountPath: '/etc/gitaly/templates'
-            - name: gitaly-secret
-              mountPath: '/etc/gitlab-secrets/gitaly_token'
-              subPath: 'gitaly_token'
-              readOnly: true
-            - name: gitaly-shell
-              mountPath: '/etc/gitlab-secrets/.gitlab_shell_secret'
-              subPath: '.gitlab_shell_secret'
-              readOnly: true
-            - name: gitaly-redis
-              mountPath: '/etc/gitlab-secrets/redis_password'
-              subPath: 'redis_password'
+            - name: gitaly-secrets
+              mountPath: '/etc/gitlab-secrets'
               readOnly: true
           livenessProbe:
             exec:
@@ -66,27 +57,25 @@ spec:
       - name: gitaly-config
         configMap:
           name: {{ template "fullname" . }}
-      - name: gitaly-secret
-        secret:
-          secretName: {{ .Values.secret.name }}
-          items:
-            - key: {{ .Values.secret.key }}
-              path: "gitaly_token"
+      - name: gitaly-secrets
+        projected:
           defaultMode: 0440
-      - name: gitaly-shell
-        secret:
-          secretName: {{ .Values.shell.secret }}
-          items:
-            - key: {{ .Values.shell.key }}
-              path: ".gitlab_shell_secret"
-          defaultMode: 0440
-      - name: gitaly-redis
-        secret:
-          secretName: {{ .Values.redis.password.secret }}
-          items:
-            - key: {{ .Values.redis.password.key }}
-              path: redis_password
-          defaultMode: 0440
+          sources:
+          - secret:
+              name: {{ .Values.secret.name }}
+              items:
+                - key: {{ .Values.secret.key }}
+                  path: "gitaly_token"
+          - secret:
+            name: {{ .Values.shell.secret }}
+            items:
+              - key: {{ .Values.shell.key }}
+                path: ".gitlab_shell_secret"
+          - secret:
+              name: {{ .Values.redis.password.secret }}
+              items:
+                - key: {{ .Values.redis.password.key }}
+                  path: redis_password
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
