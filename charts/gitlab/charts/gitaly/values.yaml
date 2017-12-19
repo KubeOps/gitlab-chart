@@ -4,8 +4,8 @@
 replicaCount: 1
 image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitaly
-  tag: cfbdb02b996a8baff2e81bd33c8fd3747edb7ac4
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 service:
   name: gitaly
   type: ClusterIP
