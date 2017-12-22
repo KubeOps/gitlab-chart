@@ -19,6 +19,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
+            - /scripts/db-migrate
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: CONFIG_TEMPLATE_DIRECTORY
@@ -38,7 +40,7 @@ spec:
           # readinessProbe:
           #   httpGet:
           #     path: /
-          #     port: 
+          #     port:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
