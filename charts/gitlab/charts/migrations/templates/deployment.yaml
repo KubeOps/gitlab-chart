@@ -1,6 +1,6 @@
 {{- if .Values.enabled }}
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: {{ template "migrations.fullname" . }}
   labels:
@@ -9,7 +9,6 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
