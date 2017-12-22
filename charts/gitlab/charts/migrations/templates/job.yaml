@@ -29,29 +29,19 @@ spec:
               value: '/var/opt/gitlab/templates'
             - name: CONFIG_DIRECTORY
               value: '/var/opt/gitlab/config/gitlab/'
+            {{- if .Values.initial_root_password}}
+            - name: GITLAB_ROOT_PASSWORD
+              value: {{ .Values.initial_root_password | quote }}
+            {{- end }}
           volumeMounts:
-            - name: migrations-status
-              mountPath: '/var/opt/gitlab/.upgrade-status'
             - name: migrations-config
               mountPath: '/var/opt/gitlab/templates'
             - name: migrations-redis
               mountPath: '/etc/gitlab-redis'
               readOnly: true
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port:
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
-      - name: migrations-status
-        emptyDir:
-          medium: "Memory"
-          sizeLimit: 10M
       - name: migrations-config
         configMap:
           name: {{ template "migrations.fullname" . }}
