@@ -27,6 +27,11 @@ data:
   gitlab.yml: |
     production: &base
       gitlab:
+      repositories:
+        storages:
+          default:
+            path: /var/opt/gitlab/repo
+            gitaly_address: tcp://localhost:8075
 
 # Leave this here - This line denotes end of block to the parser.
 {{- end }}

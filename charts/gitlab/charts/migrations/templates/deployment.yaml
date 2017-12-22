@@ -16,6 +16,7 @@ spec:
         app: {{ template "migrations.name" . }}
         release: {{ .Release.Name }}
     spec:
+      RestartPolicy: OnFailure
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
