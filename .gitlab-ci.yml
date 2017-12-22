@@ -296,7 +296,7 @@ production:
       --set gitlab.omnibus.service.type=NodePort \
       --set gitlab.omnibus.external_url="https://gitlab$DOMAIN" \
       --set gitlab.omnibus.initial_root_password="$ROOT_PASSWORD" \
-      --set giltab.omnibus.auto_migrate=false \
+      --set gitlab.omnibus.auto_migrate=false \
       --set gitlab.omnibus.redis.enabled=false \
       --set gitlab.omnibus.redis.serviceName=redis \
       --set gitlab.omnibus.redis.password.secret=gitlab-redis \
