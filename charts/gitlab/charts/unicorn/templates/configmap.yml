@@ -33,7 +33,7 @@ data:
       gitlab:
         https: false # Set to true if using HTTPS, see installation.md#using-https for additional HTTPS configuration details
         trusted_proxies:
-        email_from: bob@example.com
+        email_from: example@example.com
         email_display_name: GitLab
         email_reply_to: noreply@example.com
         email_subject_suffix: ''
