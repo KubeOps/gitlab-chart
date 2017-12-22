@@ -52,6 +52,7 @@ spec:
             - key: {{ .Values.redis.password.key }}
               path: password
           defaultMode: 0400
+    {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
