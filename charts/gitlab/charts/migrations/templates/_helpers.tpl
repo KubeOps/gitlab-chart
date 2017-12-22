@@ -12,7 +12,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 */}}
 {{- define "migrations.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s.%s" .Release.Name $name .Release.Revision | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s.%d" .Release.Name $name .Release.Revision | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
