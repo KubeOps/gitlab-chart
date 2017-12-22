@@ -24,6 +24,9 @@ data:
     production:
       # Redis (single instance)
       url: redis://:<%= File.read("/etc/gitlab-redis/password") %>@{{ template "migrations.redis.host" . }}:{{ default 6379 .Values.redis.port }}
+  gitlab.yml: |
+    production: &base
+      gitlab:
 
 # Leave this here - This line denotes end of block to the parser.
 {{- end }}
