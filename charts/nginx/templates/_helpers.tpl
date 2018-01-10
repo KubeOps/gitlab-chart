@@ -25,3 +25,17 @@ Return the serviceaccount name
 {{- .Values.serviceAccount.name -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+  Returns the nginx ingress host list
+*/}}
+{{- define "nginx.ingress.hosts" -}}
+{{- $hosts := .Values.ingress.hosts -}}
+{{- if .Values.global.registryHost -}}
+{{- $hosts := prepend $hosts .Values.global.registryHost -}}
+{{- end-}}
+{{- if .Values.global.gitlabHost -}}
+{{- $hosts := prepend $hosts .Values.global.gitlabHost -}}
+{{- end-}}
+{{- $hosts -}}
+{{- end -}}
