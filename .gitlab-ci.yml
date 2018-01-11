@@ -35,10 +35,12 @@ variables:
   POSTGRES_PASSWORD: testing-password
   POSTGRES_ENABLED: "false"
   POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+  GITLAB_ROOT_PASSWORD: admin12345 #Just for testing purposes
 
 stages:
   - test
   - review
+  - qa
   - staging
   - canary
   - production
@@ -58,7 +60,7 @@ stages:
   only:
     - branches
 
-review:
+prepare_review:
   stage: review
   script:
     - terraform_init
@@ -69,6 +71,10 @@ review:
     - install_tiller
     - create_secret
     - deploy
+    - echo "export REVIEW_ENVIRONMENT_URL=gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables
+  artifacts:
+    paths:
+    - variables
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
@@ -81,6 +87,30 @@ review:
     kubernetes: active
   except:
     - master
+
+qa:
+  image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
+  stage: qa
+  services:
+  - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    DOMAIN: "review-$CI_COMMIT_REF_NAME.$AUTO_DEVOPS_DOMAIN"
+    QA_SCREENSHOTS_DIR: "$CI_PROJECT_DIR/screenshots"
+  script:
+    - gem install gitlab-qa
+    - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+    - source variables
+    - echo $REVIEW_ENVIRONMENT_URL
+    - GITLAB_USERNAME=root GITLAB_PASSWORD=$GITLAB_ROOT_PASSWORD gitlab-qa Test::Instance::Any CE latest https://$REVIEW_ENVIRONMENT_URL
+  artifacts:
+    when: on_failure
+    expire_in: 7d
+    paths:
+    - screenshots
+  dependencies:
+    - prepare_review
 
 stop_review:
   stage: cleanup
@@ -182,6 +212,8 @@ production:
     refs:
       - master
     kubernetes: active
+
+
 
 # ---------------------------------------------------------------------------
 
