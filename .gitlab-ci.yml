@@ -39,6 +39,7 @@ variables:
 stages:
   - test
   - review
+  - qa
   - staging
   - canary
   - production
@@ -58,9 +59,12 @@ stages:
   only:
     - branches
 
-review:
+prepare_review:
   stage: review
   script:
+    - echo $DOMAIN
+    - echo $CI_COMMIT_REF_NAME
+    - echo $CI_ENVIRONMENT_SLUG
     - terraform_init
     - check_kube_domain
     - terraform_up
@@ -81,6 +85,22 @@ review:
     kubernetes: active
   except:
     - master
+
+qa:
+  image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
+  stage: qa
+  services:
+  - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    DOMAIN: "review-$CI_COMMIT_REF_NAME.$AUTO_DEVOPS_DOMAIN"
+  script:
+    - gem install gitlab-qa
+    - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+    - gitlab-qa Test::Instance::Any CE latest https://gitlab$DOMAIN
+  dependencies:
+    - prepare_review
 
 stop_review:
   stage: cleanup
@@ -182,6 +202,8 @@ production:
     refs:
       - master
     kubernetes: active
+
+
 
 # ---------------------------------------------------------------------------
 
