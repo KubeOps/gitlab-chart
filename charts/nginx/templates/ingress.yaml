@@ -5,7 +5,7 @@
 {{- $ingressHosts := .Values.ingress.hosts -}}
 {{- if .Values.global -}}
 
-{{- end-}}
+{{- end -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
