@@ -31,11 +31,5 @@ Return the serviceaccount name
 */}}
 {{- define "nginx.ingress.hosts" -}}
 {{- $hosts := .Values.ingress.hosts -}}
-{{- if .Values.global.registryHost -}}
-{{- $hosts := prepend $hosts .Values.global.registryHost -}}
-{{- end-}}
-{{- if .Values.global.gitlabHost -}}
-{{- $hosts := prepend $hosts .Values.global.gitlabHost -}}
-{{- end -}}
 {{- $hosts -}}
 {{- end -}}
