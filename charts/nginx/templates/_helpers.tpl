@@ -36,6 +36,6 @@ Return the serviceaccount name
 {{- end-}}
 {{- if .Values.global.gitlabHost -}}
 {{- $hosts := prepend $hosts .Values.global.gitlabHost -}}
-{{- end-}}
+{{- end -}}
 {{- $hosts -}}
 {{- end -}}
