@@ -64,6 +64,9 @@ review:
     - terraform_init
     - check_kube_domain
     - terraform_up
+    - echo $DOMAIN_IP
+    - echo $AUTO_DEVOPS_DOMAIN
+    - echo $DOMAIN
 #    - download_chart
     - ensure_namespace
     - install_tiller
