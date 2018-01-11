@@ -2,6 +2,13 @@
 {{- $serviceName := include "fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
 {{- $releaseName := .Release.Name -}}
+{{- $ingressHosts := .Values.ingress.hosts -}}
+{{- if .Values.global.registryHost -}}
+{{- $ingressHosts := prepend $ingressHosts .Values.global.registryHost -}}
+{{- end-}}
+{{- if .Values.global.gitlabHost -}}
+{{- $ingressHosts := prepend $ingressHosts .Values.global.gitlabHost -}}
+{{- end -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -19,7 +26,7 @@ metadata:
   {{- end }}
 spec:
   rules:
-    {{- range $host := include "nginx.ingress.hosts" . }}
+    {{- range $host := $ingressHosts . }}
     - host: {{ $host.name }}
       http:
         paths:

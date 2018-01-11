@@ -25,11 +25,3 @@ Return the serviceaccount name
 {{- .Values.serviceAccount.name -}}
 {{- end -}}
 {{- end -}}
-
-{{/*
-  Returns the nginx ingress host list
-*/}}
-{{- define "nginx.ingress.hosts" -}}
-{{- $hosts := .Values.ingress.hosts -}}
-{{- $hosts -}}
-{{- end -}}
