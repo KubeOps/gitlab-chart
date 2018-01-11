@@ -21,7 +21,7 @@ service:
 
 enabled: false
 # config items
-# initial_root_password:
+initial_root_password: admin12345
 external_url: http://gitlab.example.local
 trusted_proxies:
 - "127.0.0.1/24"
