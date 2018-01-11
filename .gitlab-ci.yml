@@ -58,7 +58,7 @@ stages:
   only:
     - branches
 
-review:
+prepare_review:
   stage: review
   script:
     - terraform_init
@@ -81,6 +81,13 @@ review:
     kubernetes: active
   except:
     - master
+
+qa:
+  image: ruby:2.3.3
+  stage: review
+  script:
+    - gem install gitlab-qa
+    - gitlab-qa Test::Instance::Any CE latest https://gitlab$DOMAIN
 
 stop_review:
   stage: cleanup
@@ -182,6 +189,8 @@ production:
     refs:
       - master
     kubernetes: active
+
+
 
 # ---------------------------------------------------------------------------
 
