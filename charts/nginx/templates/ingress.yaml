@@ -3,12 +3,9 @@
 {{- $servicePort := .Values.service.externalPort -}}
 {{- $releaseName := .Release.Name -}}
 {{- $ingressHosts := .Values.ingress.hosts -}}
-{{- if and (not empty .Values.global.registryHost) .Values.global.registryHost.name -}}
-{{- $ingressHosts := prepend $ingressHosts .Values.global.registryHost -}}
+{{- if .Values.global -}}
+
 {{- end-}}
-{{- if and (not empty .Values.global.gitlabHost) .Values.global.gitlabHost.name -}}
-{{- $ingressHosts := prepend $ingressHosts .Values.global.gitlabHost -}}
-{{- end -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
