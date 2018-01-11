@@ -16,7 +16,7 @@ service:
 enabled: false
 global:
   gitlabHost:
-    name: gitlab.example.local
+    name: gitlabes.example.local
   registryHost:
     name: registry.example.local
     serviceName: registry

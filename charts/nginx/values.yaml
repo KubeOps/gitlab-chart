@@ -33,7 +33,7 @@ serverNameHashBucketSize: 256
 
 global:
   gitlabHost:
-    name: gitlab.example.local
+    name: gitlab.example.org
     serviceName: unicorn
     servicePort: workhorse
   registryHost:
