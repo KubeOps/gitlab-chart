@@ -21,11 +21,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "global.hostname" -}}
-{{- template "global.urlSplit" . 1 -}}
+{{- template "global.urlSplit" (list . 1) -}}
 {{- end -}}
 
 {{- define "global.hostprotocol" -}}
-{{- template "global.urlSplit" . 0 -}}
+{{- template "global.urlSplit" (list . 0) -}}
 {{- end -}}
 
 {{/*
