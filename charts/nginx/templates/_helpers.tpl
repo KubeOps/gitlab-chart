@@ -16,9 +16,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "global.urlSplit" -}}
-{{- $urlParts := regexSplit "://" (index . 0) 2 -}}
+{{- $urlParts := splitList "://" (index . 0) -}}
 {{- $ind := index . 1 -}}
-{{- index $urlParts ($ind | int) -}}
+{{- index $urlParts 0 -}}
 {{- end -}}
 
 {{- define "global.hostname" -}}
