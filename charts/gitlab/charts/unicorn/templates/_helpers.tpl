@@ -80,6 +80,17 @@ to the global registr host name.
 {{-   if .Values.registry.host -}}
 {{-     .Values.registry.host -}}
 {{-   else -}}
-{{-     .Values.global.registryHost.name -}}
+{{-     template "hostname" .Values.global.registryHost.url -}}
 {{-   end -}}
+{{- end -}}
+
+{{- define "hostname" -}}
+{{- $urlParts := split "://" . -}}
+{{- $urlParts._1 -}}
+{{- end -}}
+
+{{- define "hostprotocol" -}}
+{{- $urlParts := split "://" . -}}
+{{- $proto := $urlParts._0 -}}
+{{- printf "$s://" $proto -}}
 {{- end -}}
