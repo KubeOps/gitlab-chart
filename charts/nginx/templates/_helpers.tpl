@@ -15,15 +15,12 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
+Take a url (eg: http://gitlab.example.local) and return the hostname.
+*/}}
 {{- define "hostname" -}}
 {{- $urlParts := split "://" . -}}
 {{- $urlParts._1 -}}
-{{- end -}}
-
-{{- define "hostprotocol" -}}
-{{- $urlParts := split "://" . -}}
-{{- $proto := $urlParts._0 -}}
-{{- printf "$s://" $proto -}}
 {{- end -}}
 
 {{/*

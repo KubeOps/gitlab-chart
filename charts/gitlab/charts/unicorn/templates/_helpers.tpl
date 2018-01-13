@@ -84,13 +84,10 @@ to the global registr host name.
 {{-   end -}}
 {{- end -}}
 
+{{/*
+Take a url (eg: http://gitlab.example.local) and return the hostname.
+*/}}
 {{- define "hostname" -}}
 {{- $urlParts := split "://" . -}}
 {{- $urlParts._1 -}}
-{{- end -}}
-
-{{- define "hostprotocol" -}}
-{{- $urlParts := split "://" . -}}
-{{- $proto := $urlParts._0 -}}
-{{- printf "$s://" $proto -}}
 {{- end -}}
