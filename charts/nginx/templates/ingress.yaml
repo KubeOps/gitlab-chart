@@ -49,12 +49,12 @@ spec:
   {{- end }}
   {{- if .Values.global.gitlabHost.tls.secretName }}
     - hosts:
-      - {{ template "global.hostname" .Values.global.gitlabHost.name }}
+      - {{ template "global.hostname" .Values.global.gitlabHost.url }}
       secretName: {{ .Values.global.gitlabHost.tls.secretName }}
   {{- end }}
   {{- if .Values.global.registryHost.tls.secretName }}
     - hosts:
-      - {{ template "global.hostname" .Values.global.registryHost.name }}
+      - {{ template "global.hostname" .Values.global.registryHost.url }}
       secretName: {{ .Values.global.registryHost.tls.secretName }}
   {{- end }}
   {{- if $.Values.ingress.tls }}
