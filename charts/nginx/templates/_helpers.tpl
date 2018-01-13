@@ -15,18 +15,14 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "global.urlSplit" -}}
-{{- $urlParts := splitList "://" (index . 0) -}}
-{{- $ind := index . 1 -}}
-{{- index $urlParts 1 -}}
-{{- end -}}
-
 {{- define "global.hostname" -}}
-{{- template "global.urlSplit" (list . 1) -}}
+{{- $proto, host := splitList "://" . -}}
+{{- $host -}}
 {{- end -}}
 
 {{- define "global.hostprotocol" -}}
-{{- template "global.urlSplit" (list . 0) -}}
+{{- $proto, host := splitList "://" . -}}
+{{- printf "$s://" $proto -}}
 {{- end -}}
 
 {{/*
