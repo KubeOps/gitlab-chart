@@ -16,12 +16,12 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "global.hostname" -}}
-{{- $proto, host := splitList "://" . -}}
+{{- $proto, $host := splitList "://" . -}}
 {{- $host -}}
 {{- end -}}
 
 {{- define "global.hostprotocol" -}}
-{{- $proto, host := splitList "://" . -}}
+{{- $proto, $host := splitList "://" . -}}
 {{- printf "$s://" $proto -}}
 {{- end -}}
 
