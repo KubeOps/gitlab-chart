@@ -8,7 +8,7 @@ Items and information needed:
 - Secrets for Certificates, Registry, Redis
 - A regional static IP in Google Cloud, with an A record in DNS
 
-## Gcloud
+## Google Cloud SDK
 
 Install this per [gcloud installation documentation][gcloud].
 If already installed, ensure they are up to date with `gcloud components update`.
@@ -29,13 +29,13 @@ kubectl
 ### Install with defaults
 Run `scripts/gke_bootstrap_script.sh` to create a new GKE cluster, setup kubectl to connect to it and have helm installed and initialized. Skip next sections if you used the script.
 
-Gcloud is a dependency of this script, you will have to make sure it is set up correctly in order for the script to work.
+Google Cloud SDK is a dependency of this script, you will have to make sure it is set up correctly in order for the script to work.
 To validate that run the following command and make sure it exits without error
 
 `gcloud container clusters list`
 
 ### Kubectl
-> Skip this if you ran the above install with defaults script
+Skip this if you ran the above install with defaults script
 
 The [gcloud][] sdk & command contains `kubectl` binary. If you are not using gcloud,
 you can setup kubectl using the installation documentation for [kubectl][].
@@ -52,7 +52,7 @@ Unable to connect to the server:
 cluster. Proceed with setting up Helm.
 
 ### Helm
-> Skip this if you ran the above install with defaults script
+Skip this if you ran the above install with defaults script
 
 Follow the [helm][] document for [installation instructions](https://github.com/kubernetes/helm#install).
 
