@@ -10,7 +10,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 data:
   initialize: |-
-    {{ include (print $.Template.BasePath "/_create_buckets_script.sh") . }}
+{{ include (print $.Template.BasePath "/_create_buckets_script.sh") . | indent 4 }}
   configure: |-
     {{ .Values.init.script }}
   config.json: |-
