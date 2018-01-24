@@ -4,27 +4,25 @@ To operate effectively, you will need to create a few resources before configura
 
 You'll need a domain on which to host the services, which we will not cover here. You will need a [static IP](#static-ip) for the Ingress, so that you can create a [DNS entry](#dns-entry) for your hostnames.
 
-
-### Bootstrap
+## Bootstrap
 
 Run `scripts/gke_bootstrap_script.sh` to create a new GKE cluster, setup kubectl to connect to it and have helm installed and initialized. Skip next section if you used the script.
 
-
 ## Static IP
 
-You'll need an external IP for ingress to use in order for your cluster to be reachable.
-Note that the external IP needs to be regional and in the same region as the cluster itself,
-a global IP or an IP outside the region will not work.
+External IP for ingress is required so that your cluster can be reachable. The external IP needs to be regional and in the same region as the cluster itself
+
+> A global IP or an IP outside the region will not work.
 
 To create a static IP run the following gcloud command:
 
-`gcloud compute addresses create <name for the ip> --region <you region>`
+`gcloud compute addresses create $EXTERNAL_IP_NAME --region $REGION
 
 To get the address of the newly created IP run the following gcloud command:
 
-`gcloud compute addresses describe <name of the ip> --region <your region> --format='value(address)'`
+`gcloud compute addresses describe $EXTERNAL_IP_NAME --region $REGION --format='value(address)'`
 
-This IP shall be pointed to by a DNS name which we will use in ingress hosts to point to the gitlab components. Take note of this IP we will need it later in the configuration phase.
+We will use this IP to bind with a DNS name in the next section.
 
 ## DNS Entry
 

@@ -29,9 +29,6 @@ kubectl
 ### Install with defaults
 
 Google Cloud SDK is a dependency of this script, you will have to make sure it is set up correctly in order for the script to work.
-To validate that run the following command and make sure it exits without error
-
-`gcloud container clusters list`
 
 Run `scripts/gke_bootstrap_script.sh` to create a new GKE cluster, setup kubectl to connect to it and have helm installed and initialized. Skip next sections if you used the script.
 
