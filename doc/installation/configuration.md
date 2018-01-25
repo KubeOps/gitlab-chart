@@ -73,14 +73,6 @@ global:
       secretName: example-local-tls
 ```
 
-If you are using a cluster with [RBAC](rbac.md):
-
-```YAML
-nginx:
-  serviceAccount:
-    autoGenerate: true
-```
-
 Now that the template is generated, we can proceed [to deployment](README.md#deploy).
 
 [static-ip]: resources.md#static-ip
