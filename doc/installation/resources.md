@@ -6,7 +6,7 @@ You'll need a domain on which to host the services, which we will not cover here
 
 ## Bootstrap
 
-Run `scripts/gke_bootstrap_script.sh` to create a new GKE cluster, setup kubectl to connect to it and have helm installed and initialized. Skip next section if you used the script.
+You should complete the [dependencies document](dependencies.md#Install-with-defaults) before proceeding.
 
 ## Static IP
 
@@ -26,7 +26,7 @@ We will use this IP to bind with a DNS name in the next section.
 
 ## DNS Entry
 
-In order to use ingress host rules to access various components of gitlab we will need a public domain with an `A record` entry pointing to the IP we just created.
+In order to use ingress host rules to access various components of gitlab we will need a public domain with an `A record` wild card DNS entry pointing to the IP we just created.
 
 Follow [This](https://cloud.google.com/dns/quickstart) to create the DNS entry.
 

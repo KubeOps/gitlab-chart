@@ -7,11 +7,16 @@ set -e
 
 REGION=${REGION-us-central1}
 ZONE=${REGION}-a
-CLUSTER_NAME=${CLUSTER_NAME-democluster}
+CLUSTER_NAME=${CLUSTER_NAME-gitlab-cluster}
 CLUSTER_VERSION=${CLUSTER_VERSION-1.8.5-gke.0}
 MACHINE_TYPE=${MACHINE_TYPE-n1-standard-2}
-PROJECT=${PROJECT-cloud-native-182609}
 RBAC_ENABLED=${RBAC_ENABLED-true}
+NUM_NODES=${NUM_NODES-2}
+
+if [ -z "$PROJECT" ]; then
+  echo "$PROJECT needs to be set to your project id";
+  exit 1;
+fi
 
 command -v gcloud >/dev/null 2>&1 || { echo >&2 "gcloud is required please follow: https://cloud.google.com/sdk/downloads"; exit 1; }
 command -v kubectl >/dev/null 2>&1 || { echo >&2 "kubectl is required please follow: https://kubernetes.io/docs/tasks/tools/install-kubectl"; exit 1; }
@@ -20,11 +25,11 @@ gcloud container clusters list >/dev/null 2>&1 || { echo >&2 "Gcloud seems to be
 
 gcloud container clusters create $CLUSTER_NAME --zone $ZONE \
   --cluster-version $CLUSTER_VERSION --machine-type $MACHINE_TYPE \
-  --node-version $CLUSTER_VERSION --num-nodes 5 --project $PROJECT
+  --node-version $CLUSTER_VERSION --num-nodes $NUM_NODES --project $PROJECT
 
 external_ip_name=${CLUSTER_NAME}-external-ip
-gcloud compute addresses create $external_ip_name --region $REGION
-address=$(gcloud compute addresses describe $external_ip_name --region $REGION --format='value(address)')
+gcloud compute addresses create $external_ip_name --region $REGION --project $PROJECT
+address=$(gcloud compute addresses describe $external_ip_name --region $REGION --project $PROJECT --format='value(address)')
 
 echo "Successfully provisioned external IP address $address , You need to add an A record to the DNS name to point to this address"
 
@@ -40,7 +45,7 @@ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 # Create roles for RBAC Helm
 if $RBAC_ENABLED; then
   curl -o rbac-config.yaml -s "https://gitlab.com/charts/helm.gitlab.io/raw/master/doc/helm/examples/rbac-config.yaml"
-  password=$(gcloud container clusters describe $CLUSTER_NAME --zone $ZONE --format='value(masterAuth.password)')
+  password=$(gcloud container clusters describe $CLUSTER_NAME --zone $ZONE --project $PROJECT --format='value(masterAuth.password)')
 
   kubectl --username=admin --password=$password create -f rbac-config.yaml
 fi
