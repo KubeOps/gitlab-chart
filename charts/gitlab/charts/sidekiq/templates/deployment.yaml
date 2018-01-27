@@ -36,6 +36,7 @@ metadata:
     heritage: {{ $releaseService }}
     queue-pod-name: {{ .name }}
 spec:
+
   replicas: {{ default $replicas .replicas }}
   template:
     metadata:
@@ -46,6 +47,26 @@ spec:
         checksum/configmap: {{ $configMapChecksum }}
         checksum/configmap-pod: {{ pluck ( .name | quote ) $queues | last | sha256sum }}
     spec:
+      initContainers:
+        - name: configure
+          command: ['sh', '/config/configure']
+          image: busybox
+          volumeMounts:
+          - name: sidekiq-config
+            mountPath: /config
+            readOnly: true
+          - name: init-sidekiq-gitaly
+            mountPath: /initconfig/gitaly
+            readOnly: true
+          - name: init-sidekiq-redis
+            mountPath: /initconfig/redis
+            readOnly: true
+          - name: sidekiq-gitaly
+            mountPath: /gitaly
+            readOnly: false
+          - name: sidekiq-redis
+            mountPath: /redis
+            readOnly: false
       containers:
         - name: {{ $name }}
           image: "{{ $image }}"
@@ -93,20 +114,26 @@ spec:
                 name: {{ $fullname }}
             - configMap:
                 name: {{ $queueName }}
-      - name: sidekiq-gitaly
+      - name: init-sidekiq-gitaly
         secret:
           secretName: {{ $gitalySecret }}
           items:
             - key: {{ $gitalyKey }}
               path: "gitaly_token"
           defaultMode: 0400
-      - name: sidekiq-redis
+      - name: init-sidekiq-redis
         secret:
           secretName: {{ $redisSecret }}
           items:
             - key: {{ $redisKey }}
               path: password
           defaultMode: 0400
+      - name: sidekiq-redis
+        emptyDir:
+          medium: "Memory"
+      - name: sidekiq-gitaly
+        emptyDir:
+          medium: "Memory"
     {{- if .nodeSelector }}
       nodeSelector:
 {{ toYaml .nodeSelector | indent 8 }}

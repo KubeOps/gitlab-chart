@@ -88,5 +88,9 @@ data:
       extra:
       rack_attack:
         git_basic_auth:
+  configure: |
+    set -e
+    cat /initconfig/redis/password > /redis/password
+    cat /initconfig/gitaly/gitaly_token > /gitaly/gitaly_token
 # Leave this here - This line denotes end of block to the parser.
 {{- end }}
