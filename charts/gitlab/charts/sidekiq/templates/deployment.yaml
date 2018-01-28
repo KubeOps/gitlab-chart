@@ -55,11 +55,8 @@ spec:
           - name: sidekiq-config
             mountPath: /config
             readOnly: true
-          - name: init-sidekiq-gitaly
-            mountPath: /initconfig/gitaly
-            readOnly: true
-          - name: init-sidekiq-redis
-            mountPath: /initconfig/redis
+          - name: init-sidekiq-secrets
+            mountPath: /initconfig
             readOnly: true
           - name: sidekiq-gitaly
             mountPath: /gitaly
@@ -114,20 +111,20 @@ spec:
                 name: {{ $fullname }}
             - configMap:
                 name: {{ $queueName }}
-      - name: init-sidekiq-gitaly
-        secret:
-          secretName: {{ $gitalySecret }}
-          items:
-            - key: {{ $gitalyKey }}
-              path: "gitaly_token"
+      - name: init-sidekiq-secrets
+        projected:
           defaultMode: 0400
-      - name: init-sidekiq-redis
-        secret:
-          secretName: {{ $redisSecret }}
-          items:
-            - key: {{ $redisKey }}
-              path: password
-          defaultMode: 0400
+          sources:
+          - secret:
+              name: {{ $gitalySecret }}
+              items:
+              - key: {{ $gitalyKey }}
+                path: gitaly/gitaly_token
+          - secret:
+              name: {{ $redisSecret }}
+              items:
+              - key: {{ $redisKey }}
+                path: redis/password
       - name: sidekiq-redis
         emptyDir:
           medium: "Memory"
