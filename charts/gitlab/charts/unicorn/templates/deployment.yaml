@@ -59,8 +59,6 @@ spec:
           - name: unicorn-registry
             mountPath: /registry
             readOnly: false
-
->>>>>>> Do not use secrets directly in unicorn
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
