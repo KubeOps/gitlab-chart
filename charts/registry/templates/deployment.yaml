@@ -20,28 +20,42 @@ spec:
       securityContext:
         runAsUser: 1000
         fsGroup: 1000
+      initContainers:
+        - name: registry-config
+          image: {{ .Values.init.image }}:{{ .Values.init.tag}}
+          imagePullPolicy: {{ .Values.init.pullPolicy }}
+          command: ["sh", "/config/configure"]
+          volumeMounts:
+            - name: registry-configuration
+              mountPath: /config
+            - name: registry-server-config
+              mountPath: /registry
       containers:
         - name: registry
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ default "" .Values.image.pullPolicy | quote }}
           volumeMounts:
-          - name: {{ .Release.Name }}-secret
-            mountPath: '/etc/registry-secret'
-            readOnly: true
-          - name: config-volume
+          - name: registry-server-config
             mountPath: /etc/docker/registry/
             readOnly: true
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
-      - name: {{ .Release.Name }}-secret
-        secret:
-            secretName: {{ .Values.certificate.secret }}
-            items:
-                - key: {{ .Values.certificate.key }}
-                  path: {{ .Values.certificate.key }}
-            defaultMode: 0400
-      - name: config-volume
-        configMap:
-          name: {{ template "fullname" . }}
+      - name: registry-server-config
+        emptyDir:
+          medium: "Memory"
+      - name: registry-configuration
+        projected:
+          sources:
+          - configMap:
+              name: {{ template "fullname" . }}
+          - secret:
+              name: {{ .Values.certificate.secret }}
+              items:
+                  - key: {{ .Values.certificate.key }}
+                    path: certificate.crt
+          {{- if .Values.minio.enabled }}
+          - secret:
+              name: {{ .Values.minio.credentials.secret }}
+          {{- end }}
 {{- end -}}
