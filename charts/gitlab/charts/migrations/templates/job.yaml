@@ -32,7 +32,6 @@ spec:
           - name: migrations-redis
             mountPath: /redis
             readOnly: false
-
       restartPolicy: OnFailure
       containers:
         - name: {{ .Chart.Name }}

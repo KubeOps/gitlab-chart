@@ -36,7 +36,6 @@ metadata:
     heritage: {{ $releaseService }}
     queue-pod-name: {{ .name }}
 spec:
-
   replicas: {{ default $replicas .replicas }}
   template:
     metadata:

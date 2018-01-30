@@ -38,7 +38,6 @@ spec:
           - name: init-unicorn-shell
             mountPath: /initconfig/shell
             readOnly: true
-
           - name: unicorn-redis
             mountPath: /redis
             readOnly: false
@@ -51,7 +50,6 @@ spec:
           - name: unicorn-registry
             mountPath: /registry
             readOnly: false
-
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
