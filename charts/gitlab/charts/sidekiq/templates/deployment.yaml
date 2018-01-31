@@ -60,16 +60,10 @@ spec:
             mountPath: /config
             readOnly: true
           - name: init-sidekiq-secrets
-            mountPath: /initconfig
+            mountPath: /init-secrets
             readOnly: true
-          - name: sidekiq-gitaly
-            mountPath: /gitaly
-            readOnly: false
-          - name: sidekiq-redis
-            mountPath: /redis
-            readOnly: false
-          - name: sidekiq-postgres
-            mountPath: /postgres
+          - name: sidekiq-secrets
+            mountPath: /sidekiq-secrets
             readOnly: false
       containers:
         - name: {{ $name }}
@@ -90,14 +84,8 @@ spec:
           - name: sidekiq-config
             mountPath: '/var/opt/gitlab/templates'
             readOnly: true
-          - name: sidekiq-gitaly
-            mountPath: '/etc/gitaly'
-            readOnly: true
-          - name: sidekiq-redis
-            mountPath: '/etc/gitlab-redis'
-            readOnly: true
-          - name: sidekiq-postgres
-            mountPath: '/etc/gitlab-postgres'
+          - name: sidekiq-secrets
+            mountPath: '/etc/gitlab'
             readOnly: true
           # livenessProbe:
           #   exec:
@@ -140,13 +128,7 @@ spec:
               items:
                 - key: {{ $postgresKey }}
                   path: postgres/psql-password
-      - name: sidekiq-postgres
-        emptyDir:
-          medium: "Memory"
-      - name: sidekiq-redis
-        emptyDir:
-          medium: "Memory"
-      - name: sidekiq-gitaly
+      - name: sidekiq-secrets
         emptyDir:
           medium: "Memory"
     {{- if .nodeSelector }}
