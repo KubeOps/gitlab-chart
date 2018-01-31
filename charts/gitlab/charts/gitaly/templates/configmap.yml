@@ -8,9 +8,9 @@ metadata:
 data:
   configure: |
     set -e
-    cp /initconfig/.gitlab_shell_secret  /secrets/.gitlab_shell_secret
-    cp /initconfig/gitaly_token  /secrets/gitaly_token
-    cp /initconfig/redis_password  /secrets/redis_password
+    cp /init-config/.gitlab_shell_secret  /init-secrets/.gitlab_shell_secret
+    cp /init-config/gitaly_token  /init-secrets/gitaly_token
+    cp /init-config/redis_password  /init-secrets/redis_password
   config.toml.erb: |
     # The directory where Gitaly's executables are stored
     bin_dir = "/usr/local/bin/gitaly"
