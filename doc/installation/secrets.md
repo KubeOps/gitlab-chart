@@ -22,6 +22,14 @@ For a functional deployment, different types of secrets are needed:
 - [Next Steps](#next-steps)
 
 ## Certificates
+By default Let's Encript certificates are used via [kube-lego](../kube-lego/README.md).
+
+If you with to use you own certificates jomp to [Custom certificates](#custom-certificates).
+
+### Custom certificates
+Using Let's encrypt certificates can be optionally disabled and custom certificates can be used
+instead. The [Configuration step](./configuration.md#disable-lets-encrypt) will walk you through
+disabling the use of let's encrypt certificates.
 
 We advise that wildcard certificates are obtained to prevent the need to
 generate and maintain multiple sets of TLS certificates.
@@ -35,13 +43,7 @@ the certificate to not be trusted by many clients.
 development in this project. They are located in the `Cloud Native`
 vault in `1Password`. Only the `*chained.crt` certificate should be used.
 
-### GitLab certificates
 
-#### Let's Encrypt
-
-If you are going to make use of Let's Encrypt certificates via [kube-lego](../kube-lego/README.md), then you can skip over [Wildcard certificates](#wildcard-certificates) and move to [Registry certificates](#registry-certificates)
-
-#### Wildcard certificates
 Add the TLS wildcard certificate to cluster secrets with:
 
 ```
