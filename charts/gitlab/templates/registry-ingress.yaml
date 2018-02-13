@@ -24,19 +24,18 @@ spec:
         paths:
           - path: /
             backend:
-              {{- with .Values.global.hosts.registry }}
+            {{- with .Values.global.hosts.registry }}
               serviceName: "{{ $releaseName }}-{{ .serviceName }}"
-              servicePort: {{ .servicePort -}}
-              {{- end }}
-
+              servicePort: {{ .servicePort }}
+            {{- end -}}
   {{- if or .Values.ingress.acme $registryTLSSecret }}
   tls:
     - hosts:
-       - {{ template "registryHost" . }}
-       {{- if .Values.ingress.acme }}
-       secretName: {{ .Release.Name }}-acme-tls
-       {{- else }}
-       secretName: {{ $registryTLSSecret }}
-       {{- end }}
-  {{- end }}
+      - {{ template "registryHost" . }}
+      {{- if .Values.ingress.acme }}
+      secretName: {{ .Release.Name }}-acme-tls
+      {{- else }}
+      secretName: {{ $registryTLSSecret }}
+      {{- end -}}
+  {{- end -}}
 {{- end -}}
