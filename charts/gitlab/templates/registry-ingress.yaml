@@ -18,25 +18,25 @@ metadata:
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 spec:
-  rules:
-    - host: {{ template "registryHost" . }}
-      http:
-        paths:
-          - path: /
-            backend:
-              {{- with .Values.global.hosts.registry }}
-              serviceName: "{{ $releaseName }}-{{ .serviceName }}"
-              servicePort: {{ .servicePort -}}
-              {{- end }}
-
-  {{- if or .Values.ingress.acme $registryTLSSecret }}
-  tls:
-    - hosts:
-       - {{ template "registryHost" . }}
-       {{- if .Values.ingress.acme }}
-       secretName: {{ .Release.Name }}-acme-tls
-       {{- else }}
-       secretName: {{ $registryTLSSecret }}
-       {{- end }}
-  {{- end }}
-{{- end -}}
+#   rules:
+#     - host: {{ template "registryHost" . }}
+#       http:
+#         paths:
+#           - path: /
+#             backend:
+#               {{- with .Values.global.hosts.registry }}
+#               serviceName: "{{ $releaseName }}-{{ .serviceName }}"
+#               servicePort: {{ .servicePort -}}
+#               {{- end }}
+#
+#   {{- if or .Values.ingress.acme $registryTLSSecret }}
+#   tls:
+#     - hosts:
+#        - {{ template "registryHost" . }}
+#        {{- if .Values.ingress.acme }}
+#        secretName: {{ .Release.Name }}-acme-tls
+#        {{- else }}
+#        secretName: {{ $registryTLSSecret }}
+#        {{- end }}
+#   {{- end }}
+# {{- end -}}
