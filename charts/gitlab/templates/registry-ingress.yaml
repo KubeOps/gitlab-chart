@@ -24,7 +24,7 @@ spec:
         paths:
           - path: /
             backend:
-              {{- with .Values.global.hosts.registry -}}
+              {{- with .Values.global.hosts.registry }}
               serviceName: "{{ $releaseName }}-{{ .serviceName }}"
               servicePort: {{ .servicePort -}}
               {{- end }}
