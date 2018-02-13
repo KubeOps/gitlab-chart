@@ -291,7 +291,7 @@ qa:
       delete
     fi
 
-    helm upgrade --install --debug --dry-run \
+    helm upgrade --install \
       --wait \
       --set releaseOverride="$CI_ENVIRONMENT_SLUG" \
       --set global.hosts.hostSuffix="$HOST_SUFFIX" \
