@@ -2,6 +2,14 @@
 {{/*
 Expand the name of the chart.
 */}}
+
+{{- define "migrations.validate_root_password" -}}
+{{ $length := len . }}
+{{- if ge $length 6 -}}
+{{ . }}
+{{- end -}}
+{{- end -}}
+
 {{- define "migrations.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
