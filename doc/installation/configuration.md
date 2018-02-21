@@ -61,6 +61,65 @@ global:
       secretName: example-local-tls
 ```
 
+## Sidekiq
+
+By default all of sidekiq queues run in an all-in-one container which is not suitable for production use cases.
+
+Following is an example of splitting queues among several pods that can be suitable for production cases.
+
+```YAML
+sidekiq:
+  pods:
+    - name: workflow
+      concurrency: 10
+      replicas: 2
+      queues:
+        - [post_receive, 5]
+        - [merge, 5]
+        - [new_note, 2]
+        - [new_issue, 2]
+        - [new_merge_request, 2]
+    - name: pipeline
+      replicas: 1
+      queues:
+        - [build, 2]
+        - [pipeline, 2]
+        - [pipeline_processing, 5]
+        - [pipeline_default, 3]
+        - [pipeline_cache, 3]
+        - [pipeline_hooks, 2]
+    - name: glob
+      replicas: 1
+      queues:
+        - [gitlab_shell, 2]
+        - [email_receiver, 2]
+        - [emails_on_push, 2]
+        - [gcp_cluster, 1]
+        - [project_migrate_hashed_storage, 1]
+        - [storage_migrator, 1]
+    - name: ee
+      replicas: 1
+      queues:
+        - [ldap_group_sync, 2]
+        - [geo, 1]
+        - [repository_update_mirror, 1]
+        - [repository_update_remote_mirror, 1]
+        - [project_update_repository_storage, 1]
+        - [admin_emails, 1]
+        - [geo_repository_update, 1]
+        - [elastic_batch_project_indexer, 1]
+        - [elastic_indexer, 1]
+        - [elastic_commit_indexer, 1]
+        - [export_csv, 1]
+        - [object_storage_upload, 1]
+```
+
+`sidekiq.pods[].replicas` controlls the number of replicas of the corresponding pod.
+`sidekiq.pods[].concurrency` controlls [sidekiq concurrency](https://github.com/mperham/sidekiq/wiki/Advanced-Options#concurrency).
+`sidekiq.pods[].queues` specify the [queues](https://github.com/mperham/sidekiq/wiki/Advanced-Options#queues) that the corresponding sidekiq instance will consume.
+
+> The above example shows all the gitlab queues, you can move them around pods as a part of your tuning.
+
 # Next Steps
 
 Now that the template is generated, we can proceed [to deployment](deployment.md).
