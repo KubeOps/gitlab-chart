@@ -76,7 +76,6 @@ gitaly:
     key: token
 lfs:
   enabled: true
-
   proxy_download: true
   # bucket:
   # connection:
@@ -91,6 +90,8 @@ minio:
   bucket: git-lfs
   credentials:
     secret: gitlab-minio
+  serviceName: 'minio-svc'
+  port: 9000
 registry:
   host:
   # port: 443
