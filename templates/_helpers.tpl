@@ -44,3 +44,16 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 certmanager.k8s.io/issuer: "{{ .Release.Name }}-issuer"
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create a default fully qualified job name.
+Due to the job only being allowed to run once, we add the chart revision so helm
+upgrades don't cause errors trying to create the already ran job.
+Due to the helm delete not cleaning up these jobs, we add a random value to
+reduce collision
+*/}}
+{{- define "gitlab.issuer_jobname" -}}
+{{- $name := printf "%s-issuer" .Release.Name | trunc 55 | trimSuffix "-" -}}
+{{- $rand := randAlphaNum 3 | lower }}
+{{- printf "%s.%d-%s" $name .Release.Revision $rand | trunc 63 | trimSuffix "-" -}}
+{{- end -}}

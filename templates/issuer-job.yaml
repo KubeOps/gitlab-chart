@@ -1,0 +1,26 @@
+{{ if (pluck "configureCertmanager" .Values.global.ingress (dict "configureCertmanager" false) | first) }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "gitlab.issuer_jobname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Value.rbac.create }}
+      serviceAccountName: {{ template "fullname" . }}-admin
+      {{- end }}
+      restartPolicy: OnFailure
+      containers:
+        - name: create-issuer
+{{- end }}
