@@ -11,26 +11,27 @@ metadata:
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
-template:
-  metadata:
-    labels:
-      app: {{ template "name" . }}
-      release: {{ .Release.Name }}
-  spec:
-    {{- if .Values.rbac.create }}
-    serviceAccountName: {{ template "fullname" . }}-admin
-    {{- end }}
-    restartPolicy: OnFailure
-    containers:
-      - name: create-issuer
-        image: "{{ .Values.kubectl.image.repository }}:{{ .Values.kubectl.image.tag }}"
-        command: ['/bin/bash', '/scripts/create-issuer', '/script/create_issuer']
-        imagePullPolicy: {{ .Values.kubectl.image.pullPolicy }}
-        volumeMounts:
-          - name: scripts
-            mountPath: /scripts
-    volumes:
-    - name: scripts
-      configMap:
-        name: {{ template "fullname" . }}-certmanager
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.rbac.create }}
+      serviceAccountName: {{ template "fullname" . }}-admin
+      {{- end }}
+      restartPolicy: OnFailure
+      containers:
+        - name: create-issuer
+          image: "{{ .Values.kubectl.image.repository }}:{{ .Values.kubectl.image.tag }}"
+          command: ['/bin/bash', '/scripts/create-issuer', '/scripts/issuer.yml']
+          imagePullPolicy: {{ .Values.kubectl.image.pullPolicy }}
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+      volumes:
+      - name: scripts
+        configMap:
+          name: {{ template "fullname" . }}-certmanager
 {{- end }}

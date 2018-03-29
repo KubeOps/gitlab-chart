@@ -4,17 +4,13 @@ set -e ;
 issuer_file=$1
 namespace={{ .Release.Namespace }}
 
-checkCRDExists() {
-  CMD=$(kubectl --namespace=$namespace get crd issuers.certmanager.k8s.io > /dev/null 2>&1)
-  return $?
-}
-
 set +e ; # The CRD check is allowed to fail
 echo "Waiting for the CRD to exist: issuers.certmanager.k8s.io " ;
 STATUS=1 ;
 until [ $STATUS -eq 0 ] ;
 do
-  STATUS=checkCRDExists ;
+  CMD=$(kubectl --namespace=$namespace get crd issuers.certmanager.k8s.io > /dev/null 2>&1)
+  STATUS=$?
   sleep 1;
 done ;
 set -e ; # reset `e` as active

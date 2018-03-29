@@ -9,7 +9,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  create_issuer: |
+  create-issuer: |
 {{ include (print $.Template.BasePath "/_create_issuer.sh") . | indent 4 }}
   issuer.yml: |
     apiVersion: certmanager.k8s.io/v1alpha1
