@@ -42,6 +42,10 @@ static IP. For example if you choose `example.local` and you have a static IP
 of `10.10.10.10`, then `gitlab.example.local`, `registry.example.local` and
 `minio.example.local` should all resolve to `10.10.10.10`.
 
+If you are using GKE, there is some documentation [here](../cloud/gke.md#creating-the-external-ip)
+for configuring static IPs and DNS. Consult your Cloud and/or DNS provider's
+documentation for more help on this process.
+
 *Include these options in your helm install command:*
 ```
 --set nginx.service.loadBalancerIP=10.10.10.10
