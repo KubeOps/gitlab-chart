@@ -430,7 +430,7 @@ qa:
     kubectl_cleanup ingress $name || true
     kubectl_cleanup job $name || true
     kubectl_cleanup pod $name || true
-    kubectl_cleanup secret $name || true
+    kubectl_cleanup configmap $name || true
   }
 
   function terraform_up() {
