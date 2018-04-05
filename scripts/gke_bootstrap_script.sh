@@ -67,16 +67,12 @@ function bootstrap(){
   helm init --service-account tiller
   helm repo update
 
-  echo "Waiting for helm to be ready..."
-  while ! helm version --tiller-connection-timeout=1 >/dev/null 2>&1; do
-    sleep 1
-  done
-
   if ! ${USE_STATIC_IP}; then
     helm install --name dns --namespace kube-system stable/external-dns \
       --set provider=google \
       --set google.project=$PROJECT \
-      --set rbac.create=true
+      --set rbac.create=true \
+      --set policy=sync
   fi
 }
 
@@ -92,7 +88,7 @@ function cleanup_gke_resources(){
     echo "Deleted ip: $external_ip_name successfully";
   fi
 
-  echo "\033[;33m Warning: Disks created during the helm deployment are not deleted, please delete them manually from the gcp console \033[0m";
+  echo "\033[;33m Warning: Disks, load balancers, DNS records, and other cloud resources created during the helm deployment are not deleted, please delete them manually from the gcp console \033[0m";
 }
 
 if [ -z "$1" ]; then
