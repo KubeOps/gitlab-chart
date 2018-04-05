@@ -67,7 +67,10 @@ function bootstrap(){
   helm repo update
 
   if ! ${USE_STATIC_IP}; then
-    helm install --name dns --namespace kube-system stable/external-dns
+    helm install --name dns --namespace kube-system stable/external-dns \
+      --set provider=google \
+      --set google.project=$PROJECT \
+      --set rbac.create=true
   fi
 }
 
