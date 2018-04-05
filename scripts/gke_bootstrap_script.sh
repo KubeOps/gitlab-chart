@@ -63,8 +63,14 @@ function bootstrap(){
     kubectl --username=admin --password=$password create -f rbac-config.yaml;
   fi
 
+  echo "Installing helm..."
   helm init --service-account tiller
   helm repo update
+
+  echo "Waiting for helm to be ready..."
+  while ! helm version --tiller-connection-timeout=1 >/dev/null 2>&1; do
+    sleep 1
+  done
 
   if ! ${USE_STATIC_IP}; then
     helm install --name dns --namespace kube-system stable/external-dns \
