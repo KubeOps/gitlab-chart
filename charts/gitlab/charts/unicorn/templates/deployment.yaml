@@ -122,9 +122,9 @@ spec:
                 - key: {{ .Values.redis.password.key }}
                   path: redis/password
           - secret:
-              name: {{ coalesce .Values.psql.password.secret .Values.global.psql.password.secret }}
+              name: {{ template "gitlab.psql.secretName" . }}
               items:
-                - key: {{ coalesce .Values.psql.password.key .Values.global.psql.password.key }}
+                - key: {{ template "gitlab.psql.secretKey" . }}
                   path: postgres/psql-password
           - secret:
               name: {{ .Values.registry.certificate.secret }}

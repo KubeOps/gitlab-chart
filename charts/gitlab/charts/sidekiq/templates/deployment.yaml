@@ -13,8 +13,6 @@
 {{- $nodeSelector := .Values.nodeSelector -}}
 {{- $redisSecret := .Values.redis.password.secret -}}
 {{- $redisKey := .Values.redis.password.key -}}
-{{- $postgresSecret := coalesce .Values.psql.password.secret .Values.global.psql.password.secret -}}
-{{- $postgresKey := coalesce .Values.psql.password.key .Values.global.psql.password.key -}}
 {{- $gitalySecret := .Values.gitaly.authToken.secret -}}
 {{- $gitalyKey := default "token" .Values.gitaly.authToken.key -}}
 {{- $railsSecretName := .Values.railsSecrets.secret -}}
@@ -160,9 +158,9 @@ spec:
                 - key: {{ $redisKey }}
                   path: redis/password
           - secret:
-              name: {{ $postgresSecret }}
+              name: {{ template "gitlab.psql.secretName" $ }}
               items:
-                - key: {{ $postgresKey }}
+                - key: {{ template "gitlab.psql.secretKey" $ }}
                   path: postgres/psql-password
       - name: sidekiq-secrets
         emptyDir:

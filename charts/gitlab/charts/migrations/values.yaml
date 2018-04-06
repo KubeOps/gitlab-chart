@@ -13,18 +13,16 @@ redis:
   password:
     secret: gitlab-redis
     key: redis-password
-psql:
-  password: {}
 global:
-  psql:
+  psql: {}
     # host: '0.0.0.0'
     # port: '5432'
     # database: 'gitlabhq_production'
     # username: 'gitlab'
-    serviceName: 'omnibus'
-    password:
-      secret: gitlab-postgres
-      key: psql-password
+    # serviceName: 'omnibus'
+    # password:
+    #   secret: gitlab-postgres
+    #   key: psql-password
 railsSecrets:
   secret: rails-secrets
   key: secrets.yml
