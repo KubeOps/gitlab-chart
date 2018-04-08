@@ -1,4 +1,4 @@
-{{- if and (include "gitlabUrl" .) (or (default "" .Values.runnerRegistrationToken) (default "" .Values.runnerToken))  }}
+{{- if .Values.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -16,13 +16,12 @@ spec:
         app: {{ template "fullname" . }}
       annotations:
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
     spec:
       serviceAccountName: {{ if .Values.rbac.create }}{{ template "fullname" . }}{{ else }}"{{ .Values.rbac.serviceAccountName }}"{{ end }}
       containers:
       - name: {{ template "fullname" . }}
         image: {{ .Values.image }}
-        {{- if and .Values.unregisterRunners .Values.runnerRegistrationToken }}
+        {{- if and .Values.unregisterRunners  }}
         lifecycle:
           preStop:
             exec:
@@ -36,12 +35,12 @@ spec:
         - name: CI_SERVER_TOKEN
           valueFrom:
             secretKeyRef:
-              name: {{ template "fullname" . }}
+              name: gitlab-runner
               key: runner-token
         - name: REGISTRATION_TOKEN
           valueFrom:
             secretKeyRef:
-              name: {{ template "fullname" . }}
+              name: gitlab-runner
               key: runner-registration-token
         - name: KUBERNETES_IMAGE
           value: {{ .Values.runners.image | quote }}
@@ -105,11 +104,6 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:
-      {{ if .Values.runners.privileged }}
-      - name: var-run-docker-sock
-        hostPath:
-          path: /var/run/docker.sock
-      {{ end }}
       {{- if .Values.certsSecretName }}
       - name: custom-certs
         secret:

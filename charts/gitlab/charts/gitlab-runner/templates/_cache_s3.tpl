@@ -2,17 +2,11 @@
 - name: CACHE_TYPE
   value: {{ default "" .Values.runners.cache.cacheType | quote }}
 - name: S3_SERVER_ADDRESS
-  value: {{ default "" .Values.runners.cache.s3ServerAddress | quote }}
+  value: {{ template "minioUrl" . }}
 - name: S3_ACCESS_KEY
-  valueFrom:
-    secretKeyRef:
-      name: s3access
-      key: accessKey
+  value: "ACCESS_KEY"
 - name: S3_SECRET_KEY
-  valueFrom:
-    secretKeyRef:
-      name: s3access
-      key: secretKey
+  value: "SECRET_KEY"
 - name: S3_BUCKET_NAME
   value: {{ default "" .Values.runners.cache.s3BucketName | quote }}
 - name: S3_BUCKET_LOCATION

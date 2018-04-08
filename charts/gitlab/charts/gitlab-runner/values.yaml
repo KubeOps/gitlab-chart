@@ -3,6 +3,7 @@
 ##
 image: gitlab/gitlab-runner:alpine-v10.3.0
 
+enabled: true
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -54,7 +55,7 @@ checkInterval: 30
 
 ## For RBAC support:
 rbac:
-  create: false
+  create: true
 
   ## Run the gitlab-bastion container with the ability to deploy/manage containers of jobs
   ## cluster-wide or only within namespace
@@ -99,14 +100,11 @@ runners:
   ##   --from-literal=secretKey="YourSecretKey"
   ## ref: https://kubernetes.io/docs/concepts/configuration/secret/
   ##
-  cache: {}
-    # cacheType: s3
-    # s3ServerAddress: s3.amazonaws.com
-    # s3BucketName:
-    # s3BucketLocation:
-    # s3CacheInsecure: false
+  cache:
+    cacheType: s3
+    s3BucketName: runner-cache
+    cacheShared: true
     # s3CachePath: "gitlab_runner"
-    # cacheShared: true
 
   ## Build Container specific configuration
   ##
