@@ -12,5 +12,4 @@ icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
 maintainers:
 - name: GitLab Inc.
   email: support@gitlab.com
-- name: DJ Mountney
-  email: dj@gitlab.com
+- name: The Distribution Team
