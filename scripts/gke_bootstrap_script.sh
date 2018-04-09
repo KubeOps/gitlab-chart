@@ -64,7 +64,7 @@ function bootstrap(){
   fi
 
   echo "Installing helm..."
-  helm init --service-account tiller
+  helm init --wait --service-account tiller
   helm repo update
 
   if ! ${USE_STATIC_IP}; then
