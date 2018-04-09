@@ -10,8 +10,8 @@ global:
     configureCertmanager: true
     annotations: {}
     enabled: true
-  psql: {}
-    # password:
+  psql:
+    password: {}
     #   secret: secretname
     #   key: postgres-password-key
     # host: myexternalsql.hostedsomewhere.else
