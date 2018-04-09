@@ -90,7 +90,7 @@ Return the secret name
 Uses the equivalent of postegresql.fullname to match upstream postgres chart by default
   and falls back to .Values.global.psql.secretName when using an external postegresql
 */}}
-{{- define "gitlab.psql.secretName" -}}
+{{- define "gitlab.psql.password.secret" -}}
 {{- if .Values.global.psql.host -}}
 {{- .Values.global.psql.password.secret | quote -}}
 {{- else -}}
@@ -103,7 +103,7 @@ Return the name of the key in a secret that contains the postgres password
 Uses `postgres-password` to match upstream postgresql chart when not using an
   external postegresql
 */}}
-{{- define "gitlab.psql.secretKey" -}}
+{{- define "gitlab.psql.password.key" -}}
 {{- if .Values.global.psql.password.key -}}
 {{- .Values.global.psql.password.key| quote -}}
 {{- else -}}
