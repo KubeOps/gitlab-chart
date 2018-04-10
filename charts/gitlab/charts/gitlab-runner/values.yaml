@@ -1,14 +1,14 @@
 ## GitLab Runner Image
 ## ref: https://hub.docker.com/r/gitlab/gitlab-runner/tags/
 ##
-image: gitlab/gitlab-runner:alpine-v10.3.0
+image: gitlab/gitlab-runner:alpine-v10.5.0
 
 enabled: true
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
 ##
-# imagePullPolicy:
+imagePullPolicy: IfNotPresent
 
 ## The GitLab Server URL (with protocol) that want to register the runner against
 ## ref: https://docs.gitlab.com/runner/commands/README.html#gitlab-runner-register
@@ -92,7 +92,7 @@ runners:
     cacheType: s3
     s3BucketName: runner-cache
     cacheShared: true
-    s3BuckedLocation: us-east-1
+    s3BucketLocation: us-east-1
     secretName: gitlab-minio
     s3CachePath: gitlab_runner
     s3CacheInsecure: false
