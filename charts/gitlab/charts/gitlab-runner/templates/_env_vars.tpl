@@ -1,16 +1,6 @@
 {{- define "runner-env-vars" }}
 - name: CI_SERVER_URL
   value: {{ template "gitlabUrl" . }}
-- name: CI_SERVER_TOKEN
-  valueFrom:
-    secretKeyRef:
-      name: gitlab-runner
-      key: runner-token
-- name: REGISTRATION_TOKEN
-  valueFrom:
-    secretKeyRef:
-      name: gitlab-runner
-      key: runner-registration-token
 - name: KUBERNETES_IMAGE
   value: {{ .Values.runners.image | quote }}
 {{ if .Values.runners.privileged }}

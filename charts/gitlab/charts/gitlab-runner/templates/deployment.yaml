@@ -17,6 +17,20 @@ spec:
       annotations:
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      initContainers:
+        - name: configure
+          command: ['sh', '/config/configure']
+          image: busybox
+          volumeMounts:
+          - name: runner-secrets
+            mountPath: /secrets
+            readOnly: false
+          - name: scripts
+            mountPath: /config
+            readOnly: true
+          - name: init-runner-secrets
+            mountPath: /init-secrets
+            readOnly: true
       serviceAccountName: {{ if .Values.rbac.create }}{{ template "fullname" . }}{{ else }}"{{ .Values.rbac.serviceAccountName }}"{{ end }}
       containers:
       - name: {{ template "fullname" . }}
@@ -48,6 +62,8 @@ spec:
           successThreshold: 1
           failureThreshold: 3
         volumeMounts:
+        - name: runner-secrets
+          mountPath: /secrets
         - name: scripts
           mountPath: /scripts
         {{- if .Values.certsSecretName }}
@@ -58,6 +74,28 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:
+      - name: runner-secrets
+        emptyDir:
+          medium: "Memory"
+      - name: init-runner-secrets
+        projected:
+          sources:
+            {{- if .Values.runners.cache }}
+            - secret:
+                name: {{ .Values.runners.cache.secretName }}
+                items:
+                  - key: accesskey
+                    path: s3-access-key
+                  - key: secretkey
+                    path: s3-secret-key
+            {{- end }}
+            - secret:
+                name: gitlab-runner
+                items:
+                  - key: runner-token
+                    path: runner-token
+                  - key: runner-registration-token
+                    path: runner-registration-token
       {{- if .Values.certsSecretName }}
       - name: custom-certs
         secret:
@@ -66,5 +104,4 @@ spec:
       - name: scripts
         configMap:
           name: {{ template "fullname" . }}
-{{ else }}
 {{ end }}
