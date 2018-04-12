@@ -185,7 +185,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.sidekiq.redis.serviceName             | Redis service name                                                           | redis                                                             |
 | gitlab.sidekiq.redis.password.secret         | Redis secret                                                                 | gitlab-redis                                                      |
 | gitlab.sidekiq.redis.password.key            | Key to redis password in redis secret                                        | redis-password                                                    |
-| gitlab.sidekiq.psql.serviceName              | psql service name                                                            | omnibus                                                           |
 | gitlab.sidekiq.psql.password.secret          | psql password secret                                                         | gitlab-postgres                                                   |
 | gitlab.sidekiq.psql.password.key             | key to psql password in psql secret                                          | psql-password                                                     |
 | gitlab.sidekiq.gitaly.serviceName            | gitaly service name                                                          | gitaly                                                            |
@@ -216,7 +215,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.redis.serviceName             | Redis service name                                                           | redis                                                             |
 | gitlab.unicorn.redis.password.secret         | Redis secret                                                                 | gitlab-redis                                                      |
 | gitlab.unicorn.redis.password.key            | Key to redis password in redis secret                                        | redis-password                                                    |
-| gitlab.unicorn.psql.serviceName              | psql service name                                                            | omnibus                                                           |
 | gitlab.unicorn.psql.password.secret          | psql secret name                                                             | gitlab-postgres                                                   |
 | gitlab.unicorn.psql.password.key             | Key to psql password in psql secret                                          | psql-password                                                     |
 | gitlab.unicorn.shell.authToken.secret        | Shell token secret                                                           | gitlab-shell-secret                                               |
@@ -239,7 +237,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.migrations.redis.serviceName          | Redis service name                                                           | redis                                                             |
 | gitlab.migrations.redis.password.secret      | Redis secret                                                                 | gitlab-redis                                                      |
 | gitlab.migrations.redis.password.key         | Key to redis password in redis secret                                        | redis-password                                                    |
-| gitlab.migrations.psql.serviceName           | psql service name                                                            | omnibus                                                           |
 | gitlab.migrations.psql.password.secret       | psql secret                                                                  | gitlab-postgres                                                   |
 | gitlab.migrations.psql.password.key          | key to psql password in psql secret                                          | psql-password                                                     |
 | gitlab.migrations.railsSecrets.secret        | Secret containing rails secrets.yml                                          | rails-secrets                                                     |

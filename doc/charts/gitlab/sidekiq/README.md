@@ -29,7 +29,6 @@ Table below contains all the possible charts configurations that can be supplied
 | redis.serviceName         | Redis service name                             | redis                                            |
 | redis.password.secret     | Redis secret                                   | gitlab-redis                                     |
 | redis.password.key        | Key to redis password in redis secret          | redis-password                                   |
-| psql.serviceName          | psql service name                              | omnibus                                          |
 | psql.password.secret      | psql password secret                           | gitlab-postgres                                  |
 | psql.password.key         | key to psql password in psql secret            | psql-password                                    |
 | gitaly.serviceName        | gitaly service name                            | gitaly                                           |
@@ -231,4 +230,3 @@ pods:
 By default all of sidekiq queues run in an all-in-one container which is not suitable for production use cases.
 
 Check the [example config](./example-queues.yaml) for a more production ready sidekiq deployment. You can move queues around pods as a part of your tuning.
-
