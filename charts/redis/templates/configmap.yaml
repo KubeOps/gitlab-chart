@@ -5,7 +5,10 @@ kind: ConfigMap
 metadata:
   name: {{ template "fullname" . }}
   labels:
-    app: {{ template "fullname" . }}
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 data:
   redis.conf: |
     # stay in foreground
@@ -37,5 +40,6 @@ data:
     set -e
     cat /config/redis.conf > /redis/redis.conf;
     echo "requirepass $(cat /config/password)" >> /redis/redis.conf
+    echo "127.0.0.1:{{ .Values.service.internalPort }},$(cat /config/password),{{ template "fullname" . }}" > /metrics/redis
 # leave this here. Signals end of block to the parser
 {{- end -}}
