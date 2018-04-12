@@ -3,9 +3,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "fullname" . }}
+  annotations:
+{{- if .Values.metrics.enabled }}
+{{ toYaml .Values.metrics.annotations | indent 4 }}
+{{- end }}
   labels:
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app: {{ template "fullname" . }}
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,6 +19,11 @@ spec:
     targetPort: {{ .Values.service.internalPort }}
     protocol: TCP
     name: {{ .Values.service.name }}
+  {{- if .Values.metrics.enabled }}
+  - name: metrics
+    port: {{ .Values.metrics.port }}
+    targetPort: metrics
+  {{- end }}
   selector:
     app: {{ template "fullname" . }}
 {{- end -}}
