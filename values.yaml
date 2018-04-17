@@ -51,6 +51,7 @@ postgresql:
   install: true
   postgresUser: gitlab
   postgresDatabase: gitlabhq
+  imageTag: 9.6.8
   # postgresPassword:
 
 # registry:
