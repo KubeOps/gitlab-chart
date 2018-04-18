@@ -52,6 +52,7 @@ postgresql:
   postgresUser: gitlab
   postgresDatabase: gitlabhq
   imageTag: 9.6.8
+  usePasswordFile: true
   # postgresPassword:
 
 # registry:

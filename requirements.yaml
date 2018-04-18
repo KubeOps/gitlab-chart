@@ -9,6 +9,6 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: prometheus.install
 - name: postgresql
-  version: 0.9.5
+  version: 0.10.0
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: postgresql.install
