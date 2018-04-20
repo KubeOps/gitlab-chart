@@ -2,10 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 image:
-  repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq
+  repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee
   tag: latest
   pullPolicy: Always
 enabled: true
+
+metrics:
+  enabled: true
+  port: 3807
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3807"
+
 redis:
   # host: '0.0.0.0'
   # port: 6379

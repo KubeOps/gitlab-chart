@@ -19,7 +19,7 @@ Table below contains all the possible charts configurations that can be supplied
 | Parameter                     | Description                                    | Default                                          |
 | ---                           | ---                                            | ---                                              |
 | replicaCount                  | Unicorn number of replicas                     | 1                                                |
-| image.repository              | Unicorn image repository                       | registry.com/gitlab-org/build/cng/gitlab-unicorn |
+| image.repository              | Unicorn image repository                       | registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ee |
 | image.tag                     | Unicorn image tag                              | latest                                           |
 | image.pullPolicy              | Unicorn image pull policy                      | Always                                           |
 | service.name                  | Unicorn service name                           | unicorn                                          |
@@ -31,6 +31,7 @@ Table below contains all the possible charts configurations that can be supplied
 | enabled                       | Unicorn enabled flag                           | true                                             |
 | workerProcesses               | Unicorn number of workers                      | 2                                                |
 | workerTimeout                 | Unicorn worker timeout                         | 60                                               |
+| metrics.enabled               | Toggle Prometheus metrics exporter             | true                                             |
 | omniauth.providers            | Omniauth providers                             | nil                                              |
 | railsSecrets.secret           | Secret containing rails secrets.yml            | rails-secrets                                    |
 | railsSecrets.key              | Key to contents of secrets.yml in rails secret | secrets.yml                                      |
@@ -60,6 +61,12 @@ Table below contains all the possible charts configurations that can be supplied
 | registry.certificate.key      | Registry certificate key                       | registry-auth.key                                |
 | resources.requests.cpu        | Unicorn minimum cpu                            | 200m                                             |
 | resources.requests.memory     | Unicorn minimum memory                         | 1.4G                                             |
+
+## Using the Community Edition of this chart
+
+By default, the Helm charts use the Enterprise Edition of GitLab. If desired, you can instead use the Community Edition. Learn more about the [difference between the two](https://about.gitlab.com/installation/ce-or-ee/).
+
+In order to use the Community Edition, set `image.repository` to `registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce`
 
 ## Global Settings
 
@@ -362,6 +369,10 @@ Field `workerProcesses` is an integer, controller the number of Unicorn workers 
 #### workerTimeout
 
 Field `workerTimeout` is an integer specifying the number of seconds a request can be pending before it times out. Defaults to `60`
+
+### metrics.enabled
+
+By default, each pod exposes a metrics endpoint at `/-/metrics`. Metrics are only available when [GitLab Prometheus metrics](https://docs.gitlab.com/ee/administration/monitoring/prometheus/gitlab_metrics.html) are enabled in the Admin area. When metrics are enabled, annotations are added to each pod allowing a Prometheus server to discover and scrape the exposed metrics.
 
 #### omniauth.providers
 

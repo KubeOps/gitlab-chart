@@ -22,10 +22,11 @@ Table below contains all the possible charts configurations that can be supplied
 
 | Parameter                 | Description                                    | Default                                          |
 | ---                       | ---                                            | ---                                              |
-| image.repository          | Sidekiq image repository                       | registry.com/gitlab-org/build/cng/gitlab-sidekiq |
+| image.repository          | Sidekiq image repository                       | registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee |
 | image.tag                 | Sidekiq image tag                              | latest                                           |
 | image.pullPolicy          | Sidekiq image pull policy                      | Always                                           |
 | enabled                   | Sidekiq enabled flag                           | true                                             |
+| metrics.enabled           | Toggle Prometheus metrics exporter             | true                                             |
 | redis.serviceName         | Redis service name                             | redis                                            |
 | redis.password.secret     | Redis secret                                   | gitlab-redis                                     |
 | redis.password.key        | Key to redis password in redis secret          | redis-password                                   |
@@ -41,6 +42,12 @@ Table below contains all the possible charts configurations that can be supplied
 | timeout                   | Sidekiq job timeout                            | 5                                                |
 | resources.requests.cpu    | Sidekiq minimum needed cpu                     | 100m                                             |
 | resources.requests.memory | Sidekiq minimum needed memory                  | 600M                                             |
+
+## Using the Community Edition of this chart
+
+By default, the Helm charts use the Enterprise Edition of GitLab. If desired, you can instead use the Community Edition. Learn more about the [difference between the two](https://about.gitlab.com/installation/ce-or-ee/).
+
+In order to use the Community Edition, set `image.repository` to `registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce`
 
 ## External Services
 
@@ -146,6 +153,10 @@ The port on which to connect to the Gitaly server. Defaults to `8075`.
 The `authToken` attribute for Gitaly has to sub keys:
 - `secret` defines the name of the kubernetes `Secret` to pull from
 - `key` defines the name of the key in the above secret that contains the authToken.
+
+## Metrics
+
+By default, a Prometheus metrics exporter is enabled per pod. Metrics are only available when [GitLab Prometheus metrics](https://docs.gitlab.com/ee/administration/monitoring/prometheus/gitlab_metrics.html) are enabled in the Admin area. The exporter exposes a `/metrics` endpoint on port `3807`. When metrics are enabled, annotations are added to each pod allowing a Prometheus server to discover and scrape the exposed metrics.
 
 ## Chart-wide defaults
 
