@@ -65,8 +65,6 @@ postgresql:
 #   enabled: false
 #
 # gitlab:
-#   omnibus:
-#     enabled: false
 #   migrations:
 #     enabled: false
 #   unicorn:
