@@ -160,6 +160,7 @@ data:
           - 0.0.0.0/0
         sidekiq_exporter:
       extra:
+{{ toYaml .Values.extra | indent 8 }}
       rack_attack:
         git_basic_auth:
       ## Registry Integration

@@ -62,6 +62,7 @@ Table below contains all the possible charts configurations that can be supplied
 | registry.certificate.key      | Registry certificate key                       | registry-auth.key                                |
 | resources.requests.cpu        | Unicorn minimum cpu                            | 200m                                             |
 | resources.requests.memory     | Unicorn minimum memory                         | 1.4G                                             |
+| extras.google_analytics_id    | Google Analytics Id for frontend               | nil                                              |
 
 ## Using the Community Edition of this chart
 

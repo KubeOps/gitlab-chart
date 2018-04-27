@@ -97,6 +97,7 @@ data:
           port: {{ .Values.metrics.port }}
 {{- end }}
       extra:
+{{ toYaml .Values.extra | indent 8 }}
       rack_attack:
         git_basic_auth:
   configure: |

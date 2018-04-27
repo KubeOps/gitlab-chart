@@ -42,6 +42,8 @@ gitaly:
     secret: gitaly-secret
     key: token
 
+extra: {}
+
 # Global defaults
 replicas: 1
 railsSecrets:
