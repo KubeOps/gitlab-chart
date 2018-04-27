@@ -33,6 +33,10 @@ data:
     [redis]
     URL = "tcp://{{ template "unicorn.redis.host" . }}:{{ default 6379 .Values.redis.port }}"
     Password = "<%= File.read("/etc/gitlab/redis/password") %>"
+    ReadTimeout = {{ .Values.redis.readTimeout | quote }}
+    KeepAlivePeriod = {{ .Values.redis.keepAlivePeriod | quote }}
+    MaxIdle = {{ .Values.redis.maxIdle }}
+    MaxActive = {{ .Values.redis.maxActive }}
   unicorn.rb: |
     worker_processes {{ .Values.workerProcesses }}
     working_directory "/home/git/gitlab"

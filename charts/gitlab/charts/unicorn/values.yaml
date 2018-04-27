@@ -74,6 +74,10 @@ redis:
   password:
     secret: gitlab-redis
     key: redis-password
+  maxActive: 1
+  maxIdle: 1
+  readTimeout: 1s
+  keepAlivePeriod: 5m
 psql:
   password: {}
 shell:
