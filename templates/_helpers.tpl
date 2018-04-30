@@ -91,11 +91,7 @@ Uses the equivalent of postegresql.fullname to match upstream postgres chart by 
   and falls back to .Values.global.psql.secretName when using an external postegresql
 */}}
 {{- define "gitlab.psql.password.secret" -}}
-{{- if .Values.global.psql.host -}}
 {{- .Values.global.psql.password.secret | quote -}}
-{{- else -}}
-{{ template "postgresql.fullname" . }}
-{{- end -}}
 {{- end -}}
 
 {{/*
@@ -104,10 +100,7 @@ Uses `postgres-password` to match upstream postgresql chart when not using an
   external postegresql
 */}}
 {{- define "gitlab.psql.password.key" -}}
-{{- if .Values.global.psql.password.key -}}
-{{- .Values.global.psql.password.key| quote -}}
-{{- else -}}
-postgres-password
+{{- .Values.global.psql.password.key | quote -}}
 {{- end -}}
 
 {{/*

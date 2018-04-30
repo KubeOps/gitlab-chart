@@ -11,9 +11,9 @@ global:
     annotations: {}
     enabled: true
   psql:
-    password: {}
-    #   secret: secretname
-    #   key: postgres-password-key
+    password:
+      secret: gitlab-postgres
+      key: postgres-password
     # host: myexternalsql.hostedsomewhere.else
     # port: 123
     # username: gitlab
@@ -73,7 +73,9 @@ postgresql:
   postgresDatabase: gitlabhq
   imageTag: 9.6.8
   usePasswordFile: true
-  # postgresPassword:
+  postgresPassword:
+    secret: gitlab-postgres
+    key: postgres-password
 
 # registry:
 #   enabled: false
