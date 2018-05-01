@@ -20,9 +20,7 @@ global:
     # database: 'gitlabhq_production'
     # username: 'gitlab'
     serviceName: 'omnibus'
-    password:
-      secret: gitlab-postgres
-      key: psql-password
+    password: {}
 backups:
   bucketName: gitlab-backups
 

@@ -141,9 +141,9 @@ spec:
                 - key: {{ .Values.redis.password.key }}
                   path: redis/password
           - secret:
-              name: {{ template "gitlab.psql.password.secret" . }}
+              name: {{ template "postgresql.password.secret" . }}
               items:
-                - key: {{ template "gitlab.psql.password.key" . }}
+                - key: {{ template "postgresql.password.key" . }}
                   path: postgres/psql-password
           - secret:
               name: {{ .Values.registry.certificate.secret }}
