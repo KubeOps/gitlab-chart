@@ -38,7 +38,7 @@ function bootstrap(){
     --scopes "https://www.googleapis.com/auth/ndev.clouddns.readwrite","https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --node-version $CLUSTER_VERSION --num-nodes $NUM_NODES --project $PROJECT $EXTRA_CREATE_ARGS;
 
-  if ${USE_STATIC_IP}; then
+  if [ ${USE_STATIC_IP} ] ; then
     gcloud compute addresses create $external_ip_name --region $REGION --project $PROJECT;
     address=$(gcloud compute addresses describe $external_ip_name --region $REGION --project $PROJECT --format='value(address)');
 
@@ -68,7 +68,7 @@ function bootstrap(){
   helm init --wait --service-account tiller
   helm repo update
 
-  if ! ${USE_STATIC_IP}; then
+  if ! [ ${USE_STATIC_IP} ]; then
     helm install --name dns --namespace kube-system stable/external-dns \
       --set provider=google \
       --set google.project=$PROJECT \
@@ -84,7 +84,7 @@ function cleanup_gke_resources(){
   gcloud container clusters delete -q $CLUSTER_NAME --zone $ZONE --project $PROJECT;
   echo "Deleted $CLUSTER_NAME cluster successfully";
 
-  if ${USE_STATIC_IP}; then
+  if [ ${USE_STATIC_IP} ]; then
     gcloud compute addresses delete -q $external_ip_name --region $REGION --project $PROJECT;
     echo "Deleted ip: $external_ip_name successfully";
   fi
