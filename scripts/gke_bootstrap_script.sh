@@ -5,17 +5,17 @@
 
 set -e
 
-REGION=${REGION-us-central1}
-ZONE_EXTENSION=${ZONE_EXTENSION-b}
-ZONE=${REGION}-${ZONE_EXTENSION}
-CLUSTER_NAME=${CLUSTER_NAME-gitlab-cluster}
-MACHINE_TYPE=${MACHINE_TYPE-n1-standard-4}
-RBAC_ENABLED=${RBAC_ENABLED-true}
-NUM_NODES=${NUM_NODES-2}
-PREEMPTIBLE=${PREEMPTIBLE-false}
-EXTRA_CREATE_ARGS=${EXTRA_CREATE_ARGS-""}
-USE_STATIC_IP=${USE_STATIC_IP-false};
-external_ip_name=${CLUSTER_NAME}-external-ip;
+REGION="${REGION:-us-central1}"
+ZONE_EXTENSION="${ZONE_EXTENSION:-b}"
+ZONE="${REGION}-${ZONE_EXTENSION}"
+CLUSTER_NAME="${CLUSTER_NAME:-gitlab-cluster}"
+MACHINE_TYPE="${MACHINE_TYPE:-n1-standard-4}"
+RBAC_ENABLED="${RBAC_ENABLED:-true}"
+NUM_NODES="${NUM_NODES:-2}"
+PREEMPTIBLE="${PREEMPTIBLE:-false}"
+EXTRA_CREATE_ARGS="${EXTRA_CREATE_ARGS-""}"
+USE_STATIC_IP="${USE_STATIC_IP:-false}"
+external_ip_name="${CLUSTER_NAME}-external-ip"
 DIR=$(dirname "$(readlink -f "$0")")
 
 source $DIR/common.sh;
@@ -38,7 +38,7 @@ function bootstrap(){
     --scopes "https://www.googleapis.com/auth/ndev.clouddns.readwrite","https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --node-version $CLUSTER_VERSION --num-nodes $NUM_NODES --project $PROJECT $EXTRA_CREATE_ARGS;
 
-  if [ ${USE_STATIC_IP} ] ; then
+  if [ "${USE_STATIC_IP}" = "true" ] ; then
     gcloud compute addresses create $external_ip_name --region $REGION --project $PROJECT;
     address=$(gcloud compute addresses describe $external_ip_name --region $REGION --project $PROJECT --format='value(address)');
 
@@ -52,7 +52,7 @@ function bootstrap(){
   gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE --project $PROJECT;
 
   # Create roles for RBAC Helm
-  if $RBAC_ENABLED; then
+  if [ "${RBAC_ENABLED}" = "true" ]; then
     status_code=$(curl -L -w '%{http_code}' -o rbac-config.yaml -s "https://gitlab.com/charts/gitlab/raw/master/doc/helm/examples/rbac-config.yaml");
     if [ "$status_code" != 200 ]; then
       echo "Failed to download rbac-config.yaml, status code: $status_code";
@@ -68,7 +68,7 @@ function bootstrap(){
   helm init --wait --service-account tiller
   helm repo update
 
-  if ! [ ${USE_STATIC_IP} ]; then
+  if [ "${USE_STATIC_IP}" = "false" ]; then
     helm install --name dns --namespace kube-system stable/external-dns \
       --set provider=google \
       --set google.project=$PROJECT \
@@ -84,7 +84,7 @@ function cleanup_gke_resources(){
   gcloud container clusters delete -q $CLUSTER_NAME --zone $ZONE --project $PROJECT;
   echo "Deleted $CLUSTER_NAME cluster successfully";
 
-  if [ ${USE_STATIC_IP} ]; then
+  if [ "${USE_STATIC_IP}" = "true" ]; then
     gcloud compute addresses delete -q $external_ip_name --region $REGION --project $PROJECT;
     echo "Deleted ip: $external_ip_name successfully";
   fi
