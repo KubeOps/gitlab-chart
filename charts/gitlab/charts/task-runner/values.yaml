@@ -27,6 +27,16 @@ backups:
   bucketName: gitlab-backups
 
 extra: {}
+
+rack_attack:
+  git_basic_auth:
+    enabled: false
+    # enabled: true
+    # ip_whitelist: ["127.0.0.1"]
+    # maxretry: 10
+    # findtime: 60
+    # bantime: 3600
+
 redis:
   # host: '0.0.0.0'
   serviceName: 'redis'

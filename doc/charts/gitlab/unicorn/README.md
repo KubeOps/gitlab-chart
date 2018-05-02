@@ -63,6 +63,7 @@ Table below contains all the possible charts configurations that can be supplied
 | resources.requests.cpu        | Unicorn minimum cpu                            | 200m                                             |
 | resources.requests.memory     | Unicorn minimum memory                         | 1.4G                                             |
 | extras.google_analytics_id    | Google Analytics Id for frontend               | nil                                              |
+| rack_attack.git_basic_auth    | See [GitLab documentation][rackattack] for details | {}                                              |
 
 ## Using the Community Edition of this chart
 
@@ -445,3 +446,4 @@ The `authToken` attribute for Gitaly has to sub keys:
 [kubernetes-secret]: https://kubernetes.io/docs/concepts/configuration/secret/
 [globals]: ../../globals.md
 [lfscon]: https://docs.gitlab.com/ee/workflow/lfs/lfs_administration.html
+[rackattack]: https://docs.gitlab.com/ee/security/rack_attack.html

@@ -102,6 +102,9 @@ data:
         {{- end }}
       rack_attack:
         git_basic_auth:
+          {{- if .Values.rack_attack.git_basic_auth.enabled }}
+{{ toYaml .Values.rack_attack.git_basic_auth | indent 10 }}
+          {{- end }}
       ## Registry Integration
       registry:
         enabled: true
