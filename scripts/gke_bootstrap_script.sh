@@ -45,9 +45,9 @@ function bootstrap(){
     echo "Successfully provisioned external IP address $address , You need to add an A record to the DNS name to point to this address. See https://gitlab.com/charts/gitlab/blob/master/doc/cloud/gke.md#dns-entry.";
   fi
 
-  mkdir -p demo/.kube;
-  touch demo/.kube/config;
-  export KUBECONFIG=$(pwd)/demo/.kube/config;
+  print "Adding cluster-credentials to subfolder"
+  mkdir -p cluster-credentials/.kube
+  touch cluster-credentials/.kube/config
 
   gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE --project $PROJECT;
 
