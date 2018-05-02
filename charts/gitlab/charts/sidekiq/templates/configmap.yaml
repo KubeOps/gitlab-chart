@@ -34,6 +34,9 @@ data:
       gitlab:
         https: false # Set to true if using HTTPS, see installation.md#using-https for additional HTTPS configuration details
         trusted_proxies:
+        {{- if .Values.trusted_proxies }}
+{{ toYaml .Values.trusted_proxies | indent 10 }}
+        {{- end }}
         time_zone: {{ .Values.global.time_zone | quote }}
         email_from: {{ template "gitlab.email.from" . }}
         email_display_name: {{ .Values.global.email.display_name | quote }}

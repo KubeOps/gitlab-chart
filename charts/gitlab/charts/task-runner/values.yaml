@@ -37,6 +37,8 @@ rack_attack:
     # findtime: 60
     # bantime: 3600
 
+trusted_proxies: []
+
 redis:
   # host: '0.0.0.0'
   serviceName: 'redis'

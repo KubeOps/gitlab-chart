@@ -120,6 +120,7 @@ rack_attack:
     # maxretry: 10
     # findtime: 60
     # bantime: 3600
+trusted_proxies: []
 resources:
   # limits:
   #  cpu: 1

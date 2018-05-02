@@ -53,6 +53,8 @@ rack_attack:
     # findtime: 60
     # bantime: 3600
 
+trusted_proxies: []
+
 # Global defaults
 replicas: 1
 railsSecrets:
