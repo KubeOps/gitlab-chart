@@ -26,6 +26,7 @@ global:
 backups:
   bucketName: gitlab-backups
 
+extra: {}
 redis:
   # host: '0.0.0.0'
   serviceName: 'redis'
