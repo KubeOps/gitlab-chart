@@ -57,7 +57,7 @@ function bootstrap(){
     --num-nodes $NUM_NODES  \
     --project $PROJECT $EXTRA_CREATE_ARGS
 
-  if [ "${USE_STATIC_IP}" = "true" ] ; then
+  if [ "${USE_STATIC_IP,,}" = "true" ] ; then
     info_msg "Creating external IP address"
     gcloud compute addresses create $external_ip_name \
       --region $REGION \
@@ -81,7 +81,7 @@ function bootstrap(){
 
   gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE --project $PROJECT
 
-  if [ "${RBAC_ENABLED}" = "true" ]; then
+  if [ "${RBAC_ENABLED,,}" = "true" ]; then
     info_msg "Creating roles for RBAC Helm"
     status_code=$(curl -L -w '%{http_code}' \
                        -o rbac-config.yaml \
@@ -100,7 +100,7 @@ function bootstrap(){
   helm init --wait --service-account tiller
   helm repo update
 
-  if [ "${USE_STATIC_IP}" = "false" ]; then
+  if [ "${USE_STATIC_IP,,}" = "false" ]; then
     helm install --name dns --namespace kube-system stable/external-dns \
       --set provider=google \
       --set google.project=$PROJECT \
@@ -115,7 +115,7 @@ function cleanup_gke_resources(){
   info_msg "Deleting cluster $CLUSTER_NAME"
   gcloud container clusters delete -q $CLUSTER_NAME --zone $ZONE --project $PROJECT
 
-  if [ "${USE_STATIC_IP}" = "true" ]; then
+  if [ "${USE_STATIC_IP,,}" = "true" ]; then
     info_msg "Deleting external IP address $external_ip_name"
     gcloud compute addresses delete -q $external_ip_name --region $REGION --project $PROJECT
   fi
