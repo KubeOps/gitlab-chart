@@ -24,9 +24,10 @@ function loadvars() {
   EXTRA_CREATE_ARGS="${EXTRA_CREATE_ARGS-""}"
   USE_STATIC_IP="${USE_STATIC_IP:-false}"
   external_ip_name="${CLUSTER_NAME}-external-ip"
-}
 
-
+  for var in "${RBAC_ENABLED}" "${PREEMPTIBLE}" "${USE_STATIC_IP}"; do
+      validate_boolean "${var}"
+  done
 }
 
 
@@ -129,8 +130,8 @@ function cleanup_gke_resources(){
 
 
 function main() {
-  loadvars
   loadcommon
+  loadvars
 
   if [ -z "$1" ]; then
     echo "You need to pass up or down"

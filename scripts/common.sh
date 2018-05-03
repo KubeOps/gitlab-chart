@@ -41,3 +41,13 @@ function err_msg() {
   echo -e "\e[1;31m"$1"\e[00m" 1>&2
 }
 
+function validate_boolean() {
+  case $1 in
+    "true" | "false")
+      ;;
+    *)
+      err_msg "$1 is not a boolean. Please set corresponding variable to 'true' or 'false'. Exiting."
+      exit
+      ;;
+  esac
+}
