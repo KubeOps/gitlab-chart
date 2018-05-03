@@ -6,6 +6,12 @@
 set -e
 
 
+function loadcommon() {
+    DIR=$(dirname "$(readlink -f "$0")")
+    source $DIR/common.sh
+}
+
+
 function loadvars() {
   REGION="${REGION:-us-central1}"
   ZONE_EXTENSION="${ZONE_EXTENSION:-b}"
@@ -21,9 +27,6 @@ function loadvars() {
 }
 
 
-function loadcommon() {
-    DIR=$(dirname "$(readlink -f "$0")")
-    source $DIR/common.sh
 }
 
 
