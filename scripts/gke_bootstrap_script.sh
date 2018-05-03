@@ -32,11 +32,7 @@ function bootstrap(){
   validate_required_tools
 
   # Use the default cluster version for the specified zone if not provided
-  if [ -z "${CLUSTER_VERSION}" ]; then
-      CLUSTER_VERSION=$(gcloud container get-server-config \
-		        --zone $ZONE \
-			--format='value(defaultClusterVersion)')
-  fi
+  CLUSTER_VERSION=${CLUSTER_VERSION:-$(get_default_cluster_version "$ZONE")}
 
   if $PREEMPTIBLE; then
     EXTRA_CREATE_ARGS="$EXTRA_CREATE_ARGS --preemptible"

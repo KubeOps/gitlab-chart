@@ -20,3 +20,10 @@ function validate_required_tools(){
 function cluster_admin_password_gke(){
   gcloud container clusters describe $CLUSTER_NAME --zone $ZONE --project $PROJECT --format='value(masterAuth.password)';
 }
+
+function get_default_cluster_version() {
+  gcloud container get-server-config \
+    --zone $1 \
+    --format='value(defaultClusterVersion)'
+}
+
