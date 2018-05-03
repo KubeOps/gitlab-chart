@@ -27,3 +27,17 @@ function get_default_cluster_version() {
     --format='value(defaultClusterVersion)'
 }
 
+function info_msg() {
+  echo -e "\n\e[1;32m"$1"\e[00m"
+}
+
+
+function warn_msg() {
+  echo -e "\e[1;33m"$1"\e[00m"
+}
+
+
+function err_msg() {
+  echo -e "\e[1;31m"$1"\e[00m" 1>&2
+}
+
