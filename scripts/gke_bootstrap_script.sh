@@ -35,7 +35,8 @@ function bootstrap(){
   CLUSTER_VERSION=${CLUSTER_VERSION:-$(get_default_cluster_version "$ZONE")}
   warn_msg "Using cluster version $CLUSTER_VERSION"
 
-  if $PREEMPTIBLE; then
+
+  if [ ${PREEMPTIBLE,,} = true ]; then
     EXTRA_CREATE_ARGS="$EXTRA_CREATE_ARGS --preemptible"
   fi
 
