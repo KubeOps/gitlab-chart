@@ -17,8 +17,8 @@ data:
       pool: 10
       username: {{ template "task-runner.psql.username" . }}
       password: <%= File.read("/etc/gitlab/postgres/psql-password") %>
-      host: {{ template "task-runner.psql.host" . }}
-      port: {{ template "task-runner.psql.port" . }}
+      host: {{ template "postgresql.fullname" . }}
+      port: {{ template "gitlab.psql.port" . }}
   resque.yml.erb: |
     production:
       # Redis (single instance)

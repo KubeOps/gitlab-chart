@@ -86,8 +86,6 @@ postgresql:
 gitlab:
   gitlab-runner:
     enabled: true
-#   omnibus:
-#     enabled: false
 #   migrations:
 #     enabled: false
 #   unicorn:

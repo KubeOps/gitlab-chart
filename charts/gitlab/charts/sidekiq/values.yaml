@@ -28,7 +28,6 @@ global:
     # port: '5432'
     # database: 'gitlabhq_production'
     # username: 'gitlab'
-    # serviceName: 'omnibus'
     # password:
     #   secret: gitlab-postgres
     #   key: psql-password

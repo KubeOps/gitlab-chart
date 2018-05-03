@@ -17,20 +17,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 
 {{/*
-Return the db hostname
-If the postgresql host is provided, it will use that, otherwise it will fallback
-to the service name
-*/}}
-{{- define "task-runner.psql.host" -}}
-{{- if or .Values.psql.host .Values.global.psql.host -}}
-{{- coalesce .Values.psql.host .Values.global.psql.host | quote -}}
-{{- else -}}
-{{- $name := default "omnibus" .Values.psql.serviceName -}}
-{{- printf "%s-%s" .Release.Name $name -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Return the db database name
 */}}
 {{- define "task-runner.psql.database" -}}
@@ -44,15 +30,6 @@ to "gitlab" default
 */}}
 {{- define "task-runner.psql.username" -}}
 {{- coalesce .Values.psql.username .Values.global.psql.username "gitlab" -}}
-{{- end -}}
-
-{{/*
-Return the db port
-If the postgresql port is provided, it will use that, otherwise it will fallback
-to 5432 default
-*/}}
-{{- define "task-runner.psql.port" -}}
-{{- coalesce .Values.psql.port .Values.global.psql.port 5432 -}}
 {{- end -}}
 
 {{/*
