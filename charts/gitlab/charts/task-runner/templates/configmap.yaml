@@ -13,9 +13,9 @@ data:
     production:
       adapter: postgresql
       encoding: unicode
-      database: {{ template "task-runner.psql.database" . }}
+      database: {{ template "gitlab.psql.database" . }}
       pool: 10
-      username: {{ template "task-runner.psql.username" . }}
+      username: {{ template "gitlab.psql.username" . }}
       password: <%= File.read("/etc/gitlab/postgres/psql-password") %>
       host: {{ template "postgresql.fullname" . }}
       port: {{ template "gitlab.psql.port" . }}

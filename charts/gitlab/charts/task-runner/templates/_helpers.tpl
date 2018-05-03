@@ -15,23 +15,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{/*
-Return the db database name
-*/}}
-{{- define "task-runner.psql.database" -}}
-{{- coalesce .Values.psql.database .Values.global.psql.database "gitlabhq_production" | quote -}}
-{{- end -}}
-
-{{/*
-Return the db username
-If the postgresql username is provided, it will use that, otherwise it will fallback
-to "gitlab" default
-*/}}
-{{- define "task-runner.psql.username" -}}
-{{- coalesce .Values.psql.username .Values.global.psql.username "gitlab" -}}
-{{- end -}}
-
 {{/*
 Return the redis hostname
 If the redis host is provided, it will use that, otherwise it will fallback

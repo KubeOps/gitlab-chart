@@ -10,8 +10,8 @@ To use an external database with the `gitlab` chart, there are a few prerequisit
 
 1. GitLab requires PostgreSQL 9.6.
 1. The `pg_trgm` extension must be available
-1. A user named `gitlab` with the password created as a [Kubernetes Secret](../../installation/secrets.md#postgres-password)
-1. A database named `gitlabhq_production`, which the `gitlab` user has access to
+1. A user with the password created as a [Kubernetes Secret](../../installation/secrets.md#postgres-password)
+1. A database with full access granted to the user above
 
 ## Configuring `gitlab` to use an external database
 
@@ -19,6 +19,8 @@ You need to set the following parameters:
 * `postgresql.install`: Set to `false` to disable the embedded database
 * `global.psql.host`: Set to the hostname of the external database
 * `global.psql.port`: The port the database is available on, defaults to `5432`
+* `global.psql.database`: The name of the database
+* `global.psql.username`: The user with access to the database
 * `global.psql.password.secret`: The name of the secret which contains the database password for the `gitlab` user
 * `global.psql.password.key`: The key within the secret, which contains the password
 

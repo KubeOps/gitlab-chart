@@ -106,7 +106,7 @@ The port on which to connect to the PostgreSQL server. Defaults to `5432`.
 
 #### database
 
-The name of the database to use on the PostgreSQL server. This defaults to `gitlabhq_production`.
+The name of the database to use on the PostgreSQL server. This defaults to `gitlabhq`.
 
 #### username
 
