@@ -49,6 +49,10 @@ Table below contains all the possible charts configurations that can be supplied
 | lfs.proxy_download            | Proxy all LFS downloads through GitLab         | true                                             |
 | lfs.bucket                    | Object storage bucket name                     | nil                                              |
 | lfs.connection                | See [GitLab documentation][lfscon] for details | {}                                               |
+| uploads.enabled               | Enable uploads storage                         | true                                             |
+| uploads.proxy_download        | Proxy all uploads downloads through GitLab     | true                                             |
+| uploads.bucket                | Object storage bucket name                     | nil                                              |
+| uploads.connection            | See [GitLab documentation][uplcon] for details | {}                                               |
 | minio.bucket                  | Name of storage bucket, when using Minio       | git-lfs                                          |
 | minio.credentials.secret      | Secret containing access/secret keys for Minio | gitlab-minio                                     |
 | minio.serviceName             | Name of Minio service                          | minio-svc                                        |
@@ -61,6 +65,9 @@ Table below contains all the possible charts configurations that can be supplied
 | registry.certificate.key      | Registry certificate key                       | registry-auth.key                                |
 | resources.requests.cpu        | Unicorn minimum cpu                            | 200m                                             |
 | resources.requests.memory     | Unicorn minimum memory                         | 1.4G                                             |
+| extras.google_analytics_id    | Google Analytics Id for frontend               | nil                                              |
+| rack_attack.git_basic_auth    | See [GitLab documentation][rackattack] for details | {}                                           |
+| trusted_proxies               | See [GitLab documentation][proxies] for details | []                                              |
 
 ## Using the Community Edition of this chart
 
@@ -230,13 +237,49 @@ Defaults to `true`
 
 Name of the bucket to use from object storage provider.
 
-Defaults to `nil`, not used when `minio.enabled: true`
+Defaults to `git-lfs`.
 
 #### connection
 
 The `connection` property is a YAML block, in accordance with the documentation
 present at [GitLab LFS Administration][lfscon] documentation. This matches to
-[Fog](https://github.com/fog), is different between provider modules.
+[Fog](https://github.com/fog), and is different between provider modules.
+
+Defaults to `{}` and will be ignored if `minio.enabled` is `true`.
+
+### uploads
+
+```YAML
+uploads:
+  enabled: true
+  proxy_download: true
+  bucket: gitlab-uploads
+  connection: {}
+```
+
+#### enabled
+
+Enable the use of uploads, via object storage.
+
+Defaults to `true`
+
+#### proxy_download
+
+Enable proxy download of all uploaded content via GitLab, in place of direct downloads from the `bucket`.
+
+Defaults to `true`
+
+#### bucket
+
+Name of the bucket to use from object storage provider.
+
+Defaults to `nil`.
+
+#### connection
+
+The `connection` property is a YAML block, in accordance with the documentation
+present at [GitLab Uploads Administration][uplcon] documentation. This matches to
+[Fog](https://github.com/fog), and is different between provider modules.
 
 Defaults to `{}` and will be ignored if `minio.enabled` is `true`.
 
@@ -245,7 +288,6 @@ Defaults to `{}` and will be ignored if `minio.enabled` is `true`.
 ```YAML
 minio:
   enabled: true
-  bucket: git-lfs
   credentials:
     secret: gitlab-minio
   serviceName: 'minio-svc'
@@ -257,14 +299,6 @@ minio:
 Enable the use of the in-chart Minio provider for object storage. When `true`, all settings provided under `lfs.connection` will be ignored.
 
 Defaults to `true`
-
-#### bucket
-
-Name of the bucket on Minio service to use.
-
-See [Minio chart documentation](../../minio/README.md#defaultbuckets) for further details on bucket naming and creation.
-
-Defaults to `git-lfs`.
 
 #### credentials.secret
 
@@ -438,3 +472,6 @@ The `authToken` attribute for Gitaly has to sub keys:
 [kubernetes-secret]: https://kubernetes.io/docs/concepts/configuration/secret/
 [globals]: ../../globals.md
 [lfscon]: https://docs.gitlab.com/ee/workflow/lfs/lfs_administration.html
+[uplcon]: https://docs.gitlab.com/ee/administration/uploads.html#using-object-storage
+[rackattack]: https://docs.gitlab.com/ee/security/rack_attack.html
+[proxies]: https://docs.gitlab.com/ee/install/installation.html#adding-your-trusted-proxies

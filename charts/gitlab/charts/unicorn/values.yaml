@@ -30,6 +30,8 @@ ingress:
   annotations: {}
 workerProcesses: 2
 workerTimeout: 60
+workhorse:
+  sentryDSN: ""
 omniauth:
   providers: []
   # - name: google_oauth2
@@ -85,11 +87,15 @@ gitaly:
 lfs:
   enabled: true
   proxy_download: true
-  # bucket:
+  bucket: git-lfs
+  # connection: {}
+uploads:
+  enabled: true
+  proxy_download: true
+  bucket: gitlab-uploads
   # connection: {}
 minio:
   enabled: true
-  bucket: git-lfs
   credentials:
     secret: gitlab-minio
   serviceName: 'minio-svc'
@@ -105,6 +111,19 @@ registry:
   certificate:
     secret: gitlab-registry
     key: registry-auth.key
+extra: {}
+  # google_analytics_id: '_your_tracking_id'
+  # piwik_url: '_your_piwik_url'
+  # piwik_site_id: '_your_piwik_site_id'
+rack_attack:
+  git_basic_auth:
+    enabled: false
+    # enabled: true
+    # ip_whitelist: ["127.0.0.1"]
+    # maxretry: 10
+    # findtime: 60
+    # bantime: 3600
+trusted_proxies: []
 resources:
   # limits:
   #  cpu: 1
