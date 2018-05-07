@@ -64,7 +64,7 @@ use the name of the service the upstream chart creates
 Return the db database name
 */}}
 {{- define "gitlab.psql.database" -}}
-{{- coalesce .Values.global.psql.database "gitlabhq" | quote -}}
+{{- coalesce .Values.global.psql.database "gitlabhq_production" | quote -}}
 {{- end -}}
 
 {{/*

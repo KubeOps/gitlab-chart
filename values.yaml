@@ -15,7 +15,7 @@ global:
     # host: myexternalsql.hostedsomewhere.else
     # port: 123
     # username: gitlab
-    # database: gitlabhq
+    # database: gitlabhq_production
 
   # Outgoing email server settings
   smtp:
@@ -68,7 +68,7 @@ redis-ha:
 postgresql:
   install: true
   postgresUser: gitlab
-  postgresDatabase: gitlabhq
+  postgresDatabase: gitlabhq_production
   imageTag: 9.6.8
   usePasswordFile: true
   postgresPassword:
