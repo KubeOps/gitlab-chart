@@ -16,7 +16,8 @@ global:
     # port: 123
     # username: gitlab
     # database: gitlabhq_production
-
+  redis:
+    password: {}
   # Outgoing email server settings
   smtp:
     enabled: false
