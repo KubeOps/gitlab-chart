@@ -17,7 +17,7 @@ data:
       pool: 10
       username: {{ template "gitlab.psql.username" . }}
       password: <%= File.read("/etc/gitlab/postgres/psql-password") %>
-      host: {{ template "postgresql.fullname" . }}
+      host: {{ template "gitlab.psql.host" . }}
       port: {{ template "gitlab.psql.port" . }}
       # load_balancing:
       #   hosts:

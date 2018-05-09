@@ -61,7 +61,7 @@ certmanager.k8s.io/issuer: "{{ .Release.Name }}-issuer"
 {{- end -}}
 {{- end -}}
 
-{{/* ######### ingress templates */}}
+{{/* ######### postgresql templates */}}
 
 {{/*
 Return the db hostname
@@ -70,12 +70,19 @@ to the service name
 This overrides the upstream postegresql chart so that we can deterministically
 use the name of the service the upstream chart creates
 */}}
-{{- define "postgresql.fullname" -}}
+{{- define "gitlab.psql.host" -}}
 {{- if .Values.global.psql.host -}}
 {{- .Values.global.psql.host | quote -}}
 {{- else -}}
 {{- printf "%s-%s" .Release.Name "postgresql" -}}
 {{- end -}}
+{{- end -}}
+
+{{/*
+Alias of gitlab.psql.host
+*/}}
+{{- define "postgresql.fullname" -}}
+{{- template "gitlab.psql.host" . -}}
 {{- end -}}
 
 {{/*
@@ -120,6 +127,8 @@ Uses `postgres-password` to match upstream postgresql chart when not using an
 {{- define "postgresql.password.key" -}}
 {{- default "postgres-password" .Values.global.psql.password.key | quote -}}
 {{- end -}}
+
+{{/* ######### ingress templates */}}
 
 {{/*
 Returns the nginx ingress class
