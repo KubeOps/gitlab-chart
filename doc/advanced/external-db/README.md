@@ -10,8 +10,9 @@ To use an external database with the `gitlab` chart, there are a few prerequisit
 
 1. GitLab requires PostgreSQL 9.6.
 1. The `pg_trgm` extension must be available
-1. A user with the password created as a [Kubernetes Secret](../../installation/secrets.md#postgres-password)
-1. A database with full access granted to the user above
+1. An empty database to use
+1. A user with full access granted to the database above
+1. A [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/) with the password for the user above
 1. Ensure that the database is reachable from the cluster. Be sure firewall policies are in place to allow traffic.
 
 ## Configuring `gitlab` to use an external database
