@@ -68,7 +68,7 @@ cron_jobs: {}
 trusted_proxies: []
 
 # Global defaults
-replicas: 1
+replicas: 2
 railsSecrets:
   secret: rails-secrets
   key: secrets.yml
@@ -86,7 +86,7 @@ resources:
 pods:
   - name: all-in-1
     concurrency: 10
-    replicas: 1
+    replicas: 2
     queues:
       - [post_receive, 5]
       - [merge, 5]
