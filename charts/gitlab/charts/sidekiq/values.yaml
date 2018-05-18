@@ -87,6 +87,8 @@ resources:
 pods:
   - name: all-in-1
     concurrency: 10
+    # minReplicas: 2
+    # maxReplicas: 10
     queues:
       - [post_receive, 5]
       - [merge, 5]
