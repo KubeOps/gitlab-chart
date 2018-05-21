@@ -20,10 +20,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{/*
 Returns the hostname.
 If the hostname is set in `global.hosts.gitlab.name`, that will be returned,
-otherwise the hostname will be assembed using `gitlab` as the prefix, and the `assembleHost` function.
+otherwise the hostname will be assembed using `gitlab` as the prefix, and the `gitlab.assembleHost` function.
 */}}
-{{- define "gitlabHost" -}}
-{{- coalesce .Values.global.hosts.gitlab.name (include "assembleHost"  (dict "name" "gitlab" "context" . )) -}}
+{{- define "gitlab.gitlabHost" -}}
+{{- coalesce .Values.global.hosts.gitlab.name (include "gitlab.assembleHost"  (dict "name" "gitlab" "context" . )) -}}
 {{- end -}}
 
 
@@ -39,7 +39,7 @@ otherwise the hostname will be assembed using `gitlab` as the prefix, and the `a
   Additionally if `global.hosts.hostSuffix` is set, it will append a hyphen, then the suffix to the name:
   eg: If hostSuffix is `beta` it will produce `minio-beta.example.local`
 */}}
-{{- define "assembleHost" -}}
+{{- define "gitlab.assembleHost" -}}
 {{- $name := .name -}}
 {{- $context := .context -}}
 {{- $result := dict -}}

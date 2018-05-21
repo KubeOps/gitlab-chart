@@ -26,7 +26,7 @@ data:
   gitlab.yml.erb: |
     production: &base
       gitlab:
-        host: {{ template "gitlabHost" . }}
+        host: {{ template "gitlab.gitlabHost" . }}
         https: {{ hasPrefix "https://" (include "gitlabUrl" .) }}
         trusted_proxies:
         {{- if .Values.trusted_proxies }}
