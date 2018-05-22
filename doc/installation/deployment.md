@@ -48,7 +48,7 @@ documentation for more help on this process.
 
 *Include these options in your helm install command:*
 ```
---set global.hosts.externalIP=10.10.10.10
+--set nginx-ingress.controller.service.loadBalancerIP=10.10.10.10
 ```
 
 ### Persistence
@@ -140,7 +140,7 @@ helm dependencies update
 helm upgrade --install gitlab . \
   --timeout 600 \
   --set global.hosts.domain=example.local \
-  --set global.hosts.externalIP=10.10.10.10 \
+  --set nginx-ingress.controller.service.loadBalancerIP=10.10.10.10 \
   --set gitlab.migrations.initialRootPassword="example-password" \
   --set certmanager-issuer.email=me@example.local
 ```

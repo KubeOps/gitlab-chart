@@ -7,7 +7,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | Parameter                                    | Description                                                                  | Default                                                           |
 | ---                                          | ---                                                                          | ---                                                               |
 | global.hosts.domain                          | Domain name that will be used for all publicly exposed services              | Required                                                          |
-| nginx-ingress.LoadBalancerIp                         | Static IP to assign to nginx ingress controller                              | Required                                                          |
+| nginx-ingress.controller.service.loadBalancerIP                         | Static IP to assign to nginx ingress controller                              | Required                                                          |
 | gitlab.migrations.initialRootPassword        | Password to the gitlab root account                                          | Required                                                          |
 | global.psql.host                             | Global hostname of an external psql, overrides subcharts' psql configuration | _Uses in-cluster non-production postgress_                        |
 | global.psql.password.secret                  | Global name of the secret containing the psql password                       | _Uses in-cluster non-production postgress_                        |
