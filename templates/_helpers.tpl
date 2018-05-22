@@ -143,3 +143,11 @@ Returns the nginx ingress class
 {{- define "gitlab.ingressclass" -}}
 {{- pluck "class" .Values.global.ingress (dict "class" (printf "%s-nginx" .Release.Name)) | first -}}
 {{- end -}}
+
+{{- define "nginx-ingress.tcp-configmap" -}}
+{{ .Release.Name}}-nginx-ingress-tcp
+{{- end -}}
+
+{{- define "nginx-ingress.controller.ingress-class" -}}
+{{ template "gitlab.ingressclass" . }}
+{{- end -}}
