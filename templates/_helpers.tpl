@@ -26,6 +26,18 @@ otherwise the hostname will be assembed using `gitlab` as the prefix, and the `g
 {{- coalesce .Values.global.hosts.gitlab.name (include "gitlab.assembleHost"  (dict "name" "gitlab" "context" . )) -}}
 {{- end -}}
 
+{{/*
+Returns the GitLab Url, ex: `http://gitlab.example.local`
+If `global.hosts.https` or `global.hosts.gitlab.https` is true, it uses https, otherwise http.
+Calls into the `gitlab.gitlabHost` function for the hostname part of the url.
+*/}}
+{{- define "gitlab.gitlabUrl" -}}
+{{- if or .Values.global.hosts.https .Values.global.hosts.gitlab.https -}}
+{{-   printf "https://%s" (include "gitlab.gitlabHost" .) -}}
+{{- else -}}
+{{-   printf "http://%s" (include "gitlab.gitlabHost" .) -}}
+{{- end -}}
+{{- end -}}
 
 {{/* ######### Utility templates */}}
 
