@@ -147,4 +147,4 @@ resources:
     memory: 2G
 maxUnavailable: 1
 minReplicas: 2
-maxReplicas: 10
+maxReplicas: 2
