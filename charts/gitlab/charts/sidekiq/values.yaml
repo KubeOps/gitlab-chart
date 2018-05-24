@@ -71,7 +71,7 @@ trusted_proxies: []
 
 # Global defaults
 minReplicas: 1
-maxReplicas: 10
+maxReplicas: 1
 railsSecrets:
   secret: rails-secrets
   key: secrets.yml

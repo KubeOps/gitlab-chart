@@ -13,8 +13,8 @@ spec:
     apiVersion: extensions/v1beta1
     kind: Deployment
     name: {{ template "fullname" . }}
-  minReplicas: 2
-  maxReplicas: 10
+  minReplicas: 1
+  maxReplicas: 1
   metrics:
   - type: Resource
     resource:
