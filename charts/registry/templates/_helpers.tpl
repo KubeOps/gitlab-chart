@@ -9,7 +9,7 @@ to the chart
 {{- if .Values.authEndpoint -}}
 {{- .Values.authEndpoint -}}
 {{- else -}}
-{{- template "gitlab.gitlabUrl" . -}}
+{{- template "gitlab.gitlab.url" . -}}
 {{- end -}}
 {{- end -}}
 

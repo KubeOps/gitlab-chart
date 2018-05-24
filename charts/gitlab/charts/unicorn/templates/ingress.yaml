@@ -1,6 +1,6 @@
 {{- if .Values.enabled -}}
 {{- if coalesce .Values.ingress.enabled .Values.global.ingress.enabled | default false -}}
-{{- $gitlabHost := include "gitlab.gitlabHost" . -}}
+{{- $gitlabHostname := include "gitlab.gitlab.hostname" . -}}
 {{- $tlsSecret := include "unicorn.tlsSecret" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -23,7 +23,7 @@ metadata:
   {{- end }}
 spec:
   rules:
-    - host: {{ $gitlabHost }}
+    - host: {{ $gitlabHostname }}
       http:
         paths:
           - path: /
@@ -33,7 +33,7 @@ spec:
   {{- if $tlsSecret }}
   tls:
     - hosts:
-      - {{ $gitlabHost }}
+      - {{ $gitlabHostname }}
       secretName: {{ $tlsSecret }}
   {{- end }}
 {{- end -}}

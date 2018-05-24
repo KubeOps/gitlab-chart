@@ -22,7 +22,7 @@ Returns the hostname.
 If the hostname is set in `global.hosts.gitlab.name`, that will be returned,
 otherwise the hostname will be assembed using `gitlab` as the prefix, and the `gitlab.assembleHost` function.
 */}}
-{{- define "gitlab.gitlabHost" -}}
+{{- define "gitlab.gitlab.hostname" -}}
 {{- coalesce .Values.global.hosts.gitlab.name (include "gitlab.assembleHost"  (dict "name" "gitlab" "context" . )) -}}
 {{- end -}}
 
@@ -31,11 +31,11 @@ Returns the GitLab Url, ex: `http://gitlab.example.local`
 If `global.hosts.https` or `global.hosts.gitlab.https` is true, it uses https, otherwise http.
 Calls into the `gitlab.gitlabHost` function for the hostname part of the url.
 */}}
-{{- define "gitlab.gitlabUrl" -}}
+{{- define "gitlab.gitlab.url" -}}
 {{- if or .Values.global.hosts.https .Values.global.hosts.gitlab.https -}}
-{{-   printf "https://%s" (include "gitlab.gitlabHost" .) -}}
+{{-   printf "https://%s" (include "gitlab.gitlab.hostname" .) -}}
 {{- else -}}
-{{-   printf "http://%s" (include "gitlab.gitlabHost" .) -}}
+{{-   printf "http://%s" (include "gitlab.gitlab.hostname" .) -}}
 {{- end -}}
 {{- end -}}
 
