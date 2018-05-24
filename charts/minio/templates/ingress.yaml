@@ -1,7 +1,7 @@
 {{- if .Values.enabled -}}
 {{- if coalesce .Values.ingress.enabled .Values.global.ingress.enabled | default false -}}
 {{- $minioHostname := include "gitlab.minio.hostname" . -}}
-{{- $minioTLSSecret := include "minioTLSSecret" . -}}
+{{- $tlsSecret := include "minio.tlsSecret" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -31,11 +31,11 @@ spec:
             backend:
               serviceName: {{ template "minio.fullname" . }}-svc
               servicePort: {{ .Values.servicePort }}
-  {{- if $minioTLSSecret }}
+  {{- if $tlsSecret }}
   tls:
     - hosts:
       - {{ $minioHostname }}
-      secretName: {{ $minioTLSSecret }}
+      secretName: {{ $tlsSecret }}
   {{- end }}
 {{- end -}}
 {{- end -}}
