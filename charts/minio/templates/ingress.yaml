@@ -1,6 +1,6 @@
 {{- if .Values.enabled -}}
 {{- if coalesce .Values.ingress.enabled .Values.global.ingress.enabled | default false -}}
-{{- $minioHost := include "minioHost" . -}}
+{{- $minioHostname := include "gitlab.minio.hostname" . -}}
 {{- $minioTLSSecret := include "minioTLSSecret" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -24,7 +24,7 @@ metadata:
   {{- end }}
 spec:
   rules:
-    - host: {{ $minioHost }}
+    - host: {{ $minioHostname }}
       http:
         paths:
           - path: /
@@ -34,7 +34,7 @@ spec:
   {{- if $minioTLSSecret }}
   tls:
     - hosts:
-      - {{ $minioHost }}
+      - {{ $minioHostname }}
       secretName: {{ $minioTLSSecret }}
   {{- end }}
 {{- end -}}

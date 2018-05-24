@@ -39,15 +39,6 @@ reduce collision
 {{- end -}}
 
 {{/*
-Returns the minio hostname.
-If the hostname is set in `global.hosts.minio.name`, that will be returned,
-otherwise the hostname will be assembed using `minio` as the prefix, and the `gitlab.assembleHost` function.
-*/}}
-{{- define "minioHost" -}}
-{{- coalesce .Values.global.hosts.minio.name (include "gitlab.assembleHost"  (dict "name" "minio" "context" . )) -}}
-{{- end -}}
-
-{{/*
 Returns the secret name for the Secret containing the TLS certificate and key.
 Uses `ingress.tls.secretName` first and falls back to `global.ingress.tls.secretName`
 if there is a shared tls secret for all ingresses.
