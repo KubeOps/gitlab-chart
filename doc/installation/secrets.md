@@ -77,6 +77,15 @@ kubectl create secret generic gitlab-shell-host-keys --from-file hostKeys
 
 Include this secret using `--set global.shell.hostKeys.secret=gitlab-shell-host-keys`
 
+### Initial root password
+
+Generate a random 64 character alpha-numeric password for the `root` user in
+GitLab.
+
+```
+kubectl create secret generic gitlab-initial-root-password --from-literal=password=$(head -c 512 /dev/urandom | LC_CTYPE=C tr -cd 'a-zA-Z0-9' | head -c 64)
+```
+
 ### Redis password
 
 Generate a random 64 character alpha-numeric password for Redis.

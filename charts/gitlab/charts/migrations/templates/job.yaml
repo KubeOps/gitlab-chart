@@ -51,10 +51,11 @@ spec:
               value: '/var/opt/gitlab/templates'
             - name: CONFIG_DIRECTORY
               value: '/var/opt/gitlab/config/gitlab/'
-            {{- if .Values.initialRootPassword}}
             - name: GITLAB_ROOT_PASSWORD
-              value: {{ include "migrations.validate_root_password" . | required "migrations.initialRootPassword needs to be more than 6 characters" | quote }}
-            {{- end }}
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-initial-root-password
+                  key: password
           volumeMounts:
             - name: migrations-config
               mountPath: '/var/opt/gitlab/templates'
