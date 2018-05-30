@@ -32,8 +32,6 @@ Table below contains all the possible charts configurations that can be supplied
 | serviceName                  | Gitaly service name                    | gitaly                                   |
 | authToken.secret             | Gitaly secret name                     | gitaly-secret                            |
 | authToken.key                | Key to gitaly token in the secret      | token                                    |
-| redis.password.secret        | Redis secret containing redis password | gitlab-redis                             |
-| redis.password.key           | Key to redis password in redis secret  | redis-password                           |
 | shell.authToken.secret       | Shell secret                           | gitlab-shell-secret                      |
 | shell.authToken.key          | Shell key                              | secret                                   |
 | persistence.enabled          | Gitaly enable persistence flag         | true                                     |
@@ -47,7 +45,7 @@ Table below contains all the possible charts configurations that can be supplied
 
 ## Chart configuration examples
 ### image.pullSecrets
-`pullSecrets` allow you to authenticate to a private registry to pull images for a pod. 
+`pullSecrets` allow you to authenticate to a private registry to pull images for a pod.
 
 Additional details about private registries and their authentication methods
 can be found in [the Kubernetes documentation](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod).
@@ -58,7 +56,7 @@ image:
   repository: my.gitaly.repository
   tag: latest
   pullPolicy: Always
-  pullSecrets: 
+  pullSecrets:
   - name: my-secret-name
   - name: my-secondary-secret-name
 ```

@@ -94,8 +94,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | redis.timeout                                | Timeout in seconds                          | 60             |
 | redis.tcpKeepalive                           | Keep alive in seconds                       | 300            |
 | redis.loglevel                               | Log verbosity                               | notice         |
-| redis.password.secret                        | Secret name                                 | gitlab-redis   |
-| redis.password.key                           | Key to password in the secret               | redis-password |
 | redis.persistence.enabled                    | Enable persistence flag                     | true           |
 | redis.persistence.accessMode                 | Redis access mode                           | ReadWriteOnce  |
 | redis.persistence.size                       | Size of volume needed for redis persistence | 5Gi            |
@@ -157,8 +155,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.gitaly.serviceName                           | Gitaly service name                            | gitaly                                                     |
 | gitlab.gitaly.authToken.secret                      | Gitaly secret name                             | {.Release.Name}-gitaly-secret                                              |
 | gitlab.gitaly.authToken.key                         | Key to gitaly token in the secret              | token                                                      |
-| gitlab.gitaly.redis.password.secret                 | Redis secret containing redis password         | gitlab-redis                                               |
-| gitlab.gitaly.redis.password.key                    | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.gitaly.shell.authToken.secret                | Shell secret                                   | {Release.Name}-gitlab-shell-secret                                        |
 | gitlab.gitaly.shell.authToken.key                   | Shell key                                      | secret                                                     |
 | gitlab.gitaly.persistence.enabled                   | Gitaly enable persistence flag                 | true                                                       |
@@ -179,15 +175,11 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.gitlab-shell.authToken.key                   | Shell auth secret key                          | secret                                                     |
 | gitlab.gitlab-shell.unicorn.serviceName             | Unicorn service name                           | unicorn                                                    |
 | gitlab.gitlab-shell.redis.serviceName               | Redis service name                             | redis                                                      |
-| gitlab.gitlab-shell.redis.password.secret           | Redis secret                                   | gitlab-redis                                               |
-| gitlab.gitlab-shell.redis.password.key              | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.sidekiq.image.repository                     | Sidekiq image repository                       | registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee |
 | gitlab.sidekiq.image.tag                            | Sidekiq image tag                              | latest                                                     |
 | gitlab.sidekiq.image.pullPolicy                     | Sidekiq image pull policy                      | Always                                                     |
 | gitlab.sidekiq.enabled                              | Sidekiq enabled flag                           | true                                                       |
 | gitlab.sidekiq.redis.serviceName                    | Redis service name                             | redis                                                      |
-| gitlab.sidekiq.redis.password.secret                | Redis secret                                   | gitlab-redis                                               |
-| gitlab.sidekiq.redis.password.key                   | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.sidekiq.psql.password.secret                 | psql password secret                           | gitlab-postgres                                            |
 | gitlab.sidekiq.psql.password.key                    | key to psql password in psql secret            | psql-password                                              |
 | gitlab.sidekiq.gitaly.serviceName                   | gitaly service name                            | gitaly                                                     |
@@ -213,8 +205,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.workerProcesses                      | Unicorn number of workers                      | 2                                                          |
 | gitlab.unicorn.workerTimeout                        | Unicorn worker timeout                         | 60                                                         |
 | gitlab.unicorn.redis.serviceName                    | Redis service name                             | redis                                                      |
-| gitlab.unicorn.redis.password.secret                | Redis secret                                   | gitlab-redis                                               |
-| gitlab.unicorn.redis.password.key                   | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.unicorn.psql.password.secret                 | psql secret name                               | gitlab-postgres                                            |
 | gitlab.unicorn.psql.password.key                    | Key to psql password in psql secret            | psql-password                                              |
 | gitlab.unicorn.shell.authToken.secret               | Shell token secret                             | {Release.Name}-gitlab-shell-secret                                        |
@@ -237,8 +227,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.migrations.image.pullPolicy                  | Migrations pull policy                         | Always                                                     |
 | gitlab.migrations.enabled                           | Migrations enable flag                         | true                                                       |
 | gitlab.migrations.redis.serviceName                 | Redis service name                             | redis                                                      |
-| gitlab.migrations.redis.password.secret             | Redis secret                                   | gitlab-redis                                               |
-| gitlab.migrations.redis.password.key                | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.migrations.psql.password.secret              | psql secret                                    | gitlab-postgres                                            |
 | gitlab.migrations.psql.password.key                 | key to psql password in psql secret            | psql-password                                              |
 | gitlab.gitlab-runner.image                          | runner image                                   | gitlab/gitlab-runner:alpine-v10.5.0                        |

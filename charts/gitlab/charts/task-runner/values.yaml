@@ -19,9 +19,7 @@ global:
     # username: 'gitlab'
     password: {}
   redis:
-    password:
-      secret: gitlab-redis
-      key: redis-password
+    password: {}
   gitaly:
     authToken: {}
 backups:

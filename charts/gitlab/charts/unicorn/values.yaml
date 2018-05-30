@@ -79,9 +79,7 @@ global:
     #   key: psql-password
   redis:
     # host: '0.0.0.0'
-    password:
-      secret: gitlab-redis
-      key: redis-password
+    password: {}
   gitaly:
     authToken: {}
 redis:

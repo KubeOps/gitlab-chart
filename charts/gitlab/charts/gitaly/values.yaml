@@ -19,9 +19,7 @@ serviceName: gitaly
 
 global:
   redis:
-    password:
-      secret: gitlab-redis
-      key: redis-password
+    password: {}
   gitaly:
     authToken: {}
 authToken: {}

@@ -22,3 +22,17 @@ to 6379 default
 {{- define "gitlab.redis.port" -}}
 {{- coalesce .Values.redis.port .Values.global.redis.port 6379 -}}
 {{- end -}}
+
+{{/*
+Return the redis password secret name
+*/}}
+{{- define "gitlab.redis.password.secret" -}}
+{{- default (printf "%s-redis-secret" .Release.Name) .Values.global.redis.password.secret | quote -}}
+{{- end -}}
+
+{{/*
+Return the redis password secret key
+*/}}
+{{- define "gitlab.redis.password.key" -}}
+{{- coalesce .Values.global.redis.password.key "secret" | quote -}}
+{{- end -}}

@@ -15,9 +15,7 @@ service:
 
 global:
   redis:
-    password:
-      secret: gitlab-redis
-      key: redis-password
+    password: {}
 
 enabled: true
 authToken:

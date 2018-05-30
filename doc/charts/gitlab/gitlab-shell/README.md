@@ -32,8 +32,6 @@ The `gitlab-shell` sub-chart provides a SSH server configured for Git SSH access
 | enabled               | Shell enable flag                     | true                                           |
 | unicorn.serviceName   | Unicorn service name                  | unicorn                                        |
 | redis.serviceName     | Redis service name                    | redis                                          |
-| redis.password.secret | Redis secret                          | gitlab-redis                                   |
-| redis.password.key    | Key to redis password in redis secret | redis-password                                 |
 
 ## Chart configuration examples
 ### image.pullSecrets

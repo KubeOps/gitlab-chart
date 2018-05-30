@@ -36,8 +36,6 @@ Table below contains all the possible charts configurations that can be supplied
 | ldap.servers                  | LDAP user authentication servers               | nil                                              |
 | omniauth.providers            | Omniauth providers                             | nil                                              |
 | redis.serviceName             | Redis service name                             | redis                                            |
-| redis.password.secret         | Redis secret                                   | gitlab-redis                                     |
-| redis.password.key            | Key to redis password in redis secret          | redis-password                                   |
 | psql.password.secret          | psql secret name                               | gitlab-postgres                                  |
 | psql.password.key             | Key to psql password in psql secret            | psql-password                                    |
 | shell.authToken.secret        | Shell token secret                             | gitlab-shell-secret                              |

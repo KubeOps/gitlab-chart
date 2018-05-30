@@ -32,8 +32,6 @@ Table below contains all the possible charts configurations that can be supplied
 | image.pullSecrets     | Secrets for the image repository               |                                                |
 | enabled               | Migrations enable flag                         | true                                           |
 | redis.serviceName     | Redis service name                             | redis                                          |
-| redis.password.secret | Redis secret                                   | gitlab-redis                                   |
-| redis.password.key    | Key to redis password in redis secret          | redis-password                                 |
 | psql.password.secret  | psql secret                                    | gitlab-postgres                                |
 | psql.password.key     | key to psql password in psql secret            | psql-password                                  |
 | initialRootPassword   | Password to the gitlab root account            | Required                                       |

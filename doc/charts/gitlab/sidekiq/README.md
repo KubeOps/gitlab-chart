@@ -29,8 +29,6 @@ Table below contains all the possible charts configurations that can be supplied
 | enabled                   | Sidekiq enabled flag                           | true                                             |
 | metrics.enabled           | Toggle Prometheus metrics exporter             | true                                             |
 | redis.serviceName         | Redis service name                             | redis                                            |
-| redis.password.secret     | Redis secret                                   | gitlab-redis                                     |
-| redis.password.key        | Key to redis password in redis secret          | redis-password                                   |
 | psql.password.secret      | psql password secret                           | gitlab-postgres                                  |
 | psql.password.key         | key to psql password in psql secret            | psql-password                                    |
 | gitaly.serviceName        | gitaly service name                            | gitaly                                           |
