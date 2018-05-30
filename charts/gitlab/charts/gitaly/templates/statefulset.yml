@@ -131,9 +131,9 @@ spec:
           defaultMode: 0440
           sources:
           - secret:
-              name: {{ coalesce .Values.authToken.secret .Values.global.gitaly.authToken.secret "gitaly-secret" }}
+              name: {{ template "gitlab.gitaly.authToken.secret" . }}
               items:
-                - key: {{ coalesce .Values.authToken.key .Values.global.gitaly.authToken.key "token" }}
+                - key: {{ template "gitlab.gitaly.authToken.key" . }}
                   path: "gitaly_token"
           - secret:
               name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}

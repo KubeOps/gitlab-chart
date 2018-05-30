@@ -28,7 +28,7 @@ Return the gitaly secret name
 Preference is local, global, default (`gitaly-secret`)
 */}}
 {{- define "gitlab.gitaly.authToken.secret" -}}
-{{- coalesce .Values.gitaly.authToken.secret .Values.global.gitaly.authToken.secret "gitaly-secret" | quote -}}
+{{- coalesce .Values.global.gitaly.authToken.secret (printf "%s-gitaly-secret" .Release.Name) | quote -}}
 {{- end -}}
 
 {{/*
@@ -36,5 +36,5 @@ Return the gitaly secret name
 Preference is local, global, default (`token`)
 */}}
 {{- define "gitlab.gitaly.authToken.key" -}}
-{{- coalesce .Values.gitaly.authToken.key .Values.global.gitaly.authToken.key "token" | quote -}}
+{{- coalesce .Values.global.gitaly.authToken.key "token" | quote -}}
 {{- end -}}

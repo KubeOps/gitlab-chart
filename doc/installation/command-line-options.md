@@ -157,7 +157,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.gitaly.service.annotations                   | Annotations to add to the `Service`            | {}                                                         |
 | gitlab.gitaly.enabled                               | Gitaly enable flag                             | true                                                       |
 | gitlab.gitaly.serviceName                           | Gitaly service name                            | gitaly                                                     |
-| gitlab.gitaly.authToken.secret                      | Gitaly secret name                             | gitaly-secret                                              |
+| gitlab.gitaly.authToken.secret                      | Gitaly secret name                             | {.Release.Name}-gitaly-secret                                              |
 | gitlab.gitaly.authToken.key                         | Key to gitaly token in the secret              | token                                                      |
 | gitlab.gitaly.redis.password.secret                 | Redis secret containing redis password         | gitlab-redis                                               |
 | gitlab.gitaly.redis.password.key                    | Key to redis password in redis secret          | redis-password                                             |
@@ -193,7 +193,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.sidekiq.psql.password.secret                 | psql password secret                           | gitlab-postgres                                            |
 | gitlab.sidekiq.psql.password.key                    | key to psql password in psql secret            | psql-password                                              |
 | gitlab.sidekiq.gitaly.serviceName                   | gitaly service name                            | gitaly                                                     |
-| gitlab.sidekiq.gitaly.authToken.secret              | gitaly secret                                  | gitaly-secret                                              |
+| gitlab.sidekiq.gitaly.authToken.secret              | gitaly secret                                  | {.Release.Name}-gitaly-secret                                              |
 | gitlab.sidekiq.gitaly.authToken.key                 | key to gitaly token in gitaly secret           | token                                                      |
 | gitlab.sidekiq.replicas                             | Sidekiq replicas                               | 1                                                          |
 | gitlab.sidekiq.railsSecrets.secret                  | Secret containing rails secrets.yml            | rails-secrets                                              |
@@ -226,7 +226,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.shell.authToken.secret               | Shell token secret                             | {Release.Name}-gitlab-shell-secret                                        |
 | gitlab.unicorn.shell.authToken.key                  | Key to shell token in shell secret             | secret                                                     |
 | gitlab.unicorn.gitaly.serviceName                   | Gitaly service name                            | gitaly                                                     |
-| gitlab.unicorn.gitaly.authToken.secret              | Gitaly secret name                             | gitaly-secret                                              |
+| gitlab.unicorn.gitaly.authToken.secret              | Gitaly secret name                             | {.Release.Name}-gitaly-secret                                              |
 | gitlab.unicorn.gitaly.authToken.key                 | Key to gitaly token in gitaly secret           | token                                                      |
 | gitlab.unicorn.registry.api.protocol                | Registry protocol                              | http                                                       |
 | gitlab.unicorn.registry.api.serviceName             | Registry service name                          | registry                                                   |
