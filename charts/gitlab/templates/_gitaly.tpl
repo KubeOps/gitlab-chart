@@ -32,7 +32,7 @@ Preference is local, global, default (`gitaly-secret`)
 {{- end -}}
 
 {{/*
-Return the gitaly secret name
+Return the gitaly secret key
 Preference is local, global, default (`token`)
 */}}
 {{- define "gitlab.gitaly.authToken.key" -}}

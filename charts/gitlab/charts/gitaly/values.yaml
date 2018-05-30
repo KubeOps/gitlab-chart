@@ -34,9 +34,7 @@ unicorn: {}
 redis:
   password: {}
 shell:
-  authToken:
-   secret: ""
-   key: secret
+  authToken: {}
 
 ## Enable prometheus metrics and set the port to scrape the
 ## container on.
