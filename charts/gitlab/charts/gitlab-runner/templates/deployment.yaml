@@ -99,9 +99,9 @@ spec:
                     path: s3-secret-key
             {{- end }}
             - secret:
-                name: gitlab-runner
+                name: {{ template "gitlab.gitlab-runner.registrationToken.secret" . }}
                 items:
-                  - key: runner-registration-token
+                  - key: {{ template "gitlab.gitlab-runner.registrationToken.key" . }}
                     path: runner-registration-token
       {{- if .Values.certsSecretName }}
       - name: custom-certs

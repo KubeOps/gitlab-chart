@@ -24,6 +24,8 @@ global:
     credentials: {}
   shell:
     authToken: {}
+  runner:
+    registrationToken: {}
   # Outgoing email server settings
   smtp:
     enabled: false
