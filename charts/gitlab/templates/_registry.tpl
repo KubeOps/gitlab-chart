@@ -35,3 +35,10 @@ to the service name
 {{-     printf "%s-%s" .Release.Name $name -}}
 {{-   end -}}
 {{- end -}}
+
+{{/*
+Return the registry certificate secret name
+*/}}
+{{- define "gitlab.registry.certificate.secret" -}}
+{{- default (printf "%s-registry-secret" .Release.Name) .Values.global.registry.certificate.secret | quote -}}
+{{- end -}}

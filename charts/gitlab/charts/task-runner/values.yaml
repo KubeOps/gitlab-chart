@@ -76,9 +76,6 @@ registry:
     serviceName: registry
     port: 5000
   tokenIssuer: gitlab-issuer
-  certificate:
-    secret: gitlab-registry
-    key: registry-auth.key
 resources:
   # limits:
   #  cpu: 1

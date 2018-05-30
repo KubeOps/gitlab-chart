@@ -174,9 +174,9 @@ spec:
                 - key: {{ template "gitlab.psql.password.key" . }}
                   path: postgres/psql-password
           - secret:
-              name: {{ .Values.registry.certificate.secret }}
+              name: {{ template "gitlab.registry.certificate.secret" . }}
               items:
-                - key: {{ .Values.registry.certificate.key }}
+                - key: registry-auth.key
                   path: registry/gitlab-registry.key
           {{- if .Values.minio.enabled }}
           - secret:

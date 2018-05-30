@@ -122,9 +122,6 @@ registry:
     serviceName: registry
     port: 5000
   tokenIssuer: gitlab-issuer
-  certificate:
-    secret: gitlab-registry
-    key: registry-auth.key
 extra: {}
   # google_analytics_id: '_your_tracking_id'
   # piwik_url: '_your_piwik_url'

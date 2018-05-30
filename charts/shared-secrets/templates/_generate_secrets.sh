@@ -41,7 +41,7 @@ generate_secret_if_needed {{ template "gitlab.gitlab-runner.registrationToken.se
 # Registry certificates
 mkdir -p certs
 openssl req -new -newkey rsa:4096 -subj "/CN=gitlab-issuer" -nodes -x509 -keyout certs/registry-example-local.key -out certs/registry-example-local.crt
-generate_secret_if_needed gitlab-registry --from-file=registry-auth.key=certs/registry-example-local.key --from-file=registry-auth.crt=certs/registry-example-local.crt
+generate_secret_if_needed {{ template "gitlab.registry.certificate.secret" . }} --from-file=registry-auth.key=certs/registry-example-local.key --from-file=registry-auth.crt=certs/registry-example-local.crt
 
 # config/secrets.yaml
 if [ -n "$env" ]; then

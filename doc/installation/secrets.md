@@ -52,9 +52,7 @@ Create a secret containing these certificates.
 kubectl create secret generic gitlab-registry --from-file=registry-auth.key=certs/registry-example-local.key --from-file=registry-auth.crt=certs/registry-example-local.crt
 ```
 
-In more isolated clusters, these certificates can be in separate secrets, as long
-as the configuration information as to which secret to use is passed to the appropriate
-chart.
+Include this secret using `--set gitlab.registry.certificate.secret=gitlab-registry`
 
 ### SSH Host Keys
 
@@ -109,6 +107,8 @@ Generate a set of random 20 & 64 character alpha-numeric keys for Minio.
 ```
 kubectl create secret generic gitlab-minio --from-literal=accesskey=$(head -c 512 /dev/urandom | LC_CTYPE=C tr -cd 'a-zA-Z0-9' | head -c 20) --from-literal=secretkey=$(head -c 512 /dev/urandom | LC_CTYPE=C tr -cd 'a-zA-Z0-9' | head -c 64)
 ```
+
+Include this secret using `--set global.minio.credentials.secret=minio-secret`
 
 ## External services
 
