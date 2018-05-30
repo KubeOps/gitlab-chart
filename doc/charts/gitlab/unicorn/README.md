@@ -56,7 +56,6 @@ Table below contains all the possible charts configurations that can be supplied
 | uploads.bucket                | Object storage bucket name                     | nil                                              |
 | uploads.connection            | See [GitLab documentation][uplcon] for details | {}                                               |
 | minio.bucket                  | Name of storage bucket, when using Minio       | git-lfs                                          |
-| minio.credentials.secret      | Secret containing access/secret keys for Minio | gitlab-minio                                     |
 | minio.serviceName             | Name of Minio service                          | minio-svc                                        |
 | minio.port                    | Port for Minio service                         | 9000                                             |
 | registry.api.protocol         | Registry protocol                              | http                                             |
@@ -73,7 +72,7 @@ Table below contains all the possible charts configurations that can be supplied
 
 ## Chart configuration examples
 ### image.pullSecrets
-`pullSecrets` allow you to authenticate to a private registry to pull images for a pod. 
+`pullSecrets` allow you to authenticate to a private registry to pull images for a pod.
 
 Additional details about private registries and their authentication methods
 can be found in [the Kubernetes documentation](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod).
@@ -84,7 +83,7 @@ image:
   repository: my.unicorn.repository
   tag: latest
   pullPolicy: Always
-  pullSecrets: 
+  pullSecrets:
   - name: my-secret-name
   - name: my-secondary-secret-name
 ```

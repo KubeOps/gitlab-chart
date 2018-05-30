@@ -20,6 +20,8 @@ global:
     password: {}
   gitaly:
     authToken: {}
+  minio:
+    credentials: {}
   shell:
     authToken: {}
   # Outgoing email server settings

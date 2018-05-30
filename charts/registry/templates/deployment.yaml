@@ -76,6 +76,6 @@ spec:
                     path: certificate.crt
           {{- if .Values.minio.enabled }}
           - secret:
-              name: {{ .Values.minio.credentials.secret }}
+              name: {{ template "gitlab.minio.credentials.secret" . }}
           {{- end }}
 {{- end -}}

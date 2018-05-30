@@ -66,8 +66,6 @@ lfs:
 minio:
   enabled: true
   bucket: git-lfs
-  credentials:
-    secret: gitlab-minio
   serviceName: 'minio-svc'
   port: 9000
 registry:

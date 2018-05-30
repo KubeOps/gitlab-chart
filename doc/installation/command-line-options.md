@@ -115,7 +115,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | registry.replicas                            | Number of replicas                  | 1                    |
 | registry.minio.enabled                       | Enable minio flag                   | true                 |
 | registry.minio.bucket                        | Minio registry bucket name          | registry             |
-| registry.minio.credentials.secret            | Secret containing minio credentials | gitlab-minio         |
 | registry.service.annotations                 | Annotations to add to the `Service` | {}                   |
 
 ## Advanced minio configuration
@@ -126,7 +125,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | minio.imageTag                               | Minio image tag                     | RELEASE.2017-12-28T01-21-00Z |
 | minio.imagePullPolicy                        | Minio image pull policy             | Always                       |
 | minio.enabled                                | Minio enable flag                   | true                         |
-| minio.credentials.secret                     | Minio credentials secret            | gitlab-minio                 |
 | minio.mountPath                              | Minio config file mount path        | /export                      |
 | minio.replicas                               | Minio number of replicas            | 4                            |
 | minio.persistence.enabled                    | Minio enable persistence flag       | true                         |

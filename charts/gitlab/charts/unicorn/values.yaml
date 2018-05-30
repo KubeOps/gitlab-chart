@@ -112,8 +112,6 @@ uploads:
   # connection: {}
 minio:
   enabled: true
-  credentials:
-    secret: gitlab-minio
   serviceName: 'minio-svc'
   port: 9000
 registry:

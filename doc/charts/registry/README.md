@@ -64,11 +64,10 @@ Table below contains all the possible charts configurations that can be supplied
 | replicas                 | Number of replicas                      | 1                    |
 | minio.enabled            | Enable minio flag                       | true                 |
 | minio.bucket             | Minio registry bucket name              | registry             |
-| minio.credentials.secret | Secret containing minio credentials     | gitlab-minio         |
 
 ## Chart configuration examples
 ### pullSecrets
-`pullSecrets` allow you to authenticate to a private registry to pull images for a pod. 
+`pullSecrets` allow you to authenticate to a private registry to pull images for a pod.
 
 Additional details about private registries and their authentication methods
 can be found in [the Kubernetes documentation](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod).
@@ -79,7 +78,7 @@ image:
   repository: my.registry.repository
   tag: latest
   pullPolicy: Always
-  pullSecrets: 
+  pullSecrets:
   - name: my-secret-name
   - name: my-secondary-secret-name
 ```

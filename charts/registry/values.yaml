@@ -88,5 +88,3 @@ storage: {}
 minio:
   enabled: true
   bucket: registry
-  credentials:
-    secret: gitlab-minio
