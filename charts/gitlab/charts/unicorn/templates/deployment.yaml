@@ -149,9 +149,9 @@ spec:
           defaultMode: 0400
           sources:
           - secret:
-              name: {{ .Values.railsSecrets.secret }}
+              name: {{ template "gitlab.rails-secrets.secret" . }}
               items:
-                - key: {{ .Values.railsSecrets.key | quote }}
+                - key: secrets.yml
                   path: rails-secrets/secrets.yml
           - secret:
               name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}

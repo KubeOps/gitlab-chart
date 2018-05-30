@@ -58,7 +58,7 @@ $env:
   openid_connect_signing_key: |
 $(openssl genrsa 2048 | awk '{print "    " $0}')
 EOF
-  generate_secret_if_needed rails-secrets --from-file secrets.yml
+  generate_secret_if_needed {{ template "gitlab.rails-secrets.secret" . }} --from-file secrets.yml
 fi
 
 # Shell ssh host keys

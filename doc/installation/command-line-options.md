@@ -194,8 +194,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.sidekiq.gitaly.authToken.secret              | gitaly secret                                  | {.Release.Name}-gitaly-secret                                              |
 | gitlab.sidekiq.gitaly.authToken.key                 | key to gitaly token in gitaly secret           | token                                                      |
 | gitlab.sidekiq.replicas                             | Sidekiq replicas                               | 1                                                          |
-| gitlab.sidekiq.railsSecrets.secret                  | Secret containing rails secrets.yml            | rails-secrets                                              |
-| gitlab.sidekiq.railsSecrets.key                     | Key to contents of secrets.yml in rails secret | secrets.yml                                                |
 | gitlab.sidekiq.concurrency                          | Sidekiq default concurrency                    | 10                                                         |
 | gitlab.sidekiq.timeout                              | Sidekiq job timeout                            | 5                                                          |
 | gitlab.sidekiq.resources.requests.cpu               | Sidekiq minimum needed cpu                     | 100m                                                       |
@@ -214,8 +212,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.enabled                              | Unicorn enabled flag                           | true                                                       |
 | gitlab.unicorn.workerProcesses                      | Unicorn number of workers                      | 2                                                          |
 | gitlab.unicorn.workerTimeout                        | Unicorn worker timeout                         | 60                                                         |
-| gitlab.unicorn.railsSecrets.secret                  | Secret containing rails secrets.yml            | rails-secrets                                              |
-| gitlab.unicorn.railsSecrets.key                     | Key to contents of secrets.yml in rails secret | secrets.yml                                                |
 | gitlab.unicorn.redis.serviceName                    | Redis service name                             | redis                                                      |
 | gitlab.unicorn.redis.password.secret                | Redis secret                                   | gitlab-redis                                               |
 | gitlab.unicorn.redis.password.key                   | Key to redis password in redis secret          | redis-password                                             |
@@ -245,8 +241,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.migrations.redis.password.key                | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.migrations.psql.password.secret              | psql secret                                    | gitlab-postgres                                            |
 | gitlab.migrations.psql.password.key                 | key to psql password in psql secret            | psql-password                                              |
-| gitlab.migrations.railsSecrets.secret               | Secret containing rails secrets.yml            | rails-secrets                                              |
-| gitlab.migrations.railsSecrets.key                  | Key to contents of secrets.yml in rails secret | secrets.yml                                                |
 | gitlab.gitlab-runner.image                          | runner image                                   | gitlab/gitlab-runner:alpine-v10.5.0                        |
 | gitlab.gitlab-runner.enabled                        |                                                | redis                                                      |
 | gitlab.gitlab-runner.imagePullPolicy                | image pull policy                              | IfNotPresent                                               |

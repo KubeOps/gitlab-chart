@@ -72,9 +72,6 @@ trusted_proxies: []
 
 # Global defaults
 replicas: 1
-railsSecrets:
-  secret: rails-secrets
-  key: secrets.yml
 concurrency: 10
 timeout: 5
 resources:

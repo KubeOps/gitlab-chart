@@ -35,8 +35,6 @@ Table below contains all the possible charts configurations that can be supplied
 | metrics.enabled               | Toggle Prometheus metrics exporter             | true                                             |
 | ldap.servers                  | LDAP user authentication servers               | nil                                              |
 | omniauth.providers            | Omniauth providers                             | nil                                              |
-| railsSecrets.secret           | Secret containing rails secrets.yml            | rails-secrets                                    |
-| railsSecrets.key              | Key to contents of secrets.yml in rails secret | secrets.yml                                      |
 | redis.serviceName             | Redis service name                             | redis                                            |
 | redis.password.secret         | Redis secret                                   | gitlab-redis                                     |
 | redis.password.key            | Key to redis password in redis secret          | redis-password                                   |

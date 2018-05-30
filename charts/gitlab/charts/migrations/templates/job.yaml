@@ -75,9 +75,9 @@ spec:
           defaultMode: 0400
           sources:
           - secret:
-              name: {{ .Values.railsSecrets.secret }}
+              name: {{ template "gitlab.rails-secrets.secret" . }}
               items:
-                - key: {{ .Values.railsSecrets.key | quote }}
+                - key: secrets.yml
                   path: rails-secrets/secrets.yml
           - secret:
               name: {{ coalesce .Values.redis.password.secret .Values.global.redis.password.secret }}

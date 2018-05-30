@@ -38,8 +38,6 @@ Table below contains all the possible charts configurations that can be supplied
 | gitaly.authToken.key      | key to gitaly token in gitaly secret           | token                                            |
 | cron_jobs                 | Auxiliary cron jobs                            | {}                                               |
 | replicas                  | Sidekiq replicas                               | 1                                                |
-| railsSecrets.secret       | Secret containing rails secrets.yml            | rails-secrets                                    |
-| railsSecrets.key          | Key to contents of secrets.yml in rails secret | secrets.yml                                      |
 | concurrency               | Sidekiq default concurrency                    | 10                                               |
 | timeout                   | Sidekiq job timeout                            | 5                                                |
 | resources.requests.cpu    | Sidekiq minimum needed cpu                     | 100m                                             |
@@ -47,7 +45,7 @@ Table below contains all the possible charts configurations that can be supplied
 
 ## Chart configuration examples
 ### image.pullSecrets
-`pullSecrets` allow you to authenticate to a private registry to pull images for a pod. 
+`pullSecrets` allow you to authenticate to a private registry to pull images for a pod.
 
 Additional details about private registries and their authentication methods
 can be found in [the Kubernetes documentation](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod).
@@ -58,7 +56,7 @@ image:
   repository: my.sidekiq.repository
   tag: latest
   pullPolicy: Always
-  pullSecrets: 
+  pullSecrets:
   - name: my-secret-name
   - name: my-secondary-secret-name
 ```

@@ -15,8 +15,7 @@
 {{- $redisKey := coalesce .Values.redis.password.key .Values.global.redis.password.key -}}
 {{- $gitalySecret := include "gitlab.gitaly.authToken.secret" . -}}
 {{- $gitalyKey := include "gitlab.gitaly.authToken.key" . -}}
-{{- $railsSecretName := .Values.railsSecrets.secret -}}
-{{- $railsSecretKey  := .Values.railsSecrets.key | quote -}}
+{{- $railsSecretName := include "gitlab.rails-secrets.secret" . -}}
 {{- $metricsEnabled := .Values.metrics.enabled -}}
 {{- $metricsPort := .Values.metrics.port -}}
 {{- $metricsAnnotations := .Values.metrics.annotations -}}
@@ -194,7 +193,7 @@ spec:
           - secret:
               name: {{ $railsSecretName }}
               items:
-                - key: {{ $railsSecretKey }}
+                - key: secrets.yml
                   path: rails-secrets/secrets.yml
           - secret:
               name: {{ $gitalySecret }}
