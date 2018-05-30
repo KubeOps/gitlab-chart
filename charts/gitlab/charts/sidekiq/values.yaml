@@ -69,7 +69,8 @@ cron_jobs: {}
 trusted_proxies: []
 
 # Global defaults
-replicas: 1
+minReplicas: 1
+maxReplicas: 10
 concurrency: 10
 timeout: 5
 resources:
@@ -85,7 +86,8 @@ maxUnavailable: 1
 pods:
   - name: all-in-1
     concurrency: 10
-    replicas: 1
+    # minReplicas: 1
+    # maxReplicas: 10
     queues:
       - [post_receive, 5]
       - [merge, 5]
