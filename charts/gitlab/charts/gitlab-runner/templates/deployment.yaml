@@ -91,7 +91,7 @@ spec:
           sources:
             {{- if .Values.runners.cache }}
             - secret:
-                name: {{ .Values.runners.cache.secretName }}
+                name: {{ template "gitlab.minio.credentials.secret" . }}
                 items:
                   - key: accesskey
                     path: s3-access-key
