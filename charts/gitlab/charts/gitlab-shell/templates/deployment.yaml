@@ -101,7 +101,7 @@ spec:
           defaultMode: 0440
           sources:
             - secret:
-                name: {{ .Values.hostKeys.secret }}
+                name: {{ template "gitlab.gitlab-shell.hostKeys.secret" . }}
             - secret:
                 name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}
                 items:

@@ -65,4 +65,4 @@ fi
 ssh-keygen -A
 mkdir -p host_keys
 cp /etc/ssh/ssh_host_* host_keys/
-generate_secret_if_needed gitlab-shell-host-keys --from-file host_keys
+generate_secret_if_needed {{ template "gitlab.gitlab-shell.hostKeys.secret" . }} --from-file host_keys

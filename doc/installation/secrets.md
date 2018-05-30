@@ -72,6 +72,8 @@ Create the secret containing these certificates.
 kubectl create secret generic gitlab-shell-host-keys --from-file hostKeys
 ```
 
+Include this secret using `--set gitlab.shell.hostKeys.secret=gitlab-shell-host-keys`
+
 ### Redis password
 
 Generate a random 64 character alpha-numeric password for Redis.

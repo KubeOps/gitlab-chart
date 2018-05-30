@@ -24,6 +24,7 @@ global:
     credentials: {}
   shell:
     authToken: {}
+    hostKeys: {}
   railsSecrets: {}
   registry:
     certificate: {}
