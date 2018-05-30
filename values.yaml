@@ -20,6 +20,8 @@ global:
     password: {}
   gitaly:
     authToken: {}
+  shell:
+    authToken: {}
   # Outgoing email server settings
   smtp:
     enabled: false

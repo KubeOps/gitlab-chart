@@ -103,9 +103,9 @@ spec:
             - secret:
                 name: {{ .Values.hostKeys.secret }}
             - secret:
-                name: {{ .Values.authToken.secret }}
+                name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}
                 items:
-                  - key: {{ .Values.authToken.key }}
+                  - key: {{ template "gitlab.gitlab-shell.authToken.key" . }}
                     path: shell/.gitlab_shell_secret
             - secret:
                 name: {{ coalesce .Values.redis.password.secret .Values.global.redis.password.secret }}

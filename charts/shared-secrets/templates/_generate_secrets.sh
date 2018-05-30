@@ -27,7 +27,7 @@ generate_secret_if_needed {{ template "gitlab.psql.password.secret" . }} --from-
 {{ end }}
 
 # Gitlab shell
-generate_secret_if_needed gitlab-shell-secret --from-literal=secret=$(gen_random 'a-zA-Z0-9' 64)
+generate_secret_if_needed {{ template "gitlab.gitlab-shell.authToken.secret" . }} --from-literal={{ template "gitlab.gitlab-shell.authToken.key" . }}=$(gen_random 'a-zA-Z0-9' 64)
 
 {{- if not .Values.global.gitaly.authToken.secret }}
 # Gitaly secret

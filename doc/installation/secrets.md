@@ -90,6 +90,8 @@ Generate a random 64 character alpha-numeric secret for GitLab Shell.
 kubectl create secret generic gitlab-shell-secret --from-literal=secret=$(head -c 512 /dev/urandom | LC_CTYPE=C tr -cd 'a-zA-Z0-9' | head -c 64)
 ```
 
+Include this secret using `--set global.shell.secret=gitlab-shell-secret`
+
 ### Gitaly secret
 
 Generate a random 64 character alpha-numeric token for Gitaly.

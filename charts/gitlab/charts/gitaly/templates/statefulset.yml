@@ -136,9 +136,9 @@ spec:
                 - key: {{ coalesce .Values.authToken.key .Values.global.gitaly.authToken.key "token" }}
                   path: "gitaly_token"
           - secret:
-              name: {{ .Values.shell.authToken.secret }}
+              name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}
               items:
-                - key: {{ .Values.shell.authToken.key }}
+                - key: {{ template "gitlab.gitlab-shell.authToken.key" . }}
                   path: ".gitlab_shell_secret"
           - secret:
               name: {{ coalesce .Values.redis.password.secret .Values.global.redis.password.secret }}

@@ -28,7 +28,7 @@ helm install .  \
 
 ### Create VM with Omnibus GitLab
 
-Create a VM on your provider of choice, or locally. This was tested with VirtualBox, KVM, and Bhyve. 
+Create a VM on your provider of choice, or locally. This was tested with VirtualBox, KVM, and Bhyve.
 Ensure that the Gitaly instance will be reachable from the cluster.
 Install Ubuntu Server onto the VM that you have created. Ensure that `openssh-server` is installed, and that all packages are up to date.
 Configure networking and a hostname. Make note of the hostname/IP, and ensure it is both resolvable and reachable from your Kubernetes cluster.
@@ -41,9 +41,9 @@ Follow the installation instructions for [Omnibus GitLab][]. When you perform th
 Create a minimal `gitlab.rb` file to be placed at `/etc/gitlab/gitlab.rb`. Be _very_ explicit about what is enabled on this node, use the contents below.
 
 _**NOTE**: The values below should be replaced_
-- `AUTH_TOKEN` should be replaced with the value in the [`gitaly-secret` secret][gitaly-secret]
+- `AUTH_TOKEN` should be replaced with the value in the [gitaly secret][gitaly-secret]
 - `GITLAB_URL` should be replaced with the URL of the GitLab instance
-- `SHELL_TOKEN` should be replaced with the value in the [`gitlab-shell-secret` secret](../../installation/secrets.md#gitlab-shell-secret)
+- `SHELL_TOKEN` should be replaced with the value in the [gitlab shell secret](../../installation/secrets.md#gitlab-shell-secret)
 
 ```Ruby
 ## Gitaly

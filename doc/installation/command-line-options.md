@@ -161,7 +161,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.gitaly.authToken.key                         | Key to gitaly token in the secret              | token                                                      |
 | gitlab.gitaly.redis.password.secret                 | Redis secret containing redis password         | gitlab-redis                                               |
 | gitlab.gitaly.redis.password.key                    | Key to redis password in redis secret          | redis-password                                             |
-| gitlab.gitaly.shell.authToken.secret                | Shell secret                                   | gitlab-shell-secret                                        |
+| gitlab.gitaly.shell.authToken.secret                | Shell secret                                   | {Release.Name}-gitlab-shell-secret                                        |
 | gitlab.gitaly.shell.authToken.key                   | Shell key                                      | secret                                                     |
 | gitlab.gitaly.persistence.enabled                   | Gitaly enable persistence flag                 | true                                                       |
 | gitlab.gitaly.persistence.accessMode                | Gitaly persistence access mode                 | ReadWriteOnce                                              |
@@ -177,7 +177,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.gitlab-shell.service.internalPort            | Shell internal port                            | 22                                                         |
 | gitlab.gitlab-shell.service.annotations             | Annotations to add to the `Service`            | {}                                                         |
 | gitlab.gitlab-shell.enabled                         | Shell enable flag                              | true                                                       |
-| gitlab.gitlab-shell.authToken.secret                | Shell auth secret                              | gitlab-shell-secret                                        |
+| gitlab.gitlab-shell.authToken.secret                | Shell auth secret                              | {Release.Name}-gitlab-shell-secret                                        |
 | gitlab.gitlab-shell.authToken.key                   | Shell auth secret key                          | secret                                                     |
 | gitlab.gitlab-shell.unicorn.serviceName             | Unicorn service name                           | unicorn                                                    |
 | gitlab.gitlab-shell.redis.serviceName               | Redis service name                             | redis                                                      |
@@ -223,7 +223,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.redis.password.key                   | Key to redis password in redis secret          | redis-password                                             |
 | gitlab.unicorn.psql.password.secret                 | psql secret name                               | gitlab-postgres                                            |
 | gitlab.unicorn.psql.password.key                    | Key to psql password in psql secret            | psql-password                                              |
-| gitlab.unicorn.shell.authToken.secret               | Shell token secret                             | gitlab-shell-secret                                        |
+| gitlab.unicorn.shell.authToken.secret               | Shell token secret                             | {Release.Name}-gitlab-shell-secret                                        |
 | gitlab.unicorn.shell.authToken.key                  | Key to shell token in shell secret             | secret                                                     |
 | gitlab.unicorn.gitaly.serviceName                   | Gitaly service name                            | gitaly                                                     |
 | gitlab.unicorn.gitaly.authToken.secret              | Gitaly secret name                             | gitaly-secret                                              |

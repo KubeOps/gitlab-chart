@@ -21,7 +21,7 @@ global:
 
 enabled: true
 authToken:
-   secret: gitlab-shell-secret
+   secret: ""
    key: secret
 hostKeys:
   secret: gitlab-shell-host-keys

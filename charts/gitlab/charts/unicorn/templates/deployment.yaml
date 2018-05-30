@@ -154,9 +154,9 @@ spec:
                 - key: {{ .Values.railsSecrets.key | quote }}
                   path: rails-secrets/secrets.yml
           - secret:
-              name: {{ .Values.shell.authToken.secret }}
+              name: {{ template "gitlab.gitlab-shell.authToken.secret" . }}
               items:
-                - key: {{ default "secret" .Values.shell.authToken.key }}
+                - key: {{ template "gitlab.gitlab-shell.authToken.key" . }}
                   path: shell/.gitlab_shell_secret
           - secret:
               name: {{ template "gitlab.gitaly.authToken.secret" . }}

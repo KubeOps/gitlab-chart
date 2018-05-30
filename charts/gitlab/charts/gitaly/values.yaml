@@ -35,7 +35,7 @@ redis:
   password: {}
 shell:
   authToken:
-   secret: gitlab-shell-secret
+   secret: ""
    key: secret
 
 ## Enable prometheus metrics and set the port to scrape the
