@@ -42,10 +42,6 @@ redis:
   password: {}
 psql:
   password: {}
-shell:
-  authToken:
-    secret: ""
-    key: secret
 gitaly:
   # host: '0.0.0.0'
   # port: 8075

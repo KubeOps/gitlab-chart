@@ -17,9 +17,6 @@ global:
     password: {}
 
 enabled: true
-authToken:
-   secret: ""
-   key: secret
 unicorn:
   serviceName: unicorn
   # host: '0.0.0.0'
