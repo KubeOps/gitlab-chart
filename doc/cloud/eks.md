@@ -26,7 +26,7 @@ Follow our documentation on [manually creating persistent volumes](../installati
 
 Dynamic provisioning utilizes a Kubernetes provisioner, like `aws-ebs`, to automatically create persistent volumes to fulfill each claim. 
 
-Unfortunately on Amazon EKS, this is not very straight forward:
+With EKS, there are a few important details to keep in mind:
 
 1. Clusters are required to span multiple AZ's
 1. Kubernetes volume provisioners create volumes across zones without regard to which pod they belong to. This leads to scenarios where a pod with multiple volumes being unable to start due to the volumes being in different zones.
