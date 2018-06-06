@@ -8,7 +8,7 @@ For a fully functional GitLab instance, you will need a few resources before dep
 
 ## Creating the EKS cluster
 
-For the most up to date instructions, follow Amazon's [EKS cluster creation documentation]().
+For the most up to date instructions, follow Amazon's [EKS getting started guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html).
 
 ## Persistent volume management
 
@@ -35,7 +35,7 @@ Unfortunately on Amazon EKS, this is not very straight forward:
 The easiest way to solve this and still utilize dynamic provisioning is to utilize, or create, a Storage Class that is locked to a specific zone. 
 > **Note**: Restricting volumes to specific zone will cause GitLab and any other application using this Storage Class to only reside in that zone. For multiple zone support, utilize [manually provisioned volumes](#manual-provisioning-of-volumes).
 
-To create the storage class, download and edit Amazon EKS's [sample Storage Class]() and add the following line:
+To create the storage class, download and edit Amazon EKS's [sample Storage Class](https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html) and add the following parameter:
 
 ```yaml
 parameters: 
