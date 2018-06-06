@@ -17,7 +17,7 @@ We recommend creating your own [Storage Class][https://kubernetes.io/docs/concep
 
 For a production deploy of GitLab, we recommend you use [Persistent Volumes][pv] that have a reclaimPolicy set to `Retain` rather than `Delete`.  On some platforms like GKE, the default [Storage Class][https://kubernetes.io/docs/concepts/storage/storage-classes/] has a reclaimPolicy of `Delete`. Meaning that uninstalling GitLab, or deleting a PVC, will result in the persistent volume being completely deleted by an automated task that goes through and deletes the volume and disk from GCE.
 
-For example, create a new [Storage Class][https://kubernetes.io/docs/concepts/storage/storage-classes/] object in your GKE cluster:
+For example, create a new [Storage Class][] object in your GKE cluster:
 
 ```
 kind: StorageClass
