@@ -64,7 +64,7 @@ gcloud container clusters get-credentials <cluster-name> --zone <zone> --project
 
 #### Connect to EKS cluster
 
-For the most up to date instructions, follow the Amazon EKS documentation on [connecting to a cluster](#UPDATEME).
+For the most up to date instructions, follow the Amazon EKS documentation on [connecting to a cluster](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html#eks-configure-kubectl).
 
 > Note: **UPDATE THIS LINK**
 
