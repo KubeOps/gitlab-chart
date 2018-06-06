@@ -7,7 +7,7 @@ This document is intended to provide an overview of working with [Helm][helm] fo
 To make use of Helm, you must have a [Kubernetes][k8s-io] cluster. Follow the [dependencies documentation](../installation/dependencies.md)
 to ensure you can access your cluster using `kubectl`.
 
-Helm consists of two parts, `helm` client and `tiller` server inside Kubernetes. 
+Helm consists of two parts, `helm` client and `tiller` server inside Kubernetes.
 
 > **Note**: If you are not able to run tiller in your cluster, for example on OpenShift, it is possible to use [tiller locally](#local-tiller) and avoid deploying it into the cluster. This should only be used when Tiller cannot be normally deployed.
 
