@@ -30,10 +30,6 @@ Table below contains all the possible charts configurations that can be supplied
 | service.internalPort         | Gitaly internal port                   | 8075                                     |
 | enabled                      | Gitaly enable flag                     | true                                     |
 | serviceName                  | Gitaly service name                    | gitaly                                   |
-| authToken.secret             | Gitaly secret name                     | gitaly-secret                            |
-| authToken.key                | Key to gitaly token in the secret      | token                                    |
-| shell.authToken.secret       | Shell secret                           | gitlab-shell-secret                      |
-| shell.authToken.key          | Shell key                              | secret                                   |
 | persistence.enabled          | Gitaly enable persistence flag         | true                                     |
 | persistence.accessMode       | Gitaly persistence access mode         | ReadWriteOnce                            |
 | persistence.size             | Gitaly persistence volume size         | 50Gi                                     |
@@ -72,9 +68,6 @@ redis:
   host: redis.example.local
   serviceName: redis
   port: 6379
-  password:
-    secret: gitlab-redis
-    key: redis-password
 ```
 
 #### host
@@ -89,11 +82,9 @@ The name of the `service` which is operating the Redis database. If this is pres
 
 The port on which to connect to the Redis server. Defaults to `6379`.
 
-#### password
+#### credentials
 
-The `password` atribute for Redis has to sub keys:
-- `secret` defines the name of the kubernetes `Secret` to pull from
-- `key` defines the name of the key in the above secret that contains the password.
+Credentials will be sourced from `global.redis.password` values.
 
 ### Unicorn
 
@@ -122,17 +113,7 @@ The following values are used to configure the Gitaly Pods.
 
 #### authToken
 
-Gitaly uses an Auth Token to authenticate with the Unicorn and Sidekiq services. Share the token with Gitaly, Unicorn, and Sidekiq using a shared Secret.
-
-```YAML
-authToken:
-  secret: gitaly-secret
-  key: token
-```
-
-The `authToken` attribute has two sub keys:
-- `secret` defines the name of the kubernetes `Secret` to pull from
-- `key` defines the name of the key in the above secret that contains the authToken.
+Gitaly uses an Auth Token to authenticate with the Unicorn and Sidekiq services. Auth Token secret and key are sourced from the `global.gitaly.authToken` value.
 
 ## GitLab Shell
 
@@ -140,18 +121,7 @@ Gitaly container has a copy of GitLab Shell, which has some configuration that c
 
 #### shell.authToken
 
-GitLab Shell uses an Auth Token in its communication with Unicorn. Share the token with GitLab Shell and Unicorn using a shared Secret.
-
-```YAML
-shell:
-  authToken:
-   secret: gitlab-shell-secret
-   key: secret
-```
-
-The `authToken` attribute has two sub keys:
-- `secret` defines the name of the kubernetes `Secret` to pull from
-- `key` defines the name of the key in the above secret that contains the authToken.
+Shell authToken is sourced from `global.shell.authToken` values.
 
 ### Git Repository Persistence
 

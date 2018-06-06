@@ -32,8 +32,6 @@ Table below contains all the possible charts configurations that can be supplied
 | psql.password.secret      | psql password secret                           | gitlab-postgres                                  |
 | psql.password.key         | key to psql password in psql secret            | psql-password                                    |
 | gitaly.serviceName        | gitaly service name                            | gitaly                                           |
-| gitaly.authToken.secret   | gitaly secret                                  | gitaly-secret                                    |
-| gitaly.authToken.key      | key to gitaly token in gitaly secret           | token                                            |
 | cron_jobs                 | Auxiliary cron jobs                            | {}                                               |
 | replicas                  | Sidekiq replicas                               | 1                                                |
 | concurrency               | Sidekiq default concurrency                    | 10                                               |

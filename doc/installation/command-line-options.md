@@ -108,8 +108,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | registry.authEndpoint                        | Auth endpoint                       | Undefined by default |
 | registry.tokenService                        | JWT token service                   | container_registry   |
 | registry.tokenIssuer                         | JWT token issuer                    | gitlab-issuer        |
-| registry.certificate.secret                  | JWT certificate                     | gitlab-registry      |
-| registry.certificate.key                     | JWT certificate private key         | registry-auth.crt    |
 | registry.replicas                            | Number of replicas                  | 1                    |
 | registry.minio.enabled                       | Enable minio flag                   | true                 |
 | registry.minio.bucket                        | Minio registry bucket name          | registry             |
@@ -216,8 +214,6 @@ Tables below contain all the possible charts configurations that can be supplied
 | gitlab.unicorn.registry.api.serviceName             | Registry service name                          | registry                                                   |
 | gitlab.unicorn.registry.api.port                    | Registry port                                  | 5000                                                       |
 | gitlab.unicorn.registry.tokenIssuer                 | Registry token issuer                          | gitlab-issuer                                              |
-| gitlab.unicorn.registry.certificate.secret          | Registry certificate                           | gitlab-registry                                            |
-| gitlab.unicorn.registry.certificate.key             | Registry certificate key                       | registry-auth.key                                          |
 | gitlab.unicorn.resources.requests.cpu               | Unicorn minimum cpu                            | 200m                                                       |
 | gitlab.unicorn.resources.requests.memory            | Unicorn minimum memory                         | 1.4G                                                       |
 | gitlab.unicorn.workhorse.sentryDSN                  | DSN for Sentry instance for error reporting    | ""                                                         |

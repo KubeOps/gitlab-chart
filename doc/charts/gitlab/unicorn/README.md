@@ -41,8 +41,6 @@ Table below contains all the possible charts configurations that can be supplied
 | shell.authToken.secret        | Shell token secret                             | gitlab-shell-secret                              |
 | shell.authToken.key           | Key to shell token in shell secret             | secret                                           |
 | gitaly.serviceName            | Gitaly service name                            | gitaly                                           |
-| gitaly.authToken.secret       | Gitaly secret name                             | gitaly-secret                                    |
-| gitaly.authToken.key          | Key to gitaly token in gitaly secret           | token                                            |
 | lfs.enabled                   | Enable Git LFS storage                         | true                                             |
 | lfs.proxy_download            | Proxy all LFS downloads through GitLab         | true                                             |
 | lfs.bucket                    | Object storage bucket name                     | nil                                              |
@@ -58,8 +56,6 @@ Table below contains all the possible charts configurations that can be supplied
 | registry.api.serviceName      | Registry service name                          | registry                                         |
 | registry.api.port             | Registry port                                  | 5000                                             |
 | registry.tokenIssuer          | Registry token issuer                          | gitlab-issuer                                    |
-| registry.certificate.secret   | Registry certificate                           | gitlab-registry                                  |
-| registry.certificate.key      | Registry certificate key                       | registry-auth.key                                |
 | resources.requests.cpu        | Unicorn minimum cpu                            | 200m                                             |
 | resources.requests.memory     | Unicorn minimum memory                         | 1.4G                                             |
 | extras.google_analytics_id    | Google Analytics Id for frontend               | nil                                              |
