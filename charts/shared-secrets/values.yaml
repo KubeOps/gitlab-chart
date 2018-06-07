@@ -1,6 +1,6 @@
 image:
   repository: registry.gitlab.com/gitlab-org/build/cng/kubectl
-  tag: latest
+  tag: move-to-debian-slim
   # pullPolicy: Always
   pullSecrets: []
 resources: {}
