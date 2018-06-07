@@ -23,7 +23,7 @@ Table below contains all the possible charts configurations that can be supplied
 | Parameter                 | Description                                    | Default                                          |
 | ---                       | ---                                            | ---                                              |
 | image.repository          | Sidekiq image repository                       | registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee |
-| image.tag                 | Sidekiq image tag                              | latest                                           |
+| image.tag                 | Sidekiq image tag                              |                                                  |
 | image.pullPolicy          | Sidekiq image pull policy                      | Always                                           |
 | image.pullSecrets         | Secrets for the image repository               |                                                  |
 | enabled                   | Sidekiq enabled flag                           | true                                             |
@@ -50,7 +50,6 @@ Below is an example use of `pullSecrets`
 ```YAML
 image:
   repository: my.sidekiq.repository
-  tag: latest
   pullPolicy: Always
   pullSecrets:
   - name: my-secret-name

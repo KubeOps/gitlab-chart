@@ -4,12 +4,15 @@
 {{- $releaseName := .Release.Name -}}
 {{- $releaseService := .Release.Service -}}
 {{- $fullname := printf "%s-%s" $releaseName $name | trunc 63 | trimSuffix "-" -}}
-{{- $image := printf "%s:%s" .Values.image.repository .Values.image.tag -}}
-{{- $imagePullPolicy := .Values.imagePullPolicy -}}
+{{- $image := printf "%s:%s" .Values.image.repository (coalesce .Values.image.tag (include "gitlab.versionTag" . )) -}}
 {{- $concurrency := .Values.concurrency -}}
 {{- $timeout := .Values.timeout -}}
 {{- $resources := .Values.resources -}}
 {{- $nodeSelector := .Values.nodeSelector -}}
+{{- $redisSecret := coalesce .Values.redis.password.secret .Values.global.redis.password.secret -}}
+{{- $redisKey := coalesce .Values.redis.password.key .Values.global.redis.password.key -}}
+{{- $minioEnabled := .Values.minio.enabled -}}
+{{- $minioSecret := .Values.minio.credentials.secret -}}
 {{- $redisSecret := include "gitlab.redis.password.secret" . -}}
 {{- $redisKey := include "gitlab.redis.password.key" . -}}
 {{- $gitalySecret := include "gitlab.gitaly.authToken.secret" . -}}
@@ -94,7 +97,7 @@ spec:
             readOnly: false
         - name: dependencies
           image: "{{ $image }}"
-          imagePullPolicy: {{ $imagePullPolicy }}
+          {{ template "gitlab.imagePullPolicy" $ }}
           args:
             - /scripts/wait-for-deps
           env:
@@ -119,7 +122,7 @@ spec:
       containers:
         - name: {{ $name }}
           image: "{{ $image }}"
-          imagePullPolicy: {{ $imagePullPolicy }}
+          {{ template "gitlab.imagePullPolicy" $ }}
           env:
 {{- if $metricsEnabled }}
             - name: prometheus_multiproc_dir
@@ -208,6 +211,15 @@ spec:
               items:
                 - key: {{ template "gitlab.psql.password.key" $ }}
                   path: postgres/psql-password
+          {{- if $minioEnabled }}
+          - secret:
+              name: {{ $minioSecret }}
+              items:
+                - key: accesskey
+                  path: minio/accesskey
+                - key: secretkey
+                  path: minio/secretkey
+          {{- end }}
           {{- if and $.Values.global.smtp.enabled $.Values.global.smtp.authentication }}
           - secret:
               name: {{ $.Values.global.smtp.password.secret | required "Missing required secret containing the SMTP password. Make sure to set `global.smtp.password.secret`" }}

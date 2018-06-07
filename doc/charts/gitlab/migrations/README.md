@@ -27,7 +27,7 @@ Table below contains all the possible charts configurations that can be supplied
 | Parameter             | Description                                    | Default                                        |
 | ---                   | ---                                            | ---                                            |
 | image.repository      | Migrations image repository                    | registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ee |
-| image.tag             | Migrations image tag                           | latest                                         |
+| image.tag             | Migrations image tag                           |                                                |
 | image.pullPolicy      | Migrations pull policy                         | Always                                         |
 | image.pullSecrets     | Secrets for the image repository               |                                                |
 | enabled               | Migrations enable flag                         | true                                           |
@@ -47,7 +47,6 @@ Below is an example use of `pullSecrets`
 ```YAML
 image:
   repository: my.migrations.repository
-  tag: latest
   pullPolicy: Always
   pullSecrets:
   - name: my-secret-name
