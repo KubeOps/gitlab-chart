@@ -55,7 +55,7 @@ Create a secret containing these certificates.
 kubectl create secret generic gitlab-registry --from-file=registry-auth.key=certs/registry-example-local.key --from-file=registry-auth.crt=certs/registry-example-local.crt
 ```
 
-Include this secret using `--set gitlab.registry.certificate.secret=gitlab-registry`
+Include this secret using `--set global.registry.certificate.secret=gitlab-registry`
 
 ### SSH Host Keys
 
@@ -75,7 +75,7 @@ Create the secret containing these certificates.
 kubectl create secret generic gitlab-shell-host-keys --from-file hostKeys
 ```
 
-Include this secret using `--set gitlab.shell.hostKeys.secret=gitlab-shell-host-keys`
+Include this secret using `--set global.shell.hostKeys.secret=gitlab-shell-host-keys`
 
 ### Redis password
 
