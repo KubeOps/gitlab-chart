@@ -84,7 +84,7 @@ should be at least 6 characters long. In the following command, replace
 `<your password>` with the value.
 
 ```
-kubectl create secret generic gitlab-initial-root-password --from-literal=password=<your password>
+kubectl create secret generic gitlab-gitlab-initial-root-password --from-literal=password=<your password>
 ```
 
 ### Redis password

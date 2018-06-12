@@ -148,10 +148,11 @@ You can access the GitLab instance by visiting the domain specified during
 installation. If you manually created the secret for initial root password, you
 can use that to sign in as `root` user. If not, Gitlab would've automatically
 created a random password for `root` user. This can be extracted by the
-following command
+following command (replace `<name>` by name of the release - which is `gitlab`
+if you used the command above)
 
 ```
-kubectl get secret gitlab-initial-root-password -o yaml | grep "password: " | awk '{print $NF}' | base64 --decode
+kubectl get secret <name>-gitlab-initial-root-password -o yaml | grep "password: " | awk '{print $NF}' | base64 --decode
 ```
 
 [secret-gl-certs]: secrets.md#gitlab-certificates

@@ -54,8 +54,8 @@ spec:
             - name: GITLAB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gitlab-initial-root-password
-                  key: password
+                  name: {{ template "gitlab.migrations.initialRootPassword.secret" . }}
+                  key: {{ template "gitlab.migrations.initialRootPassword.key" . }}
           volumeMounts:
             - name: migrations-config
               mountPath: '/var/opt/gitlab/templates'
