@@ -152,7 +152,7 @@ following command (replace `<name>` by name of the release - which is `gitlab`
 if you used the command above)
 
 ```
-kubectl get secret <name>-gitlab-initial-root-password -o yaml | grep "password: " | awk '{print $NF}' | base64 --decode
+kubectl get secret <name>-gitlab-initial-root-password -ojsonpath={.data.password} | base64 -d
 ```
 
 [secret-gl-certs]: secrets.md#gitlab-certificates
