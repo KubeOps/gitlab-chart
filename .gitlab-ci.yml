@@ -35,7 +35,6 @@ variables:
   POSTGRES_PASSWORD: testing-password
   POSTGRES_ENABLED: "false"
   POSTGRES_DB: $CI_ENVIRONMENT_SLUG
-  ROOT_PASSWORD: "balusrandompassword"
 
 stages:
   - changelog

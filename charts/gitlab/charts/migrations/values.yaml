@@ -5,7 +5,7 @@ image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ee
   pullSecrets: []
   # pullPolicy: IfNotPresent
-  tag: branch-initia-root-password-variable
+  # tag: latest
 enabled: true
 initialRootPassword: {}
 redis:
