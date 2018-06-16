@@ -121,17 +121,18 @@ By default, the Helm charts use the Enterprise Edition of GitLab. If desired, yo
 ```
 
 ## Deploy using helm
-
 Once you have all of your configuration options collected, we can get any dependencies and
-run helm. In this example, we've named our helm release "gitlab".
+run helm. In this example, we've named our helm release "gitlab". We are going to create a namespace `gitlab` in order to install our chart:
 
 ```
+kubectl create namespace gitlab
 helm dependencies update
 helm upgrade --install gitlab . \
   --timeout 600 \
   --set global.hosts.domain=example.local \
   --set global.hosts.externalIP=10.10.10.10 \
-  --set certmanager-issuer.email=me@example.local
+  --set certmanager-issuer.email=me@example.local \
+  --namespace gitlab
 ```
 
 ## Monitoring the Deployment
