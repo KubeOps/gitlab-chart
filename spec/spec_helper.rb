@@ -1,5 +1,4 @@
 require 'aws-sdk-s3'
-require 'inifile'
 require 'open-uri'
 require 'open3'
 require 'capybara/rspec'
@@ -78,13 +77,11 @@ def ensure_backups_on_object_storage
   end
 end
 
-s3cfg=IniFile.load("#{Dir.home}/.s3cfg")["default"]
-
 conf = {
-  region: s3cfg['region'] || 'us-east-1',
-  access_key_id: s3cfg['access_key'],
-  secret_access_key: s3cfg['secret_key'],
-  endpoint: s3cfg['website_endpoint'],
+  region: ENV['S3_REGION'] || 'us-east-1',
+  access_key_id: ENV['S3_ACCESS_KEY'],
+  secret_access_key: ENV['S3_SECRET_KEY'],
+  endpoint: S3['S3_ENDPOINT'],
   force_path_style: true
 }
 
