@@ -43,6 +43,7 @@ stages:
   - staging
   - canary
   - stable
+  - specs
   - qa
   - cleanup
 
@@ -72,6 +73,7 @@ review:
     - create_secret
     - deploy
     - echo "export QA_ENVIRONMENT_URL=gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables
+    - echo $KUBE_CONFIG
   artifacts:
     paths:
     - variables
@@ -199,6 +201,30 @@ stable:
       - master
     kubernetes: active
 
+specs:
+  image: registry.gitlab.com/gitlab-org/build/cng/kubectl:latest
+  stage: specs
+  services:
+  - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    GITLAB_ROOT_DOMAIN: $CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
+    GITLAB_PASSWORD: $ROOT_PASSWORD
+    KUBE_CONFIG: $KUBE_CONFIG
+  script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl ca-certificates unzip
+    - curl -LsO https://storage.googleapis.com/kubernetes-release/release/v1.9.3/bin/linux/amd64/kubectl
+    - chmod +x kubectl
+    - echo $KUBE_CA_PEM_FILE
+    - echo $KUBE_CONFIG
+    - echo $KUBE_CA_PEM
+    - mkdir -p $HOME/.kube && echo $KUBE_CONFIG > $HOME/.kube/config
+    - mv kubectl /usr/local/bin/kubectl
+    - kubectl get pods
+    - bundle install
+    - bundle exec rspec -c -f d spec
 qa:
   image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
   stage: qa
