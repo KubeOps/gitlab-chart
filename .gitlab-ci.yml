@@ -43,6 +43,7 @@ stages:
   - staging
   - canary
   - stable
+  - specs
   - qa
   - cleanup
 
@@ -199,6 +200,30 @@ stable:
       - master
     kubernetes: active
 
+specs:
+  image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
+  stage: specs
+  services:
+  - docker:dind
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
+    on_stop: stop_review
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    GITLAB_ROOT_DOMAIN: $CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
+    GITLAB_PASSWORD: $ROOT_PASSWORD
+    S3_ENDPOINT: ${CI_ENVIRONMENT_SLUG}-minio-svc:9000
+  script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl ca-certificates unzip
+    - curl -LsO https://storage.googleapis.com/kubernetes-release/release/v1.9.3/bin/linux/amd64/kubectl
+    - chmod +x kubectl
+    - mv kubectl /usr/local/bin/kubectl
+    - kubectl get deployments
+    - bundle install
+    - bundle exec rspec -c -f d spec
 qa:
   image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
   stage: qa
@@ -321,6 +346,7 @@ changelog_manager:
       --set gitlab.unicorn.resources.requests.cpu=200m \
       --set gitlab.sidekiq.resources.requests.cpu=100m \
       --set gitlab.gitlab-shell.resources.requests.cpu=100m \
+      --set gitlab.task-runner.enabled=true \
       --set redis.resources.requests.cpu=100m \
       --set minio.resources.requests.cpu=100m \
       --namespace="$KUBE_NAMESPACE" \
