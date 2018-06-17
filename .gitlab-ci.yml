@@ -43,6 +43,7 @@ stages:
   - staging
   - canary
   - stable
+  - specs
   - qa
   - cleanup
 
@@ -199,6 +200,19 @@ stable:
       - master
     kubernetes: active
 
+specs:
+  image: ahmadposten/gitlab-task-runner-test2 # registry.gitlab.com/gitlab-org/build/cng/gitlab-task-runner-ee
+  stage: specs
+  services:
+  - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    GITLAB_ROOT_DOMAIN: $CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
+    GITLAB_PASSWORD: $ROOT_PASSWORD
+  script:
+    - bundle install
+    - bundle exec rspec -c -f d spec
 qa:
   image: registry.gitlab.com/gitlab-org/gitlab-omnibus-builder:ruby_docker-0.0.7
   stage: qa
