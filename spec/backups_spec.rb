@@ -47,7 +47,39 @@ describe "Restoring a backup" do
       stdout, status = Open3.capture2e("docker pull #{registry_url}/root/testproject1/master:d88102fe7cf105b72643ecb9baf41a03070c9f1b")
       fail "Pulling image failed: #{stdout}" unless status.success?
     end
+
+  end
+
+  describe 'Backups' do
+    it 'Should be able to backup an identical tar' do
+      stdout, status = backup_instance
+      fail stdout unless status.success?
+
+      ObjectStorage.get_object(
+        response_target: '/tmp/original_backup.tar',
+        bucket: 'gitlab-backups',
+        key: '0_11.0.0-pre_gitlab_backup.tar'
+      )
+
+      cmd = 'mkdir -p /tmp/original_backup && tar -xf /tmp/original_backup.tar -C /tmp/original_backup'
+      stdout, status = Open3.capture2e(cmd)
+      fail stdout unless status.success?
+
+      ObjectStorage.get_object(
+        response_target: '/tmp/test_generated_backup.tar',
+        bucket: 'gitlab-backups',
+        key: 'test-backup_gitlab_backup.tar'
+      )
+      cmd = 'mkdir -p /tmp/test_backup && tar -xf /tmp/test_generated_backup.tar -C /tmp/test_backup'
+      stdout, status = Open3.capture2e(cmd)
+      fail stdout unless status.success?
+
+      Dir.glob("/tmp/original_backup/*") do |file|
+        next if File.basename(file) == "backup_information.yml"
+
+        expect(File.exist?("/tmp/test_backup/#{File.basename(file)}")).to be_truthy
+        expect(File.size(file) / 1024).to eq(File.size("/tmp/test_backup/#{File.basename(file)}") / 1024)
+      end
+    end
   end
 end
-
-

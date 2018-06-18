@@ -32,6 +32,13 @@ def restore_from_backup
   return [stdout, status]
 end
 
+def backup_instance
+  cmd = full_command("backup-utility --backup -t test-backup")
+  stdout, status = Open3.capture2e(cmd)
+
+  return [stdout, status]
+end
+
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: { args: %w(headless disable-gpu) }
