@@ -12,12 +12,14 @@ describe "Restoring a backup" do
 
     it 'Home page should show projects' do
       visit '/'
+      page.save_screenshot("/tmp/screenshots/1.png")
       expect(page).to have_content 'Projects'
       expect(page).to have_content 'Administrator / testproject1'
     end
 
     it 'Navigating to testproject1 repo should work' do
       visit '/root/testproject1'
+      page.save_screenshot("/tmp/screenshots/2.png")
       expect(page).to have_content 'Dockerfile'
     end
 
@@ -75,10 +77,7 @@ describe "Restoring a backup" do
       fail stdout unless status.success?
 
       Dir.glob("/tmp/original_backup/*") do |file|
-        next if File.basename(file) == "backup_information.yml"
-
         expect(File.exist?("/tmp/test_backup/#{File.basename(file)}")).to be_truthy
-        expect(File.size(file) / 1024).to eq(File.size("/tmp/test_backup/#{File.basename(file)}") / 1024)
       end
     end
   end

@@ -13,15 +13,17 @@ def sign_in
   fill_in 'Username or email', with: 'root'
   fill_in 'Password', with: ENV['GITLAB_PASSWORD']
   click_button 'Sign in'
+  page.save_screenshot("/tmp/screenshots/sign_in.png")
 end
 
 def gitlab_url
   protocol = ENV['PROTOCOL'] || 'https'
-  "#{protocol}://gitlab.#{ENV['GITLAB_ROOT_DOMAIN']}"
+  instance_url = ENV['GITLAB_URL'] || "#{ENV['GITLAB_ROOT_DOMAIN']}}"
+  "#{protocol}://#{instance_url}"
 end
 
 def registry_url
-  return "registry.#{ENV['GITLAB_ROOT_DOMAIN']}"
+  ENV['REGISTRY_URL'] || "registry.#{ENV['GITLAB_ROOT_DOMAIN']}"
 end
 
 def restore_from_backup
@@ -41,7 +43,7 @@ end
 
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w(headless disable-gpu) }
+    chromeOptions: { args: %w(headless disable-gpu no-sandbox disable-dev-shm-usage) }
   )
 
   Capybara::Selenium::Driver.new app,
@@ -69,7 +71,7 @@ end
 
 def pod_name
   if ENV['RELEASE_NAME']
-    release_filter="-l #{ENV['RELEASE_NAME']}"
+    release_filter="-l release=#{ENV['RELEASE_NAME']}"
   end
   release_filter ||= ""
 
