@@ -5,3 +5,5 @@ gem 'aws-sdk-s3'
 gem 'capybara'
 gem 'selenium-webdriver'
 gem 'chromedriver-helper'
+gem "rugged"
+gem "activesupport"
