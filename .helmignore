@@ -25,6 +25,8 @@ doc/
 images/
 certs/
 scripts/
+spec/
+build/
 *.md
 CHANGELOG
 changelogs/
