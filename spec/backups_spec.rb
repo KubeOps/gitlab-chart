@@ -85,24 +85,23 @@ describe "Restoring a backup" do
         if File.extname(file) == 'tar'
           cmd = "tar -xf #{file} -C /tmp/original_backup"
           stdout, status = Open3.capture2e(cmd)
-          if ! status.success?
-            puts file
-          end
           fail stdout unless status.success?
 
-          cmd = "tar -xf /tmp/test_backup/#{File.basename(file)} -C /tmp/test_backup"
+          cmd = "tar -xf #{file.gsub('original_backup', 'test_backup')} -C /tmp/test_backup"
           stdout, status = Open3.capture2e(cmd)
-          if ! status.success?
-            puts "test backup #{file}"
-          end
           fail stdout unless status.success?
         end
       end
 
       Dir.glob("/tmp/original_backup/**/*") do |file|
-        next unless File.extname(file) == 'tar'
-        expect(File.exist?("/tmp/test_backup/#{File.basename(file)}")).to be_truthy
-        expect(MD5.md5(File.read(file))).to eq(MD5.md5(File.read("/tmp/test_backup/#{File.basename(file)}")))
+        next if ['tar', '.gz'].include? File.extname(file)
+        next if File.directory?(file)
+
+        test_counterpart = file.gsub('original_backup', 'test_backup')
+
+        expect(File.exist?(test_counterpart)).to be_truthy, "Expected #{test_counterpart} to exist"
+        expect(Digest::MD5.hexdigest(File.read(file))).to eq(Digest::MD5.hexdigest(File.read(test_counterpart))),
+          "Expected #{file} to equal #{test_counterpart}"
       end
     end
   end
