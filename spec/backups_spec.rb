@@ -60,7 +60,7 @@ describe "Restoring a backup" do
       stdout, status = backup_instance
       fail stdout unless status.success?
 
-      ObjectStorage.get_object(
+      object_storage.get_object(
         response_target: '/tmp/original_backup.tar',
         bucket: 'gitlab-backups',
         key: '0_11.0.0-pre_gitlab_backup.tar'
@@ -70,7 +70,7 @@ describe "Restoring a backup" do
       stdout, status = Open3.capture2e(cmd)
       fail stdout unless status.success?
 
-      ObjectStorage.get_object(
+      object_storage.get_object(
         response_target: '/tmp/test_generated_backup.tar',
         bucket: 'gitlab-backups',
         key: 'test-backup_gitlab_backup.tar'
