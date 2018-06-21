@@ -105,7 +105,7 @@ review:
     - echo "export GITLAB_ROOT_DOMAIN=$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"        >> variables
     - echo "export GITLAB_URL=gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"         >> variable
     - echo "export REGISTRY_URL=registry-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"     >> variables
-    - echo "export S3_ENDPOINT=https://minio-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables"
+    - echo "export S3_ENDPOINT=https://minio-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables
   artifacts:
     paths:
     - variables
