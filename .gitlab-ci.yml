@@ -105,7 +105,7 @@ review:
     - echo "export GITLAB_ROOT_DOMAIN=$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"        >> variables
     - echo "export GITLAB_URL=gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"         >> variable
     - echo "export REGISTRY_URL=registry-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN"     >> variables
-    - echo "export S3_ENDPOINT=https://minio-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables"
+    - echo "export S3_ENDPOINT=https://minio-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN" >> variables
   artifacts:
     paths:
     - variables
@@ -246,10 +246,10 @@ specs:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://docker:2375
     GITLAB_PASSWORD: $ROOT_PASSWORD
-    S3_ENDPOINT: https://minio-${CI_ENVIRONMENT_SLUG}.$AUTO_DEVOPS_DOMAIN
     RELEASE_NAME: $CI_ENVIRONMENT_SLUG
     S3_CONFIG_PATH: /etc/gitlab/minio
   script:
+    - cat variables
     - source variables
     - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
     - curl -sSL https://get.docker.com/ | sh
