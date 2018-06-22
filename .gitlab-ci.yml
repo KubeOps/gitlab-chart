@@ -258,7 +258,7 @@ stable:
     - bundle install --without non_test
     - bundle exec rspec -c -f d spec
 
-.review_specs:
+review_specs:
   <<: *specs
   environment:
     name: review/$CI_COMMIT_REF_NAME
@@ -267,7 +267,7 @@ stable:
     refs:
       - master
 
-.production_specs:
+production_specs:
   <<: *specs
   environment:
     name: production
