@@ -55,8 +55,7 @@ module Gitlab
     end
 
     def run_migrations
-      rails_dir = ENV['RAILS_DIR'] || '/home/git/gitlab'
-      cmd = full_command("cd #{rails_dir} && #{rails_dir}/bin/rake db:migrate")
+      cmd = full_command("gitlab-rake db:migrate'")
 
       stdout, status = Open3.capture2e(cmd)
       return [stdout, status]
