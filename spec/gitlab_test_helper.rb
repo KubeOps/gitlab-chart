@@ -55,7 +55,7 @@ module Gitlab
     end
 
     def run_migrations
-      cmd = full_command("gitlab-rake db:migrate'")
+      cmd = full_command("gitlab-rake db:migrate")
 
       stdout, status = Open3.capture2e(cmd)
       return [stdout, status]
