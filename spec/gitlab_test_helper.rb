@@ -54,6 +54,13 @@ module Gitlab
       return [stdout, status]
     end
 
+    def backup_instance
+      cmd = full_command("backup-utility --backup -t test-backup")
+      stdout, status = Open3.capture2e(cmd)
+
+      return [stdout, status]
+    end
+
     def run_migrations
       cmd = full_command("gitlab-rake db:migrate")
 
