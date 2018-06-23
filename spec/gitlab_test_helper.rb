@@ -54,17 +54,9 @@ module Gitlab
       return [stdout, status]
     end
 
-    def restore_from_backup
-      backup = ENV['BACKUP_TIMESTAMP'] || '0_11.0.0-pre'
-      cmd = full_command("backup-utility --restore -t #{backup}")
-      stdout, status = Open3.capture2e(cmd)
-
-      return [stdout, status]
-    end
-
     def run_migrations
       rails_dir = ENV['RAILS_DIR'] || '/home/git/gitlab'
-      cmd = full_command("#{rails_dir}/bin/rake db:migrate")
+      cmd = full_command("cd #{rails_dir} && #{rails_dir}/bin/rake db:migrate")
 
       stdout, status = Open3.capture2e(cmd)
       return [stdout, status]
