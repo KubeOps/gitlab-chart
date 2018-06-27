@@ -62,6 +62,8 @@ spec:
         - name: dependencies
           image: "{{ .Values.image.repository }}:{{ coalesce .Values.image.tag (include "gitlab.versionTag" . ) }}"
           {{ template "gitlab.imagePullPolicy" . }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
           args:
             - /scripts/wait-for-deps
           env:
