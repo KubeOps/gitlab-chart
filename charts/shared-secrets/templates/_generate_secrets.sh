@@ -16,6 +16,17 @@ function generate_secret_if_needed(){
   else
     echo "secret \"$secret_name\" already exists"
   fi;
+{{- if .Values.global.application.name }}
+  kubectl --namespace=$namespace label \
+    --overwrite \
+    secret $secret_name {{ include "gitlab.application.labels" . | replace ": " "=" | replace "\n" " " }}
+{{- else }}
+  kubectl --namespace=$namespace label \
+    secret $secret_name $(echo '{{ include "gitlab.application.labels" . | replace ": " "=" | replace "\n" " " }}' | sed -E 's/=[^ ]*/-/g')
+{{- end }}
+  kubectl --namespace=$namespace label \
+    --overwrite \
+    secret $secret_name {{ include "gitlab.standardLabels" . | replace ": " "=" | replace "\n" " " }}
 }
 
 # Initial root password
