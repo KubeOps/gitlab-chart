@@ -304,7 +304,7 @@ helm_test:
   stage: qa
   script:
     - export TILLER_NAMESPACE=$KUBE_NAMESPACE
-    - helm test --clean "$CI_ENVIRONMENT_SLUG"
+    - helm test "$CI_ENVIRONMENT_SLUG"
   only:
     refs:
       - branches
