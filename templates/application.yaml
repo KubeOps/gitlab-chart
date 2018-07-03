@@ -2,7 +2,7 @@
 apiVersion: app.k8s.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ .Values.global.application.name | quote }}
   labels:
     app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -43,5 +43,4 @@ spec:
     kind: StatefulSet
   - apiVersion: policy/v1beta1
     kind: PodDisruptionBudget
-  assemblyPhase: "Success"
 {{- end -}}
