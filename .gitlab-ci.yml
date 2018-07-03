@@ -300,6 +300,15 @@ qa:
     refs:
       - branches
 
+helm_test:
+  stage: qa
+  script:
+    - export TILLER_NAMESPACE=$KUBE_NAMESPACE
+    - helm test --clean "$CI_ENVIRONMENT_SLUG"
+  only:
+    refs:
+      - branches
+
 debug_review:
   stage: qa
   when: on_failure
