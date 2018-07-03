@@ -124,7 +124,7 @@ review:
     - master
 
 stop_review:
-  stage: cleanup
+  stage: review
   variables:
     GIT_CHECKOUT: "false"
   script:
@@ -307,6 +307,30 @@ helm_test:
   only:
     refs:
       - branches
+
+review_helm_test:
+  stage: qa
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://gitlab-$CI_ENVIRONMENT_SLUG.$AUTO_DEVOPS_DOMAIN
+  script:
+    - export TILLER_NAMESPACE=$KUBE_NAMESPACE
+    - helm test "$CI_ENVIRONMENT_SLUG"
+  except:
+    refs:
+      - master
+
+production_helm_test:
+  stage: qa
+  environment:
+    name: production
+    url: https://gitlab.$AUTO_DEVOPS_DOMAIN
+  script:
+    - export TILLER_NAMESPACE=$KUBE_NAMESPACE
+    - helm test "$CI_ENVIRONMENT_SLUG"
+  only:
+    refs:
+      - master
 
 changelog_manager:
   stage: changelog
