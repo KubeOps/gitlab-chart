@@ -16,6 +16,7 @@ metadata:
     release: {{ $releaseName }}
     heritage: {{ $releaseService }}
     queue_pod_name: {{ .name }}
+{{ include "gitlab.application.labels" $ | indent 4 }}
 data:
   sidekiq_queues.yml.erb: |
     {{- if .concurrency }}

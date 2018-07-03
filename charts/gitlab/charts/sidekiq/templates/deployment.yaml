@@ -34,7 +34,7 @@
 {{- range .Values.pods -}}
 {{- $queueName := printf "%s-%s" $fullname .name | trunc 63}}
 {{- $podNodeSelector := default $nodeSelector .nodeSelector -}}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: {{ $queueName }}
@@ -44,6 +44,7 @@ metadata:
     release: {{ $releaseName }}
     heritage: {{ $releaseService }}
     queue-pod-name: {{ .name }}
+{{ include "gitlab.application.labels" $ | indent 4 }}
 spec:
   template:
     metadata:
