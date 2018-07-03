@@ -20,7 +20,7 @@ spec:
   volumes:
   - name: tests
     configMap:
-      name: {{ template "fullname" . }}-test
+      name: {{ template "fullname" . }}-tests
   - name: root-password
     secret:
       secretName: {{ template "gitlab.migrations.initialRootPassword.secret" . }}
