@@ -299,15 +299,6 @@ qa:
     refs:
       - branches
 
-helm_test:
-  stage: qa
-  script:
-    - export TILLER_NAMESPACE=$KUBE_NAMESPACE
-    - helm test "$CI_ENVIRONMENT_SLUG"
-  only:
-    refs:
-      - branches
-
 review_helm_test:
   stage: qa
   environment:
