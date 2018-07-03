@@ -7,6 +7,10 @@ metadata:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:

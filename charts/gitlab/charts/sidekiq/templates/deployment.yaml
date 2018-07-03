@@ -46,6 +46,10 @@ metadata:
     queue-pod-name: {{ .name }}
 {{ include "gitlab.application.labels" $ | indent 4 }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ $name }}
+      release: {{ $releaseName }}
   template:
     metadata:
       labels:
