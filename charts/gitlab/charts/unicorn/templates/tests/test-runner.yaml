@@ -12,7 +12,7 @@ spec:
     command: ['sh', '/tests/test_login']
     volumeMounts:
       - name: tests
-        mountPath: '/config'
+        mountPath: '/tests'
       - name: root-password
         readOnly: true
         mountPath: /initial_root_password
