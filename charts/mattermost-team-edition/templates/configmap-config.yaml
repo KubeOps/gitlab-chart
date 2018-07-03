@@ -1,0 +1,12 @@
+{{- if .Values.global.mattermost.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{template "mattermost-team-edition.fullname" .}}-config-json
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app: {{ template "mattermost-team-edition.fullname" . }}
+data:
+  config.json: |
+{{include "config.tpl" . | printf "%s" | indent 4}}
+{{- end -}}

@@ -1,0 +1,20 @@
+{{- if .Values.global.mattermost.enabled -}}
+{{- if .Values.persistence.data.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{template "mattermost-team-edition.fullname" .}}-data
+  annotations:
+  {{- if .Values.persistence.data.storageClass }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.persistence.data.storageClass | quote }}
+  {{- else }}
+    volume.alpha.kubernetes.io/storage-class: default
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.data.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.data.size | quote }}
+{{- end }}
+{{- end -}}

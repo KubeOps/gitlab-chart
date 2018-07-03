@@ -1,0 +1,49 @@
+{{- if .Values.global.mattermost.enabled -}}
+{{- if .Values.ingress.enabled -}}
+{{- $serviceName := include "mattermost-team-edition.name" . -}}
+{{- $servicePort := .Values.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "mattermost-team-edition.fullname" . }}
+  labels:
+    app: {{ template "mattermost-team-edition.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+{{- if .Values.ingress.tls }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+{{- else }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+{{- end }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_cache mattermost_cache;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 2;
+      proxy_cache_use_stale timeout;
+      proxy_cache_lock on;
+    {{- if .Values.ingress.tls }}
+    kubernetes.io/tls-acme: 'true'
+    {{- end }}
+spec:
+  rules:
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+    {{- end -}}
+  {{- if .Values.ingress.tls }}
+  tls:
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
