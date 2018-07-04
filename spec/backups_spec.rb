@@ -121,7 +121,7 @@ describe "Restoring a backup" do
         end
 
         expect(Digest::MD5.hexdigest(original_content)).to eq(Digest::MD5.hexdigest(test_content)),
-          "Expected #{file} to equal #{test_counterpart}"
+          "Expected #{original_content} to equal #{test_content}"
       end
     end
   end
