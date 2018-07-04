@@ -8,7 +8,7 @@ data:
     set -e
     workhorse_service="{{ template "fullname" . }}:{{ .Values.service.workhorseExternalPort }}"
     signin_url="http://$workhorse_service/user/sign_in"
-    csrf=$(curl $signin_url --fail -c cookies.txt -s | grep -Po '<meta.*name="csrf-token".*content="\K[a-zA-Z0-9\+=\-\/]*')
-    curl --fail -X POST $signin_url  -c cookies.txt -s -F "authenticity_token=$csrf" -F 'user[login]=root' -F "user[password]=$(cat /initial_root_password)"
+    csrf=$(curl $signin_url -S -c cookies.txt -s | grep -Po '<meta.*name="csrf-token".*content="\K[a-zA-Z0-9\+=\-\/]*')
+    curl -S -X POST $signin_url  -c cookies.txt -s -F "authenticity_token=$csrf" -F 'user[login]=root' -F "user[password]=$(cat /initial_root_password)"
 # Leave this here - This line denotes end of block to the parser.
 {{- end }}
