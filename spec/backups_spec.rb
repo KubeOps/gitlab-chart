@@ -106,7 +106,7 @@ describe "Restoring a backup" do
 
         expect(File.exist?(test_counterpart)).to be_truthy, "Expected #{test_counterpart} to exist"
 
-        # Use git to verify the contents of bundles 
+        # Use git to verify the contents of bundles
         if File.extname(file) == 'bundle'
           cmd = "git ls-remote #{file}"
           original_content, status = Open3.capture2e(cmd)
@@ -120,7 +120,7 @@ describe "Restoring a backup" do
           test_content     = File.read(test_counterpart)
         end
 
-        expect(Digest::MD5.hexdigest(original_content)).to eq(Digest::MD5.hexdigesttest_content)),
+        expect(Digest::MD5.hexdigest(original_content)).to eq(Digest::MD5.hexdigest(test_content)),
           "Expected #{file} to equal #{test_counterpart}"
       end
     end
