@@ -108,10 +108,10 @@ describe "Restoring a backup" do
 
         # Use git to verify the contents of bundles
         if File.extname(file) == 'bundle'
-          original_content, status = Open3.capture2e("git ls-remote --heads --tags #{file}")
+          original_content, status = Open3.capture2e("git ls-remote --heads --tags -- #{file}", chdir: '/tmp/original_backup')
           fail original_content unless status.success?
 
-          test_content, status = Open3.capture2e("git ls-remote --heads --tags #{test_counterpart}")
+          test_content, status = Open3.capture2e("git ls-remote --heads --tags  -- #{test_counterpart}", chdir: '/tmp/test_backup')
           fail test_content unless status.success?
         else
           original_content = File.read(file)
