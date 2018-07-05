@@ -98,7 +98,7 @@ describe "Restoring a backup" do
       end
 
       Dir.glob("/tmp/original_backup/**/*") do |file|
-        next if ['tar', '.gz'].include? File.extname(file)
+        next if ['.tar', '.gz'].include? File.extname(file)
         next if File.directory?(file)
         next if File.basename(file) == 'backup_information.yml'
 
@@ -107,11 +107,11 @@ describe "Restoring a backup" do
         expect(File.exist?(test_counterpart)).to be_truthy, "Expected #{test_counterpart} to exist"
 
         # Use git to verify the contents of bundles
-        if File.extname(file) == 'bundle'
-          original_content, status = Open3.capture2e("git ls-remote --heads --tags -- #{file}", chdir: '/tmp/original_backup')
-          fail original_content # unless status.success?
+        if File.extname(file) == '.bundle'
+          original_content, status = Open3.capture2e("git ls-remote --heads --tags #{file}")
+          fail original_content unless status.success?
 
-          test_content, status = Open3.capture2e("git ls-remote --heads --tags  -- #{test_counterpart}", chdir: '/tmp/test_backup')
+          test_content, status = Open3.capture2e("git ls-remote --heads --tags #{test_counterpart}")
           fail test_content unless status.success?
         else
           original_content = File.read(file)
