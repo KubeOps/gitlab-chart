@@ -8,7 +8,7 @@ data:
     set -e
     echo 'Start Test'
     workhorse_service="{{ template "fullname" . }}:{{ .Values.service.workhorseExternalPort }}"
-    signin_url="http://$workhorse_service/user/sign_in"
+    signin_url="http://$workhorse_service/users/sign_in"
     echo "Testing loging page: $signin_url"
     csrf=$(curl $signin_url -S -c cookies.txt -s | grep -Po '<meta.*name="csrf-token".*content="\K[a-zA-Z0-9\+=\-\/]*')
     curl -S -X POST $signin_url  -c cookies.txt -s -F "authenticity_token=$csrf" -F 'user[login]=root' -F "user[password]=$(cat /initial_root_password)"
