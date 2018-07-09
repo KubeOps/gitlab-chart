@@ -7,7 +7,7 @@ data:
   test_login: |
     set -e
     echo 'Start Test'
-    endpoint="{{ template ""gitlab.gitlab.url"" . }}"
+    endpoint="{{ template "gitlab.gitlab.url" . }}"
 
     signin_url="$endpoint/users/sign_in"
     echo "Login to create a session: $signin_url"
