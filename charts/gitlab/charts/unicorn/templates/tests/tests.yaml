@@ -12,7 +12,7 @@ data:
     signin_url="$endpoint/users/sign_in"
     echo "Login to create a session: $signin_url"
     csrf=$(curl $signin_url --fail -s -c cookies.txt | grep -Po '<meta.*name="csrf-token".*content="\K[a-zA-Z0-9\+=\-\/]*')
-    curl --fail -X POST $signin_url -s -c cookies.txt -b cookies.txt -F "authenticity_token=${csrf}" -F 'user[login]=root' -F "user[password]=$(cat /initial_root_password)"
+    curl --fail -X POST $signin_url -s -c cookies.txt -b cookies.txt -F "authenticity_token=$csrf" -F 'user[login]=root' -F "user[password]=$(cat /initial_root_password)"
 
     profile_url="$endpoint/profile"
     echo "Confirm session valid: $profile_url"
