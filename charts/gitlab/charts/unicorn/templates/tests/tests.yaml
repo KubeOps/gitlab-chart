@@ -18,11 +18,11 @@ data:
 
     profile_url="$endpoint/profile"
     echo "Confirm session valid: $profile_url"
-    profile_status=$(curl -s -o profile_output -w "%{http_code}" $cookie_readwrite $profile_url)
+    profile_status=$(curl -s -o /tmp/profile_output -w "%{http_code}" $cookie_readwrite $profile_url)
 
     if [ "$profile_status" != "200" ]; then
       echo "Error: Session Invalid"
-      cat profile_output
+      cat /tmp/profile_output
       exit 1
     fi
 
