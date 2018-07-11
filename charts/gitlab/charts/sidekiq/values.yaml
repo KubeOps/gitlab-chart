@@ -58,6 +58,7 @@ gitaly:
   # port: 8075
   # serviceName: 'gitaly'
   authToken: {}
+  storageNames: {}
   #   secret: gitaly-secret
   #   key: token
 artifacts:
