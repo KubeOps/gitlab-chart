@@ -24,6 +24,8 @@ global:
     password: {}
   gitaly:
     authToken: {}
+    storageNames:
+      - default
   minio:
     credentials: {}
   shell:
