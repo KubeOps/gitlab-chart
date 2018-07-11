@@ -4,6 +4,7 @@ kind: StatefulSet
 metadata:
   name: {{ template "fullname" . }}
   labels:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum | trunc 63 }}
 {{ include "gitlab.immutableLabels" . | indent 4 }}
 spec:
   selector:
@@ -11,7 +12,7 @@ spec:
       app: {{ template "name" . }}
       release: {{ .Release.Name }}
   serviceName: {{ template "fullname" . }}
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   podManagementPolicy: Parallel
   template:
     metadata:
