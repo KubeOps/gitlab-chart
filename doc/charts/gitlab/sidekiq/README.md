@@ -137,9 +137,13 @@ The `password` attribute for PostgreSQL has to sub keys:
 
 ```YAML
 gitaly:
-  host: 'rank-racoon-gitaly'
+  hosts:
+    - 'rank-racoon-gitaly'
   serviceName: 'gitaly'
-  port: 8075
+  storageNames:
+    - default
+  ports:
+    - 8075
   authToken:
     secret: gitaly-secret
     key: token
