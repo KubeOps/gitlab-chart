@@ -144,7 +144,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/usr/bin/pkill", "-f", "'unicorn master'"]
+                command: ["/usr/bin/pkill", "-SIGQUIT", "-f", "'unicorn master'"]
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
