@@ -8,14 +8,8 @@ to the service name 'gitaly'. Preference is local, global, default.
 {{- define "gitlab.gitaly.host" }}
 {{- if or .Values.gitaly.host .Values.global.gitaly.host -}}
 {{- coalesce .Values.gitaly.host .Values.global.gitaly.host -}}
-{{- else if .Values.gitaly.nodes -}}
-{{- if (index .Values.gitaly.nodes .index).hostname -}}
-{{ (index .Values.gitaly.nodes .index).hostname -}}
-{{- end }}
-{{- else if .Values.global.gitaly.nodes -}}
-{{- if (index .Values.global.gitaly.nodes .index).hostname -}}
-{{ (index .Values.global.gitaly.nodes .index).hostname }}
-{{- end }}
+{{- else if (coalesce .Values.gitaly.external .Values.global.gitaly.external) -}}
+{{ (index (coalesce .Values.gitaly.external .Values.global.gitaly.external) .index).hostname -}}
 {{- else -}}
 {{- $podName := printf "%s-gitaly-%d" .Release.Name .index }}
 {{- $name := coalesce .Values.gitaly.serviceName .Values.global.gitaly.serviceName "gitaly" }}
@@ -29,14 +23,8 @@ Return the gitaly port
 Preference is local, global, default (`8075`)
 */}}
 {{- define "gitlab.gitaly.port" }}
-{{- if .Values.gitaly.nodes -}}
-{{- if (index .Values.gitaly.nodes .index).port -}}
-{{ (index .Values.gitaly.nodes .index).port }}
-{{- end }}
-{{- else if .Values.global.gitaly.nodes -}}
-{{- if (index .Values.global.gitaly.nodes .index).port -}}
-{{ (index .Values.global.gitaly.nodes .index).port }}
-{{- end }}
+{{- if coalesce .Values.gitaly.external .Values.global.gitaly.external -}}
+{{ (index (coalesce .Values.gitaly.external .Values.global.gitaly.external) .index).port }}
 {{- else -}}
 8075
 {{- end -}}
@@ -48,8 +36,13 @@ Return the gitaly storages list
 */}}
 {{- define "gitlab.gitaly.storages" -}}
 {{-  $d := merge (dict) . -}}
-{{- range $i, $storageName := .Values.global.gitaly.storageNames }}
-  {{ $storageName }}:
+{{- $storageNames := coalesce .Values.global.gitaly.external .Values.global.gitaly.internal }}
+{{- range $i, $storage := $storageNames }}
+  {{- if $d.Values.global.gitaly.external }}
+  {{ $storage.name }}:
+  {{- else }}
+  {{ $storage }}:
+  {{- end }}
     path: /var/opt/gitlab/repo
     {{- $_ := set $d "index"  $i }}
     gitaly_address: tcp://{{ template "gitlab.gitaly.host" $d }}:{{ template "gitlab.gitaly.port" $d }}
