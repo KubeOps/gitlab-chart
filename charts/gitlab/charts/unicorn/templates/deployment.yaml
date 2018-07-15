@@ -17,6 +17,7 @@ spec:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
       annotations:
+        whatever: {{ include (print $.Template.BasePath "/configmap.yml") .  | quote }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
 {{- if .Values.metrics.enabled }}
 {{ toYaml .Values.metrics.annotations | indent 8 }}
