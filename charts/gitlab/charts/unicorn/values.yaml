@@ -121,7 +121,6 @@ uploads:
   bucket: gitlab-uploads
   # connection: {}
 minio:
-  enabled: true
   serviceName: 'minio-svc'
   port: 9000
 registry:
