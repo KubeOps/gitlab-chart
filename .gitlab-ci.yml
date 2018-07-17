@@ -35,7 +35,7 @@ variables:
   POSTGRES_PASSWORD: testing-password
   POSTGRES_ENABLED: "false"
   POSTGRES_DB: $CI_ENVIRONMENT_SLUG
-  QA_IMAGE: registry.gitlab.com/gitlab-org/build/cng/gitlab-ee-qa
+  QA_IMAGE: registry.gitlab.com/gitlab-org/build/cng/gitlab-ee
 
 stages:
   - changelog
