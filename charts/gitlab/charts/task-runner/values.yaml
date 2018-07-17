@@ -68,7 +68,6 @@ lfs:
   # bucket:
   # connection: {}
 minio:
-  enabled: true
   bucket: git-lfs
   serviceName: 'minio-svc'
   port: 9000
