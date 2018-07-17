@@ -85,5 +85,4 @@ replicas: 1
 maxUnavailable: 1
 storage: {}
 minio:
-  enabled: true
   bucket: registry
