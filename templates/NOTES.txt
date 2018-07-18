@@ -7,3 +7,50 @@ no TLS certificates were provided. Self-signed certificates were generated.
 {{- end -}}
 
 {{- end -}}
+
+{{/* Migration of rails `connection` blocks to secrets */}}
+{{- if .Values.unicorn.lfs.connection -}}
+{{-   if without (keys .Values.unicorn.lfs.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nunicorn:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `unicorn.lfs.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.unicorn.artifacts.connection -}}
+{{-   if without (keys .Values.unicorn.artifacts.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nunicorn:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `unicorn.artifacts.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.unicorn.uploads.connection -}}
+{{-   if without (keys .Values.unicorn.uploads.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nunicorn:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `unicorn.uploads.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.sidekiq.lfs.connection -}}
+{{-   if without (keys .Values.sidekiq.lfs.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nsidekiq:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `sidekiq.lfs.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.sidekiq.artifacts.connection -}}
+{{-   if without (keys .Values.sidekiq.artifacts.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nsidekiq:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `sidekiq.artifacts.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.sidekiq.uploads.connection -}}
+{{-   if without (keys .Values.sidekiq.uploads.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\nsidekiq:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `sidekiq.uploads.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.task-runner.lfs.connection -}}
+{{-   if without (keys .Values.task-runner.lfs.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\ntask-runner:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `task-runner.lfs.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.task-runner.artifacts.connection -}}
+{{-   if without (keys .Values.task-runner.artifacts.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\ntask-runner:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `task-runner.artifacts.connection.secret`"
+{{-   end -}}
+{{- end -}}
+{{- if .Values.task-runner.uploads.connection -}}
+{{-   if without (keys .Values.task-runner.uploads.connection) "secret" "key" | len | ne 0 -}
+{{-     fail "\ntask-runner:\n\tThe `connection` declarations have been moved to be stored in a secret. Please create a secret with these contents, and provide `task-runner.uploads.connection.secret`"
+{{-   end -}}
+{{- end -}}
