@@ -1,9 +1,11 @@
 # Using the Shared-Secrets chart
 
-The `shared-secrets` sub-chart is responsible for provisioning a variety of secrets used across the installation. This includes:
-1. Self-signed TLS certificates, if none have been otherwise provided by a secret or cert-manager.
-1. Database encryption key
-1. Other stuff (?)
+The `shared-secrets` sub-chart is responsible for provisioning a variety of secrets used across the installation, unless otherwise manually specified. This includes:
+1. Initial root password
+1. Self-signed TLS certificates for GitLab and the Registry
+1. Minio, Registry, GitLab Shell, Gitaly secrets
+1. Redis, Postgres passwords
+1. SSH host keys
 
 ## Installation command line options
 
