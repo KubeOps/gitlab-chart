@@ -4,7 +4,8 @@
 
 global:
   gitaly:
-    internal: ["default"]
+    internal:
+      names: ["default"]
     external: []
 image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitaly
