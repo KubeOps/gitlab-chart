@@ -8,6 +8,7 @@ for more information on how the global variables work.
 - [Hosts](#configure-host-settings)
 - [Ingress](#configure-ingress-settings)
 - [GitLab Version](#gitlab-version)
+- [GitLab Application](#configure-gitlab-application-settings)
 - [PostgreSQL](#configure-postgresql-settings)
 - [Redis](#configure-redis-settings)
 - [Gitaly](#configure-gitaly-settings)
@@ -198,6 +199,23 @@ The GitLab version used in the default image tag for the charts can be changed u
 
 This impacts the default image tag used in the `unicorn`, `sidekiq`, and `migration` charts. Note that the `gitaly`, `gitlab-shell` and `gitlab-runner`
 image tags should be separately updated to versions compatible with the GitLab version.
+
+## Configure Gitlab Application settings
+
+The settings that configure the GitLab rails application (analogous to the
+entries in `gitlab.yml` file) are defined under the `appConfig` key in the
+global settings.
+
+|name|description|type|default|
+|:---|:---|:---|:---|
+|global.appConfig.issueClosingPattern|[Pattern to close issues automatically](https://docs.gitlab.com/ee/administration/issue_closing_pattern.html)|string|(empty)|
+|global.appConfig.defaultTheme|[Numeric ID of the default theme for the GitLab instance](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/themes.rb#L14-25)|numeric|(empty)|
+|global.appConfig.webHookTimeout|[Waiting time in seconds before a hook is deemed failure](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html#receiving-duplicate-or-multiple-web-hook-requests-triggered-by-one-event)|numeric|(empty)|
+|global.appConfig.gravatar.plainUrl|[HTTP URL to libravatar instance (instead of using gravatar.com)](https://docs.gitlab.com/ee/customization/libravatar.html)|string|(empty)|
+|global.appConfig.gravatar.sslUrl|[HTTPS URL to libravatar instance (instead of using gravatar.com)](https://docs.gitlab.com/ee/customization/libravatar.html)|string|(empty)|
+|global.appConfig.extra.googleAnalyticsId|Tracking ID for Google Analytics|string|(empty)|
+|global.appConfig.extra.piwikUrl|Piwik URL|string|(empty)|
+|global.appConfig.extra.piwikSiteId|Piwik Site ID|string|(empty)|
 
 ## Configure PostgreSQL settings
 
