@@ -30,6 +30,11 @@ global:
   minio:
     enabled: true
     credentials: {}
+  appConfig:
+    issueClosingPattern:
+    defaultTheme:
+    webhookTimeout:
+    repositoryDownloadsPath:
   shell:
     authToken: {}
     hostKeys: {}
