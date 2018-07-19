@@ -58,6 +58,8 @@ global:
     reply_to: ''
     subject_suffix: ''
   time_zone: UTC
+  rails:
+    # issueClosingPattern: ""
   service:
     annotations: {}
   antiAffinity: soft

@@ -33,6 +33,7 @@ data:
       gitlab:
         host: {{ template "gitlab.gitlab.hostname" . }}
         https: {{ hasPrefix "https://" (include "gitlab.gitlab.url" .) }}
+        issue_closing_pattern: {{ .Values.global.rails.issueClosingPattern | quote }}
         trusted_proxies:
         {{- if .Values.trusted_proxies }}
 {{ toYaml .Values.trusted_proxies | indent 10 }}
