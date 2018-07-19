@@ -39,6 +39,7 @@ workerTimeout: 60
 workhorse:
   sentryDSN: ""
   extraArgs: ""
+# issue_closing_pattern: ""
 ldap:
   servers: {}
   # 'main' is the GitLab 'provider ID' of this LDAP server
