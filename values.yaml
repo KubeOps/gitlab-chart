@@ -59,7 +59,7 @@ global:
     subject_suffix: ''
   time_zone: UTC
   rails:
-    # issueClosingPattern: ""
+    issueClosingPattern: ""
   service:
     annotations: {}
   antiAffinity: soft
