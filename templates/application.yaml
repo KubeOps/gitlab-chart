@@ -1,4 +1,4 @@
-{{- if and .Values.global.application.name .Values.global.application.create -}}
+{{- if .Values.global.application.create -}}
 apiVersion: app.k8s.io/v1alpha1
 kind: Application
 metadata:
@@ -13,6 +13,56 @@ spec:
   descriptor:
     type: GitLab
     version: {{ .Chart.AppVersion | quote }}
+    description: |-
+      GitLab is a single application for the complete DevOps lifecycle from project planning and source code management to CI/CD and monitoring.
+
+      # Support
+      Contacting [support for GitLab](https://about.gitlab.com/support/).
+    maintainers:
+    - name: GitLab
+      url: https://about.gitlab.com
+    links: {{ .Values.global.application.links }}
+    notes: |-
+      {{- if not .global.hosts.externalIP }}
+      # Setting up DNS
+
+      Retrieve the IP address GitLab is available at, note it may take a few minutes for the IP address to populate:
+
+      ```
+      kubectl get \
+        --namespace {{ .Release.Namespace }} \
+        ing {{ .Release.Name }}-unicorn \
+        -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+      ```
+
+      Then configure a DNS record for `*.{{ .Values.global.hosts.domain }}`, resolving to the IP address you retrieved above.
+      {{- end }}
+      # Signing in
+
+      Browse to https://`gitlab.{{ .Values.global.hosts.domain }}`.
+
+      {{- if not .gitlab.migrations.initialRootPassword.secret }}
+
+      GitLab is provisioned with a randomly generated administrator password. To retrieve it: 
+
+      ```
+      kubectl get secret {{ .Release.Name }}-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode
+      ```
+
+      {{- end }}
+      {{- if and not .global.ingress.configureCertmanager not .global.ingress.tls.secretName }}
+      # Configuring a valid TLS certificate
+
+      GitLab was configured to utilize self-signed certificates. To utilize your own certificate:
+
+      ````
+      kubectl create secret tls {{ .Release.Name }}-wildcard-tls --cert=<path/to-full-chain.crt> --key=<path/to.key> --dry-run -o json | kubectl apply -f -
+      ```
+      {{- end }}
+
+      # Using GitLab
+
+      More information on using GitLab is available in our [documentation](https://docs.gitlab.com/ee/README.html).
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Release.Name | quote }}

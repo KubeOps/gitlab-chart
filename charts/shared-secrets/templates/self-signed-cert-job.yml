@@ -52,7 +52,7 @@ spec:
           # create wildcard certificate secret
           kubectl create secret tls $certname \
             --cert=/output/wildcard.pem --key=/output/wildcard-key.pem || true
-{{- if not .Values.global.application.name }}
+{{- if not .Values.global.application.create }}
           kubectl --namespace=$namespace label \
             secret $certname  $(echo '{{ include "gitlab.application.labels" . | replace ": " "=" | replace "\n" " " }}' | sed -E 's/=[^ ]*/-/g')
 {{- end }}
