@@ -45,7 +45,7 @@ spec:
         - -exc
         - |
           kubectl create -f /certs/secret.yaml || true
-{{- if not .Values.global.application.name }}
+{{- if not .Values.global.application.create }}
           kubectl --namespace=$namespace label \
             secret {{ template "gitlab.wildcard-self-signed-cert-name" . }} $(echo '{{ include "gitlab.application.labels" . | replace ": " "=" | replace "\n" " " }}' | sed -E 's/=[^ ]*/-/g')
 {{- end }}

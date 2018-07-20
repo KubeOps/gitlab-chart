@@ -4,7 +4,8 @@
 global:
   # gitlabVersion: master
   application:
-    create: true
+    create: false
+    links: {}
   hosts:
     domain: example.local
     https: true
@@ -168,3 +169,4 @@ gitlab-runner:
 #     enabled: false
 #   gitlab-shell:
 #     enabled: false
+

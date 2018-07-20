@@ -7,7 +7,7 @@ app: {{ template "name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}
-{{ if .Values.global.application.name -}}
+{{ if .Values.global.application.create -}}
 {{ include "gitlab.application.labels" . }}
 {{- end -}}
 {{- end -}}
@@ -17,7 +17,7 @@ app: {{ template "name" . }}
 chart: {{ .Chart.Name }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}
-{{ if .Values.global.application.name -}}
+{{ if .Values.global.application.create -}}
 {{ include "gitlab.application.labels" . }}
 {{- end -}}
 {{- end -}}
