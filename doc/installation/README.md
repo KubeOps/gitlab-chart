@@ -14,6 +14,8 @@ In order to install GitLab in a Kubernetes cluster, there are a few required too
 
 Follow the instructions to connect to the Kubernetes cluster of your choice.
 
+> **Note**: Kubernetes 1.8 or higher is required, due to the usage of certain Kubernetes features.
+
 * [Google Kubernetes Engine][]
 * [Amazon EKS](../cloud/eks.md)
 * Azure Container Service - Documentation to be added.
