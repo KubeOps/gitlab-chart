@@ -23,7 +23,7 @@ spec:
       url: https://about.gitlab.com
     links: {{ .Values.global.application.links }}
     notes: |-
-      {{- if not .global.hosts.externalIP -}}
+      {{- if not .Values.global.hosts.externalIP -}}
       # Setting up DNS
 
       Retrieve the IP address GitLab is available at, note it may take a few minutes for the IP address to populate:
@@ -41,21 +41,21 @@ spec:
 
       Browse to https://`gitlab.{{ .Values.global.hosts.domain }}`.
 
-      {{- if not .gitlab.migrations.initialRootPassword.secret -}}
+      {{- if not .Values.gitlab.migrations.initialRootPassword.secret -}}
 
       GitLab is provisioned with a randomly generated administrator password. To retrieve it: 
 
       ```
       kubectl get secret {{ .Release.Name }}-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode
       ```
-
       {{- end -}}
-      {{- if not ( or .global.ingress.configureCertmanager .global.ingress.tls.secretName ) -}}
+
+      {{- if not ( or .Values.global.ingress.configureCertmanager .Values.global.ingress.tls.secretName ) -}}
       # Configuring a valid TLS certificate
 
       GitLab was configured to utilize self-signed certificates. To utilize your own certificate:
 
-      ````
+      ```
       kubectl create secret tls {{ .Release.Name }}-wildcard-tls --cert=<path/to-full-chain.crt> --key=<path/to.key> --dry-run -o json | kubectl apply -f -
       ```
       {{- end -}}
