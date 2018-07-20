@@ -1,5 +1,5 @@
 {{- define "gitlab.application.labels" -}}
-app.kubernetes.io/name: {{ .Values.global.application.name }}
+app.kubernetes.io/name: {{ .Release.Name | quote }}
 {{- end -}}
 
 {{- define "gitlab.standardLabels" -}}
