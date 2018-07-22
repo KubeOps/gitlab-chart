@@ -71,6 +71,9 @@ data:
         webhook_timeout: {{ .webhookTimeout }}
         repository_downloads_path: {{ .repositoryDownloadsPath }}
         {{- end }}
+        gravatar:
+          plain_url: {{ .Values.global.gravatar.plainUrl }}
+          ssl_url: {{ .Values.global.gravatar.sslUrl }}
         trusted_proxies:
         {{- if .Values.trusted_proxies }}
 {{ toYaml .Values.trusted_proxies | indent 10 }}

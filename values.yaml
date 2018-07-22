@@ -35,6 +35,9 @@ global:
     defaultTheme:
     webhookTimeout:
     repositoryDownloadsPath:
+  gravatar:
+    plainUrl:
+    sslUrl:
   shell:
     authToken: {}
     hostKeys: {}
