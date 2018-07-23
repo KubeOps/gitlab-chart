@@ -35,9 +35,13 @@ global:
     defaultTheme:
     webhookTimeout:
     repositoryDownloadsPath:
-  gravatar:
-    plainUrl:
-    sslUrl:
+    gravatar:
+      plainUrl:
+      sslUrl:
+    extra:
+      googleAnalyticsId:
+      piwikUrl:
+      piwikSiteId:
   shell:
     authToken: {}
     hostKeys: {}

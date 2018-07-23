@@ -71,9 +71,6 @@ data:
         webhook_timeout: {{ .webhookTimeout }}
         repository_downloads_path: {{ .repositoryDownloadsPath }}
         {{- end }}
-        gravatar:
-          plain_url: {{ .Values.global.gravatar.plainUrl }}
-          ssl_url: {{ .Values.global.gravatar.sslUrl }}
         trusted_proxies:
         {{- if .Values.trusted_proxies }}
 {{ toYaml .Values.trusted_proxies | indent 10 }}
@@ -92,6 +89,15 @@ data:
           container_registry: true
       incoming_email:
         enabled: false
+      {{- with .Values.global.appConfig }}
+      gravatar:
+        plain_url: {{ .gravatar.plainUrl }}
+        ssl_url: {{ .gravatar.sslUrl }}
+      extra:
+        google_analytics_id: {{ .extra.googleAnalyticsId | quote }}
+        piwik_url: {{ .extra.piwikUrl | quote }}
+        piwik_site_id: {{ .extra.piwikSiteId | quote }}
+      {{- end }}
       artifacts:
         enabled: {{ eq .Values.artifacts.enabled true }}
         object_store:
