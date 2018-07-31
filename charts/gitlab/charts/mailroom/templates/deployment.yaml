@@ -17,7 +17,7 @@ spec:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       securityContext:
         runAsUser: 1000
@@ -49,10 +49,11 @@ spec:
           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
           volumeMounts:
           - name: mailroom-config
-            mountPath: /config
+            mountPath: /config/configure
+            subPath: configure
             readOnly: true
           - name: init-mailroom-secrets
-            mounthPath: /init-config
+            mountPath: /init-config
             readOnly: true
           - name: mailroom-secrets
             mountPath: /init-secrets
@@ -66,19 +67,17 @@ spec:
           {{ template "gitlab.imagePullPolicy" . }}
           volumeMounts:
             - name: mailroom-config
-              mountPath: '/srv/gitlab/config/mail_room.yml.erb'
-              subPath: mail_room.yml.erb
-              readOnly: true
+              mountPath: /var/opt/gitlab/mail_room.yml
+              subPath: mail_room.yml
             - name: mailroom-secrets
               mountPath: '/etc/gitlab'
               readOnly: true
+          resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
       - name: mailroom-config
-        projected:
-          sources:
-            - configMap:
-              name: {{ template "fullname" . }}
+        configMap:
+          name: {{ template "fullname" . }}
       - name: init-mailroom-secrets
         projected:
           defaultMode: 0400

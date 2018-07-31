@@ -2,7 +2,7 @@ image:
   repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-mailroom-ee
   pullSecrets: []
   # pullPolicy: IfNotPresent
-  # tag: latest
+  tag: mailroom-image
 
 enabled: true
 
@@ -73,6 +73,9 @@ global:
       proxy_download: true
       bucket:
       connection: {}
+
+redis:
+  password: {}
 
 resources:
   # limits:
