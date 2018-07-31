@@ -218,7 +218,7 @@ spec:
               items:
                 - key: {{ $redisKey }}
                   path: redis/password
-          {{- if eq .Values.global.appConfig.incomingEmail.enabled true}}
+          {{- if eq $.Values.global.appConfig.incomingEmail.enabled true}}
           - secret:
               name: {{ template "gitlab.incomingEmail.password.secret" $ }}
               items:
