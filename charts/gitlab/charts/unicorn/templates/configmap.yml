@@ -244,7 +244,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: workhorse-config
+    name: {{ template "fullname" . }}-workhorse-config
     labels:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 data:
