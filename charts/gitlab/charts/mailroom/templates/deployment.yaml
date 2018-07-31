@@ -22,7 +22,7 @@ spec:
       securityContext:
         runAsUser: 1000
         fsGroup: 1000
-      {{- if eq (default $.Values.global.antiAffinity .antiAffinity) "hard" }}
+      {{- if eq (default .Values.global.antiAffinity .antiAffinity) "hard" }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -31,7 +31,7 @@ spec:
                 matchLabels:
                   app: {{ template "name" . }}
                   release: {{ .Release.Name }}
-      {{- else if eq (default $.Values.global.antiAffinity .antiAffinity) "soft" }}
+      {{- else if eq (default .Values.global.antiAffinity .antiAffinity) "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -46,7 +46,7 @@ spec:
       initContainers:
         - name: configure
           command: ['sh', '/config/configure']
-          image: {{ $initImage }}:{{ $initTag }}
+          image: {{ .Values.init.image }}:{{ .Values.init.tag }}
           volumeMounts:
           - name: mailroom-config
             mountPath: /config
@@ -72,13 +72,13 @@ spec:
             - name: mailroom-secrets
               mountPath: '/etc/gitlab'
               readOnly: true
-{{ toYaml ( default $resources .resources ) | indent 12 }}
+{{ toYaml .Values.resources | indent 12 }}
       volumes:
       - name: mailroom-config
         projected:
           sources:
             - configMap:
-              name: {{ $fullname }}
+              name: {{ template "fullname" . }}
       - name: init-mailroom-secrets
         projected:
           defaultMode: 0400
@@ -96,6 +96,8 @@ spec:
       - name: mailroom-secrets
         emptyDir:
           medium: "Memory"
+    {{- if .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml $podNodeSelector | indent 8 }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
 {{- end }}
