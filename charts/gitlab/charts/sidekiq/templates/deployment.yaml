@@ -13,6 +13,8 @@
 {{- $minioSecret := include "gitlab.minio.credentials.secret" . -}}
 {{- $redisSecret := include "gitlab.redis.password.secret" . -}}
 {{- $redisKey := include "gitlab.redis.password.key" . -}}
+{{- $incomingEmailSecret := include "gitlab.incomingEmail.password.secret" . -}}
+{{- $incomingEmailKey := include "gitlab.incomingEmail.password.key" . -}}
 {{- $gitalySecret := include "gitlab.gitaly.authToken.secret" . -}}
 {{- $gitalyKey := include "gitlab.gitaly.authToken.key" . -}}
 {{- $railsSecretName := include "gitlab.rails-secrets.secret" . -}}
@@ -218,6 +220,13 @@ spec:
               items:
                 - key: {{ $redisKey }}
                   path: redis/password
+          {{- if eq .Values.global.appConfig.incomingEmail.enabled true}}
+          - secret:
+              name: {{ $incomingEmailSecret }}
+              items:
+                - key: {{ $incomingEmailKey }}
+                  path: mailroom/password
+          {{- end }}
           - secret:
               name: {{ template "gitlab.psql.password.secret" $ }}
               items:

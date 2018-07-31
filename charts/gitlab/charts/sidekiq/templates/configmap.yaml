@@ -54,9 +54,18 @@ data:
           snippets: true
           builds: true
           container_registry: true
-      incoming_email:
-        enabled: false
       {{- with .Values.global.appConfig }}
+      incoming_email:
+        enabled: {{ eq .incomingEmail.enabled true }}
+        address: {{ .incomingEmail.address | quote }}
+        host: {{ .incomingEmail.host | quote }}
+        port: {{ .incomingEmail.port }}
+        ssl: {{ .incomingEmail.ssl }}
+        start_tls: {{ .incomingEmail.startTls }}
+        user: {{ .incomingEmail.user }}
+        password: "<%= File.read('/etc/gitlab/mailroom/password') %>"
+        mailbox: {{ .incomingEmail.mailbox | quote }}
+        idle_timeout: {{ .incomingEmail.idleTimeout }}
       gravatar:
         plain_url: {{ .gravatar.plainUrl }}
         ssl_url: {{ .gravatar.sslUrl }}
@@ -181,11 +190,15 @@ data:
   configure: |
     set -e
     mkdir -p /sidekiq-secrets/redis /sidekiq-secrets/postgres \
-    /sidekiq-secrets/gitaly /sidekiq-secrets/rails-secrets
+    /sidekiq-secrets/gitaly /sidekiq-secrets/rails-secrets \
+    /sidekiq-secrets/mailroom
     cp /init-secrets/redis/password /sidekiq-secrets/redis/password
     cp /init-secrets/gitaly/gitaly_token /sidekiq-secrets/gitaly/gitaly_token
     cp /init-secrets/postgres/psql-password /sidekiq-secrets/postgres/psql-password
     cp /init-secrets/rails-secrets/secrets.yml /sidekiq-secrets/rails-secrets/secrets.yml
+    if [ -e /init-secrets/mailroom/password ]; then
+      cp /init-secrets/mailroom/password /sidekiq-secrets/mailroom/password
+    fi
     if [ -e /init-secrets/minio ]; then
       mkdir -p /sidekiq-secrets/minio
       cp /init-secrets/minio/* /sidekiq-secrets/minio/
