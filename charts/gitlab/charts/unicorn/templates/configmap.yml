@@ -87,6 +87,7 @@ data:
           builds: true
           container_registry: true
       {{- with .Values.global.appConfig }}
+      {{- if eq .incomingEmail.enabled true }}
       incoming_email:
         enabled: {{ eq .incomingEmail.enabled true }}
         address: {{ .incomingEmail.address | quote }}
@@ -98,6 +99,7 @@ data:
         password: "<%= File.read('/etc/gitlab/mailroom/password') %>"
         mailbox: {{ .incomingEmail.mailbox | quote }}
         idle_timeout: {{ .incomingEmail.idleTimeout }}
+      {{- end }}
       gravatar:
         plain_url: {{ .gravatar.plainUrl }}
         ssl_url: {{ .gravatar.sslUrl }}
