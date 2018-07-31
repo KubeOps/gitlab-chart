@@ -1,0 +1,86 @@
+image:
+  repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-mailroom-ee
+  pullSecrets: []
+  # pullPolicy: IfNotPresent
+  # tag: latest
+
+enabled: true
+
+init:
+  image: busybox
+  tag: latest
+  resources:
+    requests:
+      cpu: 50m
+
+global:
+  # imagePullPolicy: IfNotPresent
+  hosts:
+    domain: example.local
+    hostSuffix:
+    https: true
+    gitlab: {}
+      #name: gitlab.example.local
+      #https: false
+    registry: {}
+      #name: registry.example.local
+      #https: false
+    minio: {}
+      #name: minio.example.local
+      #https: false
+  psql: {}
+    # host: '0.0.0.0'
+    # port: '5432'
+    # database: 'gitlabhq_production'
+    # username: 'gitlab'
+    # password:
+    #   secret: gitlab-postgres
+    #   key: psql-password
+  redis:
+    password: {}
+  gitaly:
+    internal:
+      names: ["default"]
+    external: []
+    authToken: {}
+  minio:
+    enabled:
+    credentials: {}
+  appConfig:
+    incomingEmail:
+      enabled: false
+      address: "gitlab-incoming+%{key}@gmail.com"
+      host: "imap.gmail.com"
+      port: 993
+      ssl: true
+      startTls: false
+      user: "gitlab-incoming@gmail.com"
+      password: {}
+      mailbox: inbox
+      idleTimeout: 60
+    lfs:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
+    artifacts:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
+    uploads:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
+
+redis:
+  password: {}
+
+resources:
+  # limits:
+  #  cpu: 1
+  #  memory: 2G
+  requests:
+    cpu: 50m
+    memory: 350M
