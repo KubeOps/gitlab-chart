@@ -218,6 +218,13 @@ spec:
               items:
                 - key: {{ $redisKey }}
                   path: redis/password
+          {{- if eq $.Values.global.appConfig.incomingEmail.enabled true}}
+          - secret:
+              name: {{ template "gitlab.incomingEmail.password.secret" $ }}
+              items:
+                - key: {{ template "gitlab.incomingEmail.password.key" $ }}
+                  path: mailroom/password
+          {{- end }}
           - secret:
               name: {{ template "gitlab.psql.password.secret" $ }}
               items:

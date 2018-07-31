@@ -103,6 +103,17 @@ global:
     enabled:
     credentials: {}
   appConfig:
+    incomingEmail:
+      enabled: false
+      address: "gitlab-incoming+%{key}@gmail.com"
+      host: "imap.gmail.com"
+      port: 993
+      ssl: true
+      startTls: false
+      user: "gitlab-incoming@gmail.com"
+      password: {}
+      mailbox: inbox
+      idleTimeout: 60
     lfs:
       enabled: true
       proxy_download: true

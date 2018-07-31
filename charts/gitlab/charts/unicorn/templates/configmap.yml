@@ -86,9 +86,20 @@ data:
           snippets: true
           builds: true
           container_registry: true
-      incoming_email:
-        enabled: false
       {{- with .Values.global.appConfig }}
+      {{- if eq .incomingEmail.enabled true }}
+      incoming_email:
+        enabled: {{ eq .incomingEmail.enabled true }}
+        address: {{ .incomingEmail.address | quote }}
+        host: {{ .incomingEmail.host | quote }}
+        port: {{ .incomingEmail.port }}
+        ssl: {{ .incomingEmail.ssl }}
+        start_tls: {{ .incomingEmail.startTls }}
+        user: {{ .incomingEmail.user }}
+        password: "<%= File.read('/etc/gitlab/mailroom/password') %>"
+        mailbox: {{ .incomingEmail.mailbox | quote }}
+        idle_timeout: {{ .incomingEmail.idleTimeout }}
+      {{- end }}
       gravatar:
         plain_url: {{ .gravatar.plainUrl }}
         ssl_url: {{ .gravatar.sslUrl }}
@@ -234,13 +245,17 @@ data:
   configure: |
     set -e
     mkdir -p /init-secrets/redis /init-secrets/shell /init-secrets/gitaly \
-      /init-secrets/registry /init-secrets/postgres /init-secrets/rails-secrets
+      /init-secrets/registry /init-secrets/postgres /init-secrets/rails-secrets \
+      /init-secrets/mailroom
     cp /init-config/redis/password /init-secrets/redis/password
     cp /init-config/shell/.gitlab_shell_secret /init-secrets/shell/.gitlab_shell_secret
     cp /init-config/gitaly/gitaly_token /init-secrets/gitaly/gitaly_token
     cp /init-config/registry/gitlab-registry.key /init-secrets/registry/gitlab-registry.key
     cp /init-config/postgres/psql-password /init-secrets/postgres/psql-password
     cp /init-config/rails-secrets/secrets.yml /init-secrets/rails-secrets/secrets.yml
+    if [ -e /init-config/mailroom/password ]; then
+      cp /init-config/mailroom/password /init-secrets/mailroom/password
+    fi
     if [ -e /init-config/minio ]; then
       mkdir -p /init-secrets/minio
       cp /init-config/minio/* /init-secrets/minio/
