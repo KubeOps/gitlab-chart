@@ -1,0 +1,98 @@
+{{- if and (.Values.enabled) (.Values.global.appConfig.incomingEmail.enabled) }}
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+{{ include "gitlab.standardLabels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      {{- if eq (default $.Values.global.antiAffinity .antiAffinity) "hard" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  app: {{ $name }}
+                  release: {{ $releaseName }}
+      {{- else if eq (default $.Values.global.antiAffinity .antiAffinity) "soft" }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: {{ $name }}
+                  release: {{ $releaseName }}
+      {{- end }}
+      initContainers:
+        - name: configure
+          command: ['sh', '/config/configure']
+          image: {{ $initImage }}:{{ $initTag }}
+      volumeMounts:
+        - name: mailroom-config
+          mountPath: /config
+          readOnly: true
+        - name: init-mailroom-secrets
+          mounthPath: /init-config
+          readOnly: true
+        - name: mailroom-secrets
+          mountPath: /init-secrets
+          readOnly: false
+      containers:
+        - name: {{ $name }}
+          image: "{{ $image }}"
+          {{ template "gitlab.imagePullPolicy" $ }}
+          volumeMounts:
+            - name: mailroom-config
+              mountPath: '/srv/gitlab/config/mail_room.yml.erb'
+              subPath: mail_room.yml.erb
+              readOnly: true
+            - name: mailroom-secrets
+              mountPath: '/etc/gitlab'
+              readOnly: true
+{{ toYaml ( default $resources .resources ) | indent 12 }}
+      volumes:
+      - name: mailroom-config
+        projected:
+          sources:
+            - configMap:
+              name: {{ $fullname }}
+      - name: init-mailroom-secrets
+        projected:
+          defaultMode: 0400
+          sources:
+          - secret:
+              name: {{ template "gitlab.redis.password.secret" . }}
+              items:
+                - key: {{ template "gitlab.redis.password.key" . }}
+                  path: redis/password
+          - secret:
+              name: {{ template "gitlab.incomingEmail.password.secret" . }}
+              items:
+                - key: {{ template "gitlab.incomingEmail.password.key" . }}
+                  path: mailroom/password
+      - name: mailroom-secrets
+        emptyDir:
+          medium: "Memory"
+      nodeSelector:
+{{ toYaml $podNodeSelector | indent 8 }}
+{{- end }}

@@ -1,0 +1,20 @@
+image:
+  repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-mailroom-ee
+  pullSecrets: []
+  # pullPolicy: IfNotPresent
+  # tag: latest
+
+init:
+  image: busybox
+  tag: latest
+  resources:
+    requests:
+      cpu: 50m
+
+resources:
+  # limits:
+  #  cpu: 1
+  #  memory: 2G
+  requests:
+    cpu: 50m
+    memory: 350M
