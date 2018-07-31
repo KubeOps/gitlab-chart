@@ -11,6 +11,8 @@ for more information on how the global variables work.
 - [PostgreSQL](#configure-postgresql-settings)
 - [Redis](#configure-redis-settings)
 - [Gitaly](#configure-gitaly-settings)
+- [Minio](#configure-minio-settings)
+- [appConfig](#configure-appconfig-settings)
 
 ## Configure Host settings
 
@@ -255,3 +257,158 @@ global:
 
 For further details on these settings, see the documentation within the
 [unicorn chart](gitlab/unicorn/README.md#gitaly)
+
+## Configure Minio settings
+
+The GitLab global Minio settings are located under the `global.minio` key.
+
+```
+global:
+  minio:
+    enabled: true
+    credentials: {}
+```
+
+For further details on these settings, see the documentation within the
+[minio chart](minio/README.md)
+
+## Configure appConfig settings
+
+The [unicorn][], [sidekiq][], and [task-runner][] charts share multiple settings, which are configured
+with the `global.appConfig` key.
+
+```
+global:
+appConfig:
+  issueClosingPattern:
+  defaultTheme:
+  webhookTimeout:
+  gravatar:
+    plainUrl:
+    sslUrl:
+  extra:
+    googleAnalyticsId:
+    piwikUrl:
+    piwikSiteId:
+  lfs:
+    enabled: true
+    proxy_download: true
+    bucket: git-lfs
+    connection: {}
+  artifacts:
+    enabled: true
+    proxy_download: true
+    bucket: gitlab-artifacts
+    connection: {}
+  uploads:
+    enabled: true
+    proxy_download: true
+    bucket: gitlab-uploads
+    connection: {}
+  backups:
+    bucket: gitlab-backups
+```
+
+[unicorn]: gitlab/unicorn/README.md
+[sidekiq]: gitlab/sidekiq/README.md
+[task-runner]: gitlab/task-runner/README.md
+
+### General application settings
+
+The settings that can be used to tweak the general properties of the Rails
+application are described below.
+
+#### issueClosingPattern
+
+[Pattern to close issues automatically](https://docs.gitlab.com/ee/administration/issue_closing_pattern.html).
+It takes a string value, and defaults to an empty value.
+
+#### defaultTheme
+
+[Numeric ID of the default theme for the GitLab instance](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/themes.rb#L14-25). It takes a number, denoting the id of the theme, as value and has an empty
+default value.
+
+#### webHookTimeout
+
+[Waiting time in seconds before a hook is deemed failure](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html#receiving-duplicate-or-multiple-web-hook-requests-triggered-by-one-event). It takes a
+number, denoting the time in seconds, as value and has an empty default value.
+
+### Gravatar/Libravatar settings
+
+By default, the charts work with Gravatar avatar service available at
+gravatar.com. However, if needed, a custom Libravatar service can also be used.
+It consists of two subkeys, both of which take string values pointing to URLs
+and have an empty default value.
+
+#### plainUrl
+
+[HTTP URL to libravatar instance (instead of using gravatar.com)](https://docs.gitlab.com/ee/customization/libravatar.html)
+
+#### sslUrl
+
+[HTTPS URL to libravatar instance (instead of using gravatar.com)](https://docs.gitlab.com/ee/customization/libravatar.html)
+
+### Hooking Analytics services to the GitLab instance
+
+Settings to configure Analytics services like Google Analytics and Piwik are
+defined under the `extra` key below `appConfig`.
+
+#### googleAnalyticsId
+
+Tracking ID for Google Analytics. Takes a string value as input and has an empty
+default value.
+
+#### piwikUrl
+
+Piwik URL. Takes a string value as input and has an empty default value.
+
+#### piwikSiteId
+
+Piwik Site ID. Takes a string value as input and has an empty default value.
+
+### LFS / Artifacts / Uploads
+
+Details on these settings are below. Documentation is not repeated individually,
+as they are structurally identical aside default value of the `bucket` property.
+
+```YAML
+  enabled: true
+  proxy_download: true
+  bucket:
+  connection:
+    secret:
+    key:
+```
+
+#### enabled
+
+Enable the use of these features with object storage.
+
+Defaults to `true`
+
+#### proxy_download
+
+Enable proxy of all downloads via GitLab, in place of direct downloads from the `bucket`.
+
+Defaults to `true`
+
+#### bucket
+
+Name of the bucket to use from object storage provider.
+
+Defaults shown above.
+
+#### connection
+
+The `connection` property has been transitioned to a Kubernetes Secret. The contents
+of this secret should be in accordance with the documentation present at
+[GitLab Job Artifacts Administration][artifactscon] documentation. This matches to
+[Fog](https://github.com/fog), and is different between provider modules.
+
+Defaults to `{}` and will be ignored if `global.minio.enabled` is `true`.
+
+This property has two sub-keys: `secret` and `key`.
+- `secret` is the name of a Kubernetes Secret. This value is required to use external object storage.
+- `key` is the name of the key in the secret which houses the YAML block. Defaults to `connection`.
+
+[artifactscon]: https://docs.gitlab.com/ee/administration/job_artifacts.html#object-storage-settings

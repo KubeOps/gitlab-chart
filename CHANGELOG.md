@@ -2,7 +2,23 @@
 documentation](doc/development/changelog.md) for instructions on adding your own
 entry.
 
-## 2018-07-19
+## 0.3.4 (2018-07-31)
+
+- No changes.
+
+## 0.3.3 (2018-07-27)
+
+- No changes.
+
+## 0.3.2 (2018-07-26)
+
+- No changes.
+
+## 0.3.1 (2018-07-23)
+
+- No changes.
+
+## 0.3.0
 
 ### Security (4 changes, 4 of them are from the community)
 
@@ -25,7 +41,7 @@ entry.
 
 - Support optional Application CRD. !363 (Corey O'Brien)
 
-## 2018-06-19
+## 0.2.0
 
 ### Fixed (1 change, 1 of them is from the community)
 

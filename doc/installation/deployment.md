@@ -53,6 +53,9 @@ documentation for more help on this process.
 
 By default the chart will create Volume Claims with the expectation that a dynamic provisioner will create the underlying Persistent Volumes. If you would like to customize the storageClass or manually create and assign volumes, please review the [storage documentation](storage.md).
 
+> **Important**: After initial installation, making changes to your storage settings requires manually editing Kubernetes
+> objects, so it's best to plan ahead before installing your production instance of GitLab to avoid extra storage migration work.
+
 ### TLS certificates
 
 You should be running GitLab using https which requires TLS certificates. By default the
@@ -123,6 +126,16 @@ By default, the Helm charts use the Enterprise Edition of GitLab. If desired, yo
 --set gitlab.migrations.image.repository=registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ce
 --set gitlab.sidekiq.image.repository=registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce
 --set gitlab.unicorn.image.repository=registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
+```
+
+### RBAC
+
+This chart defaults to creating and using RBAC. If your cluster does not have RBAC enabled, you will need to disable these settings:
+```
+--set certmanager.rbac.create=false
+--set nginx-ingress.rbac.createRole=false
+--set prometheus.rbac.create=false
+--set gitlab-runner.rbac.create=false
 ```
 
 ## Deploy using helm

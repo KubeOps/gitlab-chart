@@ -47,6 +47,16 @@ Tables below contain all the possible charts configurations that can be supplied
 | global.email.reply_to           | Reply-to email listed in emails from GitLab                                             | noreply@example.local |
 | global.email.subject_suffix     | Suffix on the subject of all outgoing email from GitLab                                 | ""                    |
 
+## RBAC Settings
+| Parameter                                    | Default                                                           | Default                      |
+| ---                                          | ---                                                               | ---                          |
+| certmanager.rbac.create                      | Create and use RBAC resources                                     | true                         |
+| nginx-ingress.rbac.create                    | Create and use default RBAC resources                             | false                        |
+| nginx-ingress.rbac.createClusterRole         | Create and use Cluster role                                       | false                        |
+| nginx-ingress.rbac.createRole                | Create and use namespaced role                                    | true                         |
+| prometheus.rbac.create                       | Create and use RBAC resources                                     | true                         |
+| gitlab-runner.rbac.create                    | Create and use RBAC resources                                     | true                         |
+
 ## Advanced nginx ingress configuration
 
 See [nginx-ingress chart](../../charts/nginx/README.md)
@@ -73,6 +83,10 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | redis.persistence.accessMode                 | Redis access mode                           | ReadWriteOnce  |
 | redis.persistence.size                       | Size of volume needed for redis persistence | 5Gi            |
 | redis.persistence.subPath                    | Subpath to mount persistence volume at      |                |
+| redis.persistence.storageClass               | storageClassName for provisioning           |                |
+| redis.persistence.volumeName                 | Existing persistent volume name             |                |
+| redis.persistence.matchLabels                | Label-value matches to bind                 |                |
+| redis.persistence.matchExpressions           | Label-expression matches to bind            |                |
 
 ## Advanced registry configuration
 
@@ -102,6 +116,10 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | minio.persistence.accessMode                 | Minio persistence access mode       | ReadWriteOnce                |
 | minio.persistence.size                       | Minio persistence volume size       | 10Gi                         |
 | minio.persistence.subPath                    | Minio persistence volume mount path |                              |
+| minio.persistence.storageClass               | Minio storageClassName for provisioning |                          |
+| minio.persistence.volumeName                 | Minio existing persistent volume name   |                          |
+| minio.persistence.matchLabels                | Minio label-value matches to bind       |                          |
+| minio.persistence.matchExpressions           | Minio label-expression matches to bind  |                          |
 | minio.serviceType                            | Minio service type                  | ClusterIP                    |
 | minio.servicePort                            | Minio service port                  | 9000                         |
 | minio.service.annotations                    | Annotations to add to the `Service` | {}                           |
@@ -133,7 +151,11 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | gitlab.gitaly.persistence.enabled                   | Gitaly enable persistence flag                 | true                                                       |
 | gitlab.gitaly.persistence.accessMode                | Gitaly persistence access mode                 | ReadWriteOnce                                              |
 | gitlab.gitaly.persistence.size                      | Gitaly persistence volume size                 | 50Gi                                                       |
-| gitlab.gitaly.persistence.subPath                   | Gitaly persistence volume mount path           |                                                            |
+| gitlab.gitaly.persistence.subPath                   | Gitaly persistence volume mount path           |                                                          |
+| gitlab.gitaly.persistence.storageClass              | storageClassName for provisioning              |                                                  |
+| gitlab.gitaly.persistence.volumeName                | Existing persistent volume name                |                                                  |
+| gitlab.gitaly.persistence.matchLabels               | Label-value matches to bind                    |                                                  |
+| gitlab.gitaly.persistence.matchExpressions          | Label-expression matches to bind               |                                                  |
 | gitlab.gitlab-shell.replicaCount                    | Shell replicas                                 | 1                                                          |
 | gitlab.gitlab-shell.image.repository                | Shell image repository                         | registry.gitlab.com/gitlab-org/build/cng/gitlab-shell      |
 | gitlab.gitlab-shell.image.tag                       | Shell image tag                                | latest                                                     |
