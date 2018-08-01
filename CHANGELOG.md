@@ -2,6 +2,25 @@
 documentation](doc/development/changelog.md) for instructions on adding your own
 entry.
 
+## 0.3.5 (2018-07-31)
+
+### Fixed (1 change)
+
+- Pin the minio/mc image version to a know working tag. !426
+
+
+## 0.3.4 (2018-07-31)
+
+- No changes.
+
+## 0.3.3 (2018-07-27)
+
+- No changes.
+
+## 0.3.2 (2018-07-26)
+
+- No changes.
+
 ## 0.3.1 (2018-07-23)
 
 - No changes.

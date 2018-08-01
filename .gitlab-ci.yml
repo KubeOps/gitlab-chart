@@ -24,7 +24,7 @@
 # `.buildpacks` that contains the URLs, one on each line, in order.
 # Note: Auto CI does not work with multiple buildpacks yet
 
-image: registry.gitlab.com/charts/gitlab:latest
+image: registry.gitlab.com/gitlab-org/gitlab-build-images:gitlab-charts-build-base
 
 variables:
   GOOGLE_APPLICATION_CREDENTIALS: ${CI_PROJECT_DIR}/.google_keyfile.json
@@ -37,7 +37,7 @@ variables:
   POSTGRES_DB: $CI_ENVIRONMENT_SLUG
 
 stages:
-  - test
+  - prepare
   - review
   - staging
   - canary
@@ -46,20 +46,6 @@ stages:
   - qa
   - package
   - cleanup
-
-.test:
-  services:
-    - postgres:latest
-  variables:
-    POSTGRES_DB: test
-  stage: test
-  image: gliderlabs/herokuish:latest
-  script:
-    - setup_test_db
-    - cp -R . /tmp/app
-    - /bin/herokuish buildpack test
-  only:
-    - branches
 
 lint_package:
   stage: package
@@ -95,7 +81,6 @@ review:
     - terraform_init
     - check_kube_domain
     - terraform_up
-#    - download_chart
     - ensure_namespace
     - install_tiller
     - create_secret
@@ -297,7 +282,6 @@ qa:
     -   qa_version="${app_version}-ee"
     - fi
     - GITLAB_USERNAME=root GITLAB_PASSWORD=$ROOT_PASSWORD gitlab-qa Test::Instance::Any EE:$qa_version https://$QA_ENVIRONMENT_URL
-
   artifacts:
     when: on_failure
     expire_in: 7d
@@ -306,6 +290,8 @@ qa:
   only:
     refs:
       - branches
+  retry: 1
+  allow_failure: true
 
 review_helm_test:
   stage: qa
@@ -357,6 +343,17 @@ debug_review:
     kubernetes: active
   except:
     - master
+
+danger-review:
+  image: registry.gitlab.com/gitlab-org/gitlab-build-images:danger
+  stage: prepare
+  cache: {}
+  only:
+    refs:
+      - branches
+  script:
+    - git version
+    - danger --fail-on-errors=true
 
 # ---------------------------------------------------------------------------
 
