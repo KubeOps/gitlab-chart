@@ -39,7 +39,7 @@ workerTimeout: 60
 hpa:
   targetAverageValue: 400m
 workhorse:
-  image: registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse
+  image: registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee
   sentryDSN: ""
   extraArgs: ""
   resources:
