@@ -10,6 +10,7 @@ Gitlab Components:
 Optional External Services
 * SMTP server
 * Omniauth
+* IMAP for reply-by-email feature (via mail_room service)
 
 
 Any secret not provided manually will be automatically generated with a random value. Automatic generation of HTTPS certificates is provided by Let's Encrypt.
@@ -150,6 +151,18 @@ kubectl create secret generic smtp-password --from-literal=password=yourpassword
 ```
 
 Then use `--set global.smtp.password.secret=smtp-password` in your helm command.
+
+### IMAP service for reply-by-email feature
+
+To use [reply-by-email feature](https://docs.gitlab.com/ee/administration/reply_by_email.html),
+store the password of IMAP account in a Kubernetes secret.
+
+```
+kubectl create secret generic incoming-email-password --from-literal=password=yourpasswordhere
+```
+
+Then use `--set global.appConfig.incomingEmail.password.secret=incoming-email-password`
+in your helm command along with other required settings as specified in docs.
 
 ## Next steps
 
