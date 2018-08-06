@@ -142,7 +142,7 @@ spec:
             - name: unicorn-config
               mountPath: '/srv/gitlab/INSTALLATION_TYPE'
               subPath: installation_type
-            - name: upload-directory
+            - name: shared-upload-directory
               mountPath: /srv/gitlab/public/uploads/tmp
               readOnly: false
 {{ include "gitlab.certificates.volumeMount" . | indent 12 }}
@@ -182,7 +182,7 @@ spec:
             - name: workhorse-secrets
               mountPath: '/etc/gitlab'
               readOnly: true
-            - name: upload-directory
+            - name: shared-upload-directory
               mountPath: /srv/gitlab/public/uploads/tmp
               readOnly: false
           livenessProbe:
@@ -316,7 +316,7 @@ spec:
       - name: workhorse-secrets
         emptyDir:
           medium: "Memory"
-      - name: upload-directory
+      - name: shared-upload-directory
         emptyDir:
           medium: "Memory"
 {{ include "gitlab.certificates.volumes" . | indent 6 }}
