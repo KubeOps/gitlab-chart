@@ -15,6 +15,22 @@ GitLab Helm chart provides a specific pod named `task-runner` that acts as an in
         ```bash
         $ /srv/gitlab/bin/rails runner "user = User.first; user.password='#{password}'; user.password_confirmation='#{password}'; user.save!"
         ```
+## Object storage
+
+We provide a minio instance out of the box when using this charts unless an external object storage is specified. The default behavior of the runner pod is consistent with this behavior such that it defaults to connect to our minio unless specific settings are given. The task-runner uses `s3cmd` to connect to object storage. In order to configure connectivity to external object storage `.Values.backups.ObjectStorage.config.secret` should be specified which points to a kubernetes secret containing the full `.s3cfg` file. `.Values.backups.objectStorage.config.key` needs to also be specified which points to the key in the secret that has the `.s3cfg` as it's value.
+
+It should look like this:
+
+```
+backups:
+  objectStorage:
+    config:
+      my-s3cfg.yml
+    key:
+      config
+```
+
+A sample `.s3cfg` file can be found [here](https://s3tools.org/kb/item14.htm)
 
 ## Backing up a GitLab installation
 
