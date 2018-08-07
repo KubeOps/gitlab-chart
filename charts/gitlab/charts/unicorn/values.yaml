@@ -36,6 +36,7 @@ ingress:
   annotations: {}
 workerProcesses: 2
 workerTimeout: 60
+hpaTargetCpuValue: 400m
 workhorse:
   sentryDSN: ""
   extraArgs: ""
