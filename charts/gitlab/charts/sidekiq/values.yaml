@@ -118,6 +118,7 @@ trusted_proxies: []
 minReplicas: 1
 maxReplicas: 10
 concurrency: 10
+targetAverageValue: 400m
 timeout: 5
 resources:
   # limits:
