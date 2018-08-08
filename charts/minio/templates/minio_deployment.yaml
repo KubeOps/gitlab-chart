@@ -15,6 +15,9 @@ spec:
       app: {{ template "minio.name" . }}
       release: "{{ .Release.Name }}"
       component: app
+  {{- if .Values.global.operator.enabled }}
+  paused: true
+  {{- end }}
   template:
     metadata:
       name: {{ template "minio.fullname" . }}

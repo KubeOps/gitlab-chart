@@ -18,6 +18,9 @@ spec:
       app: {{ template "name" . }}
       component: "{{ .Values.controller.name }}"
       release: {{ .Release.Name }}
+  {{- if .Values.global.operator.enabled }}
+  paused: true
+  {{- end }}
   template:
     metadata:
       {{- if .Values.controller.podAnnotations }}

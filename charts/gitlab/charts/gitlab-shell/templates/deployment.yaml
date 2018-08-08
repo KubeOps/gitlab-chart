@@ -10,6 +10,9 @@ spec:
     matchLabels:
       app: {{ template "name" . }}
       release: {{ .Release.Name }}
+  {{- if .Values.global.operator.enabled }}
+  paused: true
+  {{- end }}
   template:
     metadata:
       labels:

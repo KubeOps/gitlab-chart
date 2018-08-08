@@ -15,6 +15,9 @@ spec:
       app: {{ template "name" . }}
       component: "{{ .Values.defaultBackend.name }}"
       release: {{ .Release.Name }}
+  {{- if .Values.global.operator.enabled }}
+  paused: true
+  {{- end }}
   template:
     metadata:
     {{- if .Values.defaultBackend.podAnnotations }}

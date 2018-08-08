@@ -19,6 +19,11 @@ spec:
 {{ include "labels.immutable" . | indent 6 }}
       name: "redis-server"
       redis-node: "true"
+  {{- if .Values.global.operator.enabled }}
+  updateStrategy:
+    rollingUpdate:
+      partition: {{ .Values.replicas.servers }}
+  {{- end }}
   template:
     metadata:
       annotations:

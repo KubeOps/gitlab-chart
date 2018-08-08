@@ -10,7 +10,13 @@ metadata:
 spec:
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   updateStrategy:
+  {{- if .Values.global.operator.enabled }}
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  {{- else }}
 {{ toYaml .Values.controller.updateStrategy | indent 4 }}
+  {{- end }}
   minReadySeconds: {{ .Values.controller.minReadySeconds }}
   template:
     metadata:

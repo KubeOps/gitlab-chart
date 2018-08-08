@@ -21,6 +21,7 @@
 {{- $metricsAnnotations := .Values.metrics.annotations -}}
 {{- $initImage := .Values.init.image }}
 {{- $initTag := .Values.init.tag }}
+{{- $operatorEnabled := .Values.global.operator.enabled -}}
 {{- /* The below is an messy attempt to read in, and reflect on the configmap-queues.yaml template. */}}
 {{- $queueConfigList := include (print $.Template.BasePath "/configmap-queue.yaml") . | split "\n---" }}
 {{- $queues := dict }}
@@ -46,6 +47,9 @@ spec:
     matchLabels:
       app: {{ $name }}
       release: {{ $releaseName }}
+  {{- if $operatorEnabled }}
+  paused: true
+  {{- end }}
   template:
     metadata:
       labels:

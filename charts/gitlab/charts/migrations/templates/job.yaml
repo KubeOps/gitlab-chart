@@ -6,6 +6,9 @@ metadata:
   labels:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
+  {{- if .Values.global.operator.enabled }}
+  parallelism: 0
+  {{- end }}
   template:
     metadata:
       labels:
