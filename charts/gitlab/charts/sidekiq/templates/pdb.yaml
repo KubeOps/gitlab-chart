@@ -10,6 +10,5 @@ spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
     matchLabels:
-      app: {{ template "name" . }}
-      release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
 {{- end -}}

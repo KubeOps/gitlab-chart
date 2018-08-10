@@ -8,8 +8,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "minio.name" . }}
-      release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
   ingress:
     - ports:
         - port: {{ .Values.servicePort }}

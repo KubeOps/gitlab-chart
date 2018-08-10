@@ -4,20 +4,18 @@ kind: StatefulSet
 metadata:
   name: {{ template "fullname" . }}
   labels:
-{{ include "gitlab.immutableLabels" . | indent 4 }}
+{{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app: {{ template "name" . }}
-      release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
   serviceName: {{ template "fullname" . }}
   replicas: {{- if .Values.global.gitaly.host }} 0 {{- else }} {{ len .Values.global.gitaly.internal.names }} {{- end }}
   podManagementPolicy: Parallel
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
-        release: {{ .Release.Name }}
+{{ include "gitlab.standardLabels" . | indent 8 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
     spec:
@@ -49,19 +47,17 @@ spec:
             - topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app: {{ template "name" . }}
-                  release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 18 }}
       {{- else if eq (default .Values.global.antiAffinity .Values.antiAffinity) "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
             podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
+              topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app: {{ template "name" . }}
-                  release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 18 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -153,8 +149,7 @@ spec:
     - metadata:
         name: repo-data
         labels:
-          app: {{ template "name" . }}
-          release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 10 }}
       spec:
         accessModes:
           - {{ .Values.persistence.accessMode | quote }}

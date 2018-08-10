@@ -13,5 +13,5 @@ spec:
       targetPort: 26379
   selector:
     redis-role: "sentinel"
-{{ include "gitlab.standardLabels" . | indent 4 }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
 {{- end -}}

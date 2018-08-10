@@ -44,13 +44,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ $name }}
-      release: {{ $releaseName }}
+{{ include "gitlab.immutableLabels" $ | indent 6 }}
   template:
     metadata:
       labels:
-        app: {{ $name }}
-        release: {{ $releaseName }}
+{{ include "gitlab.standardLabels" $ | indent 8 }}
       annotations:
         checksum/configmap: {{ $configMapChecksum }}
         checksum/configmap-pod: {{ pluck ( .name | quote ) $queues | last | sha256sum }}
@@ -68,8 +66,7 @@ spec:
             - topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app: {{ $name }}
-                  release: {{ $releaseName }}
+{{ include "gitlab.immutableLabels" $ | indent 18 }}
       {{- else if eq (default $.Values.global.antiAffinity .antiAffinity) "soft" }}
       affinity:
         podAntiAffinity:
@@ -79,8 +76,7 @@ spec:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchLabels:
-                  app: {{ $name }}
-                  release: {{ $releaseName }}
+{{ include "gitlab.immutableLabels" $ | indent 18 }}
       {{- end }}
       initContainers:
         - name: configure

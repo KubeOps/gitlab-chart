@@ -12,6 +12,9 @@ spec:
   updateStrategy:
 {{ toYaml .Values.controller.updateStrategy | indent 4 }}
   minReadySeconds: {{ .Values.controller.minReadySeconds }}
+  selector:
+    matchLabels:
+{{ include "gitlab.immutableLabels" . | indent 6 }}
   template:
     metadata:
       annotations:
@@ -20,9 +23,8 @@ spec:
 {{ toYaml .Values.controller.podAnnotations | indent 8}}
     {{- end }}
       labels:
-        app: {{ template "name" . }}
+{{ include "gitlab.standardLabels" . | indent 8 }}
         component: "{{ .Values.controller.name }}"
-        release: {{ .Release.Name }}
         {{- if .Values.controller.podLabels }}
 {{ toYaml .Values.controller.podLabels | indent 8}}
         {{- end }}

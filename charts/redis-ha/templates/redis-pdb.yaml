@@ -10,5 +10,5 @@ spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
     matchLabels:
-{{ include "labels.immutable" . | indent 6 }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
 {{- end -}}

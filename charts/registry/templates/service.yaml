@@ -15,6 +15,5 @@ spec:
     protocol: TCP
     name: {{ .Values.service.name }}
   selector:
-    app: {{ template "name" . }}
-    release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
 {{- end -}}

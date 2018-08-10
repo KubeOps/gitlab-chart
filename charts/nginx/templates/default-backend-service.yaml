@@ -30,9 +30,8 @@ spec:
       protocol: TCP
       targetPort: http
   selector:
-    app: {{ template "name" . }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
     component: "{{ .Values.defaultBackend.name }}"
-    release: {{ .Release.Name }}
   type: "{{ .Values.defaultBackend.service.type }}"
 {{- end }}
 {{- end }}

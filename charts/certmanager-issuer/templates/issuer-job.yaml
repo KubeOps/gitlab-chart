@@ -7,11 +7,13 @@ metadata:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
   activeDeadlineSeconds: 300
+  selector:
+    matchLabels:
+{{ include "gitlab.immutableLabels" . | indent 6 }}
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
-        release: {{ .Release.Name }}
+{{ include "gitlab.standardLabels" . | indent 8 }}
     spec:
       {{- if .Values.rbac.create }}
       serviceAccountName: {{ template "fullname" . }}

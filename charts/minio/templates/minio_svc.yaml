@@ -13,8 +13,7 @@ spec:
   loadBalancerIP: {{ default "" .Values.minioLoadBalancerIP }}
   {{- end }}
   selector:
-    app: {{ template "minio.name" . }}
-    release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
     component: app
   ports:
     - name: service

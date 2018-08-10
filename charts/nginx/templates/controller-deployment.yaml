@@ -15,9 +15,8 @@ spec:
   minReadySeconds: {{ .Values.controller.minReadySeconds }}
   selector:
     matchLabels:
-      app: {{ template "name" . }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
       component: "{{ .Values.controller.name }}"
-      release: {{ .Release.Name }}
   template:
     metadata:
       {{- if .Values.controller.podAnnotations }}
@@ -25,9 +24,8 @@ spec:
 {{ toYaml .Values.controller.podAnnotations | indent 8}}
       {{- end }}
       labels:
-        app: {{ template "name" . }}
+{{ include "gitlab.standardLabels" . | indent 8 }}
         component: "{{ .Values.controller.name }}"
-        release: {{ .Release.Name }}
         {{- if .Values.controller.podLabels }}
 {{ toYaml .Values.controller.podLabels | indent 8 }}
         {{- end }}
@@ -175,8 +173,7 @@ spec:
             - topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
-                  app: {{ template "name" . }}
-                  release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 18 }}
       {{- else if eq (default .Values.global.antiAffinity .Values.antiAffinity) "soft" }}
       affinity:
         podAntiAffinity:
@@ -186,8 +183,7 @@ spec:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchLabels:
-                  app: {{ template "name" . }}
-                  release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 18 }}
       {{- end }}
     {{- end }}
       serviceAccountName: {{ if or .Values.rbac.create .Values.rbac.createRole .Values.rbac.createClusterRole }}{{ template "nginx-ingress.fullname" . }}{{ else }}"{{ .Values.rbac.serviceAccountName }}"{{ end }}

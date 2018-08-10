@@ -60,8 +60,7 @@ spec:
       targetPort: "{{ $key }}-udp"
   {{- end }}
   selector:
-    app: {{ template "name" . }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
     component: "{{ .Values.controller.name }}"
-    release: {{ .Release.Name }}
   type: "{{ .Values.controller.service.type }}"
 {{- end }}

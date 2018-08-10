@@ -29,9 +29,8 @@ spec:
       port: {{ .Values.controller.metrics.service.servicePort }}
       targetPort: metrics
   selector:
-    app: {{ template "name" . }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
     component: "{{ .Values.controller.name }}"
-    release: {{ .Release.Name }}
   type: "{{ .Values.controller.metrics.service.type }}"
 {{- end }}
 {{- end }}

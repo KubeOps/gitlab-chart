@@ -22,6 +22,5 @@ spec:
       name: {{ .Values.service.name }}-metrics
    {{- end }}
   selector:
-    app: {{ template "name" . }}
-    release: {{ .Release.Name }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
 {{- end }}

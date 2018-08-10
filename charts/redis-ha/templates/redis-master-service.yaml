@@ -25,7 +25,7 @@ spec:
     targetPort: metrics
   {{- end }}
   selector:
-{{ include "labels.immutable" . | indent 4 }}
+{{ include "gitlab.immutableLabels" . | indent 4 }}
     redis-node: "true"
     redis-role: "master"
   type: "{{ .Values.servers.serviceType }}"

@@ -7,10 +7,13 @@ metadata:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicas.sentinels }}
+  selector:
+    labelSelector:
+{{ include "gitlab.immutableLabels" . | indent 6 }}
   template:
     metadata:
       labels:
-{{ include "labels.standard" . | indent 8 }}
+{{ include "gitlab.standardLabels" . | indent 8 }}
     spec:
       affinity:
         podAntiAffinity:

@@ -12,17 +12,13 @@ spec:
     rollingUpdate: null
   selector:
     matchLabels:
-      app: {{ template "minio.name" . }}
-      release: "{{ .Release.Name }}"
+{{ include "gitlab.immutableLabels" . | indent 6 }}
       component: app
   template:
     metadata:
       name: {{ template "minio.fullname" . }}
       labels:
-        app: {{ template "minio.name" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+{{ include "gitlab.standardLabels" . | indent 8 }}
         component: app
     spec:
       securityContext:

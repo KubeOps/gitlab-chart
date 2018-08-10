@@ -12,9 +12,8 @@ spec:
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
-      app: {{ template "name" . }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
       component: "{{ .Values.defaultBackend.name }}"
-      release: {{ .Release.Name }}
   template:
     metadata:
     {{- if .Values.defaultBackend.podAnnotations }}
@@ -22,8 +21,7 @@ spec:
 {{ toYaml .Values.defaultBackend.podAnnotations | indent 8 }}
     {{- end }}
       labels:
-        app: {{ template "name" . }}
-        component: "{{ .Values.defaultBackend.name }}"
+{{ include "gitlab.standardLabels" . | indent 8 }}
         release: {{ .Release.Name }}
         {{- if .Values.defaultBackend.podLabels }}
 {{ toYaml .Values.defaultBackend.podLabels | indent 8 }}

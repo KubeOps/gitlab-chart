@@ -6,9 +6,9 @@ metadata:
   # Pay attention to the redis-role label at runtime. The self-determination logic in the image sets this value accordingly.
   name: {{ template "fullname" . }}-server
   labels:
+{{ include "gitlab.standardLabels" . | indent 4 }}
     name: "redis-server"
     redis-node: "true"
-{{ include "gitlab.immutableLabels" . | indent 4 }}
   annotations:
 {{ include "gitlab.serviceAnnotations" . | indent 4 }}
 spec:
@@ -16,7 +16,7 @@ spec:
   replicas: {{ .Values.replicas.servers }}
   selector:
     matchLabels:
-{{ include "labels.immutable" . | indent 6 }}
+{{ include "gitlab.immutableLabels" . | indent 6 }}
       name: "redis-server"
       redis-node: "true"
   template:
@@ -24,9 +24,9 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/redis-configmap.yaml") . | sha256sum }}
       labels:
+{{ include "gitlab.standardLabels" . | indent 8 }}
         name: "redis-server"
         redis-node: "true"
-{{ include "labels.standard" . | indent 8 }}
     spec:
       affinity:
         podAntiAffinity:
@@ -34,15 +34,9 @@ spec:
           - weight: 1
             podAffinityTerm:
               labelSelector:
+                matchLabels:
+{{ template "gitlab.immutableLabels" . | indent 18 }}
                 matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "name" . }}
-                - key: release
-                  operator: In
-                  values:
-                  - {{ .Release.Name | quote }}
                 - key: redis-role
                   operator: In
                   values:
