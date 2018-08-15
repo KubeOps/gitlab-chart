@@ -4,8 +4,8 @@ app.kubernetes.io/name: {{ .Values.global.application.name }}
 
 # Default labels include the immutable labels, and the mutable labels.
 {{- define "gitlab.standardLabels" -}}
-{{- template "gitlab.immutableLabels" . -}}
-{{- template "gitlab.mutableLabels" . -}}
+{{ template "gitlab.immutableLabels" . }}
+{{ template "gitlab.mutableLabels" . }}
 {{- end -}}
 
 # Labels that won't change across new versions of the release.
