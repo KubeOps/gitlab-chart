@@ -40,6 +40,7 @@ spec:
 {{ include "gitlab.immutableLabels" . | indent 18 }}
       {{- end }}
       initContainers:
+{{ include "gitlab.certificates.initContainer" . | indent 8 }}
         - name: configure
           command: ['sh', '/config/configure']
           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
@@ -68,6 +69,7 @@ spec:
             - name: mailroom-secrets
               mountPath: '/etc/gitlab'
               readOnly: true
+{{ include "gitlab.certificates.volumeMount" . | indent 12 }}
           livenessProbe:
             exec:
               command:
@@ -107,6 +109,7 @@ spec:
       - name: mailroom-secrets
         emptyDir:
           medium: "Memory"
+{{ include "gitlab.certificates.volumes" . | indent 6 }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
