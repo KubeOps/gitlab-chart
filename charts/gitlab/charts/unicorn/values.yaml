@@ -44,8 +44,8 @@ workhorse:
   extraArgs: ""
   resources:
     requests:
-      cpu: 200m
-      memory: 512M
+      cpu: 100m
+      memory: 100M
 ldap:
   servers: {}
   # 'main' is the GitLab 'provider ID' of this LDAP server
@@ -166,8 +166,8 @@ resources:
   #  cpu: 1
   #  memory: 2G
   requests:
-    cpu: 200m
-    memory: 1.5G
+    cpu: 100m
+    memory: 1.4G
 maxUnavailable: 1
 minReplicas: 2
 maxReplicas: 10
