@@ -37,13 +37,15 @@ global:
   minio:
     enabled:
     credentials: {}
+  appConfig:
+    lfs:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
 backups:
-  bucketNames:
-    backups: gitlab-backups
-    artifacts: gitlab-artifacts
-    uploads: gitlab-uploads
-    registry: registry
-    lfs: git-lfs
+  objectStorage:
+    config: {}
 extra: {}
 
 rack_attack:
@@ -68,11 +70,6 @@ gitaly:
   authToken: {}
   #   secret: gitaly-secret
   #   key: token
-lfs:
-  enabled: true
-  proxy_download: true
-  # bucket:
-  # connection: {}
 minio:
   bucket: git-lfs
   serviceName: 'minio-svc'

@@ -8,7 +8,7 @@ pullSecrets: []
 
 minioMc:
   image: minio/mc
-  tag: latest
+  tag: "RELEASE.2018-07-13T00-53-22Z"
 
 ingress:
   enabled: false
@@ -110,7 +110,7 @@ nodeSelector: {}
 ##
 resources:
   requests:
-    memory: 256Mi
+    memory: 128Mi
     cpu: 100m
 
 ## Create a buckets after minio install

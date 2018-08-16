@@ -37,6 +37,7 @@ Table below contains all the possible charts configurations that can be supplied
 | cron_jobs                 | Auxiliary cron jobs                            | {}                                               |
 | replicas                  | Sidekiq replicas                               | 1                                                |
 | concurrency               | Sidekiq default concurrency                    | 10                                               |
+| hpa.targetAverageValue    | Set the autoscaling target value               | 400m                                             |
 | timeout                   | Sidekiq job timeout                            | 5                                                |
 | resources.requests.cpu    | Sidekiq minimum needed cpu                     | 100m                                             |
 | resources.requests.memory | Sidekiq minimum needed memory                  | 600M                                             |
@@ -228,7 +229,7 @@ The number of tasks to process simultaneously. If not provided, this will pull f
 
 #### queues
 
-The `queues` value will be directly templated into the Sidekiq configuration file. As such, you may follow the documentation from Sidekiq for the value of `:queues:`.
+The `queues` value will be directly templated into the Sidekiq configuration file. As such, you may follow the documentation from Sidekiq for the value of `:queues:`. If this is not provided, the [upstream defaults](https://gitlab.com/gitlab-org/gitlab-ee/blob/master/config/sidekiq_queues.yml) will be used, resulting in the handling of _all_ queues.
 
 In summary, provide an list of queue names to process. Each item in the list may be a queue name (`merge`) or an array of queue name and priority (`[merge, 5]`).
 

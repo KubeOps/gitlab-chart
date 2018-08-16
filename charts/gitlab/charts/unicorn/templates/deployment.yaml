@@ -47,6 +47,7 @@ spec:
                   release: {{ .Release.Name }}
       {{- end }}
       initContainers:
+{{ include "gitlab.certificates.initContainer" . | indent 8 }}
         - name: configure
           command: ['sh', '/config/configure']
           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
@@ -130,6 +131,7 @@ spec:
             - name: unicorn-config
               mountPath: '/srv/gitlab/INSTALLATION_TYPE'
               subPath: installation_type
+{{ include "gitlab.certificates.volumeMount" . | indent 12 }}
           livenessProbe:
             exec:
               command:
@@ -199,25 +201,25 @@ spec:
                 - key: secretkey
                   path: minio/secretkey
           {{- end }}
-          {{- if .Values.lfs.connection }}
+          {{- if .Values.global.appConfig.lfs.connection }}
           - secret:
-              name: {{ .Values.lfs.connection.secret }}
+              name: {{ .Values.global.appConfig.lfs.connection.secret }}
               items:
-                - key: {{ default "connection" .Values.lfs.connection.key }}
+                - key: {{ default "connection" .Values.global.appConfig.lfs.connection.key }}
                   path: objectstorage/lfs
           {{- end }}
-          {{- if .Values.artifacts.connection }}
+          {{- if .Values.global.appConfig.artifacts.connection }}
           - secret:
-              name: {{ .Values.artifacts.connection.secret }}
+              name: {{ .Values.global.appConfig.artifacts.connection.secret }}
               items:
-                - key: {{ default "connection" .Values.artifacts.connection.key }}
+                - key: {{ default "connection" .Values.global.appConfig.artifacts.connection.key }}
                   path: objectstorage/artifacts
           {{- end }}
-          {{- if .Values.uploads.connection }}
+          {{- if .Values.global.appConfig.uploads.connection }}
           - secret:
-              name: {{ .Values.uploads.connection.secret }}
+              name: {{ .Values.global.appConfig.uploads.connection.secret }}
               items:
-                - key: {{ default "connection" .Values.uploads.connection.key }}
+                - key: {{ default "connection" .Values.global.appConfig.uploads.connection.key }}
                   path: objectstorage/uploads
           {{- end }}
           {{- if .Values.omniauth.providers }}
@@ -239,6 +241,7 @@ spec:
       - name: unicorn-secrets
         emptyDir:
           medium: "Memory"
+{{ include "gitlab.certificates.volumes" . | indent 6 }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

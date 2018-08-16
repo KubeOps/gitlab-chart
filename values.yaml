@@ -31,11 +31,48 @@ global:
   minio:
     enabled: true
     credentials: {}
+  appConfig:
+    issueClosingPattern:
+    defaultTheme:
+    webhookTimeout:
+    gravatar:
+      plainUrl:
+      sslUrl:
+    extra:
+      googleAnalyticsId:
+      piwikUrl:
+      piwikSiteId:
+    lfs:
+      bucket: git-lfs
+      connection: {}
+    artifacts:
+      bucket: gitlab-artifacts
+      connection: {}
+    uploads:
+      bucket: gitlab-uploads
+      connection: {}
+    backups:
+      bucket: gitlab-backups
+      tmpBucket: tmp
+    incomingEmail:
+      enabled: false
+      address: ""
+      host: "imap.gmail.com"
+      port: 993
+      ssl: true
+      startTls: false
+      user: ""
+      password:
+        secret: ""
+        key: password
+      mailbox: inbox
+      idleTimeout: 60
   shell:
     authToken: {}
     hostKeys: {}
   railsSecrets: {}
   registry:
+    bucket: registry
     certificate: {}
   runner:
     registrationToken: {}
@@ -62,6 +99,14 @@ global:
   service:
     annotations: {}
   antiAffinity: soft
+  # configuration of certificates container & custom CA injection
+  certificates:
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/alpine-certificates
+      tag: 20171114-r3
+    customCAs: []
+    # - secret: custom-CA
+    # - secret: more-custom-CAs
 
 certmanager:
   # Install cert-manager chart. Set to false if you already have cert-manager
@@ -93,16 +138,28 @@ nginx-ingress:
     resources:
       requests:
         cpu: 100m
-        memory: 200Mi
+        memory: 100Mi
     publishService:
       enabled: true
     replicaCount: 3
     minAvailable: 2
     scope:
       enabled: true
+    stats:
+      enabled: true
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "10254"
   defaultBackend:
     minAvailable: 1
     replicaCount: 2
+    resources:
+      requests:
+        cpu: 5m
+        memory: 5Mi
   rbac:
     create: false
     createClusterRole: false
@@ -145,6 +202,9 @@ postgresql:
 # redis:
 #   enabled: false
 
+shared-secrets:
+  rbac:
+    create: true
 
 gitlab-runner:
   install: true

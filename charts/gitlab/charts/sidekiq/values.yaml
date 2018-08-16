@@ -59,6 +59,25 @@ global:
   minio:
     enabled:
     credentials: {}
+  appConfig:
+    incomingEmail:
+      enabled: false
+      address:
+    lfs:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
+    artifacts:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
+    uploads:
+      enabled: true
+      proxy_download: true
+      bucket:
+      connection: {}
 gitaly:
   # host: '0.0.0.0'
   # port: 8075
@@ -66,21 +85,6 @@ gitaly:
   authToken: {}
   #   secret: gitaly-secret
   #   key: token
-artifacts:
-  enabled: true
-  proxy_download: true
-  bucket: gitlab-artifacts
-  # connection: {}
-lfs:
-  enabled: true
-  proxy_download: true
-  bucket: git-lfs
-  # connection: {}
-uploads:
-  enabled: true
-  proxy_download: true
-  bucket: gitlab-uploads
-  # connection: {}
 minio:
   serviceName: 'minio-svc'
   port: 9000
@@ -117,6 +121,8 @@ trusted_proxies: []
 minReplicas: 1
 maxReplicas: 10
 concurrency: 10
+hpa:
+  targetAverageValue: 400m
 timeout: 5
 resources:
   # limits:
@@ -124,7 +130,7 @@ resources:
   #  memory: 1G
   requests:
     cpu: 200m
-    memory: 1G
+    memory: 768Mi
 maxUnavailable: 1
 
 # Define queue groups into Pods
@@ -134,57 +140,3 @@ pods:
     # minReplicas: 1
     # maxReplicas: 10
     queues:
-      - [post_receive, 5]
-      - [merge, 5]
-      - [update_merge_requests, 3]
-      - [process_commit, 3]
-      - [new_note, 2]
-      - [new_issue, 2]
-      - [new_merge_request, 2]
-      - [pipeline_processing, 5]
-      - [pipeline_creation, 4]
-      - [pipeline_default, 3]
-      - [pipeline_cache, 3]
-      - [pipeline_hooks, 2]
-      - [gitlab_shell, 2]
-      - [email_receiver, 2]
-      - [emails_on_push, 2]
-      - [mailers, 2]
-      - [invalid_gpg_signature_update, 2]
-      - [create_gpg_signature, 2]
-      - [rebase, 2]
-      - [upload_checksum, 1]
-      - [repository_fork, 1]
-      - [repository_import, 1]
-      - [github_importer, 1]
-      - [github_import_advance_stage, 1]
-      - [project_service, 1]
-      - [delete_user, 1]
-      - [delete_merged_branches, 1]
-      - [authorized_projects, 1]
-      - [expire_build_instance_artifacts, 1]
-      - [group_destroy, 1]
-      - [irker, 1]
-      - [namespaceless_project_destroy, 1]
-      - [project_cache, 1]
-      - [project_destroy, 1]
-      - [project_export, 1]
-      - [web_hook, 1]
-      - [repository_check, 1]
-      - [git_garbage_collect, 1]
-      - [reactive_caching, 1]
-      - [cronjob, 1]
-      - [default, 1]
-      - [pages, 1]
-      - [system_hook_push, 1]
-      - [update_user_activity, 1]
-      - [propagate_service_template, 1]
-      - [background_migration, 1]
-      - [gcp_cluster, 1]
-      - [project_migrate_hashed_storage, 1]
-      - [storage_migrator, 1]
-      - [pages_domain_verification, 1]
-      - [object_storage_upload, 1]
-      - [object_storage, 1]
-      - [plugin, 1]
-      - [pipeline_background, 1]

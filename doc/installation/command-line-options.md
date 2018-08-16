@@ -14,7 +14,8 @@ Tables below contain all the possible charts configurations that can be supplied
 | global.psql.password.secret                     | Global name of the secret containing the psql password                       | _Uses in-cluster non-production postgress_ |
 | global.psql.password.key                        | Key pointing to the psql password in the psql secret                         | _Uses in-cluster non-production postgress_ |
 | global.time_zone                                | Global time zone                                                             | UTC                                        |
-| global.service.annotations                      | Annotations to add to every `Service`                                        | {}                                         |
+| global.service.annotations                      | Annotations to add to every `Service`                                        | {}                     |
+| global.registry.bucket                          | registry bucket name                    | registry             |
 
 ## TLS configuration
 
@@ -28,7 +29,7 @@ Tables below contain all the possible charts configurations that can be supplied
 | minio.ingress.tls.secretName                 | Existing `Secret` containing TLS certificate and key for minio    | {Release.Name}-minio-tls     |
 | registry.ingress.tls.secretName              | Existing `Secret` containing TLS certificate and key for registry | {Release.Name}-registry-tls  |
 
-## Email configuration
+## Outgoing Email configuration
 
 | Parameter                       | Description                                                                             | Default               |
 | ---                             | ---                                                                                     | ---                   |
@@ -46,6 +47,33 @@ Tables below contain all the possible charts configurations that can be supplied
 | global.email.display_name       | Name that appears as the sender for emails from GitLab                                  | GitLab                |
 | global.email.reply_to           | Reply-to email listed in emails from GitLab                                             | noreply@example.local |
 | global.email.subject_suffix     | Suffix on the subject of all outgoing email from GitLab                                 | ""                    |
+
+## Incoming Email configuration
+
+| Parameter                                          | Description                                                                                              | Default               |
+| ---                                                | ---                                                                                                      | ---                   |
+| global.appConfig.incomingEmail.enabled             | Enable incoming email                                                                                    | false                 |
+| global.appConfig.incomingEmail.address             | The email address to reference the item being replied to (example: gitlab-incoming+%{key}@gmail.com)     | empty                 |
+| global.appConfig.incomingEmail.host                | Host for IMAP                                                                                            | empty                 |
+| global.appConfig.incomingEmail.port                | Port for IMAP                                                                                            | 993                   |
+| global.appConfig.incomingEmail.ssl                 | Whether IMAP server uses SSL                                                                             | true                  |
+| global.appConfig.incomingEmail.startTls            | Whether IMAP server uses StartTLS                                                                        | false                 |
+| global.appConfig.incomingEmail.user                | Username for IMAP authentication                                                                         | empty                 |
+| global.appConfig.incomingEmail.password.secret     | Name of a `Secret` containing the IMAP password                                                          | empty                 |
+| global.appConfig.incomingEmail.password.key        | Key in `global.appConfig.incomingEmail.password.secret` that contains the IMAP password                  | password              |
+| global.appConfig.incomingEmail.mailbox             | Mailbox where incoming mail will end up.                                                                 | inbox                 |
+| global.appConfig.incomingEmail.idleTimeout         | The IDLE command timeout                                                                                 | 60                    |
+
+
+## RBAC Settings
+| Parameter                                    | Default                                                           | Default                      |
+| ---                                          | ---                                                               | ---                          |
+| certmanager.rbac.create                      | Create and use RBAC resources                                     | true                         |
+| nginx-ingress.rbac.create                    | Create and use default RBAC resources                             | false                        |
+| nginx-ingress.rbac.createClusterRole         | Create and use Cluster role                                       | false                        |
+| nginx-ingress.rbac.createRole                | Create and use namespaced role                                    | true                         |
+| prometheus.rbac.create                       | Create and use RBAC resources                                     | true                         |
+| gitlab-runner.rbac.create                    | Create and use RBAC resources                                     | true                         |
 
 ## Advanced nginx ingress configuration
 
@@ -73,6 +101,10 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | redis.persistence.accessMode                 | Redis access mode                           | ReadWriteOnce  |
 | redis.persistence.size                       | Size of volume needed for redis persistence | 5Gi            |
 | redis.persistence.subPath                    | Subpath to mount persistence volume at      |                |
+| redis.persistence.storageClass               | storageClassName for provisioning           |                |
+| redis.persistence.volumeName                 | Existing persistent volume name             |                |
+| redis.persistence.matchLabels                | Label-value matches to bind                 |                |
+| redis.persistence.matchExpressions           | Label-expression matches to bind            |                |
 
 ## Advanced registry configuration
 
@@ -102,6 +134,10 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | minio.persistence.accessMode                 | Minio persistence access mode       | ReadWriteOnce                |
 | minio.persistence.size                       | Minio persistence volume size       | 10Gi                         |
 | minio.persistence.subPath                    | Minio persistence volume mount path |                              |
+| minio.persistence.storageClass               | Minio storageClassName for provisioning |                          |
+| minio.persistence.volumeName                 | Minio existing persistent volume name   |                          |
+| minio.persistence.matchLabels                | Minio label-value matches to bind       |                          |
+| minio.persistence.matchExpressions           | Minio label-expression matches to bind  |                          |
 | minio.serviceType                            | Minio service type                  | ClusterIP                    |
 | minio.servicePort                            | Minio service port                  | 9000                         |
 | minio.service.annotations                    | Annotations to add to the `Service` | {}                           |
@@ -133,7 +169,11 @@ See [nginx-ingress chart](../../charts/nginx/README.md)
 | gitlab.gitaly.persistence.enabled                   | Gitaly enable persistence flag                 | true                                                       |
 | gitlab.gitaly.persistence.accessMode                | Gitaly persistence access mode                 | ReadWriteOnce                                              |
 | gitlab.gitaly.persistence.size                      | Gitaly persistence volume size                 | 50Gi                                                       |
-| gitlab.gitaly.persistence.subPath                   | Gitaly persistence volume mount path           |                                                            |
+| gitlab.gitaly.persistence.subPath                   | Gitaly persistence volume mount path           |                                                          |
+| gitlab.gitaly.persistence.storageClass              | storageClassName for provisioning              |                                                  |
+| gitlab.gitaly.persistence.volumeName                | Existing persistent volume name                |                                                  |
+| gitlab.gitaly.persistence.matchLabels               | Label-value matches to bind                    |                                                  |
+| gitlab.gitaly.persistence.matchExpressions          | Label-expression matches to bind               |                                                  |
 | gitlab.gitlab-shell.replicaCount                    | Shell replicas                                 | 1                                                          |
 | gitlab.gitlab-shell.image.repository                | Shell image repository                         | registry.gitlab.com/gitlab-org/build/cng/gitlab-shell      |
 | gitlab.gitlab-shell.image.tag                       | Shell image tag                                | latest                                                     |
