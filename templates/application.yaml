@@ -40,14 +40,14 @@ spec:
       {{ end -}}
       # Signing in
 
-      Browse to https://`gitlab.{{ .Values.global.hosts.domain }}`.
+      Browse to https://gitlab.{{ .Values.global.hosts.domain }}
 
       {{ if not .Values.gitlab.migrations.initialRootPassword.secret -}}
 
       GitLab is provisioned with a randomly generated administrator password. To retrieve it: 
 
       ```
-      kubectl get secret {{ .Release.Name }}-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode
+      kubectl get secret {{ .Release.Name }}-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode ; echo
       ```
       {{- end }}
 
