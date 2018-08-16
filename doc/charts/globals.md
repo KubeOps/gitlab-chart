@@ -472,4 +472,3 @@ global:
   application:
     create: false
 ```
-```
