@@ -32,11 +32,11 @@ spec:
     kind: Ingress
   - apiVersion: v1
     kind: PersistentVolumeClaim
-  - apiVersion: apps/v1beta2
+  - apiVersion: apps/v1beta1
     kind: Deployment
   - apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
-  - apiVersion: apps/v1beta2
+  - apiVersion: apps/v1beta1
     kind: StatefulSet
   - apiVersion: policy/v1beta1
     kind: PodDisruptionBudget
