@@ -17,7 +17,7 @@ spec:
       GitLab is a single application for the complete DevOps lifecycle from project planning and source code management to CI/CD and monitoring.
 
       # Support
-      Contacting [support for GitLab](https://about.gitlab.com/support/).
+      Contact [support for GitLab](https://about.gitlab.com/support/).
     maintainers:
     - name: GitLab
       url: https://about.gitlab.com
