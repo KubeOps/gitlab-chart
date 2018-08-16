@@ -183,6 +183,7 @@ spec:
             - name: shared-artifact-directory
               mountPath: /srv/gitlab/shared
               readOnly: false
+{{ include "gitlab.certificates.volumeMount" . | indent 12 }}
           livenessProbe:
             exec:
               command:
