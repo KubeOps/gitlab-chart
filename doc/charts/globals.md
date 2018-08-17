@@ -465,10 +465,10 @@ helm install gitlab \
 
 GitLab optionally includes an [Application resource](https://github.com/kubernetes-sigs/application), which can created to identify the GitLab application within the cluster. Requires the [Application CRD](https://github.com/kubernetes-sigs/application#installing-the-crd), version`v1beta1`, to already be deployed to the cluster.
 
-To enable, set:
+To enable, set to `global.application.create` to `true`:
 
 ```yaml
 global:
   application:
-    create: false
+    create: true
 ```
