@@ -45,12 +45,10 @@ spec:
   selector:
     matchLabels:
 {{ include "gitlab.immutableLabels" $ | indent 6 }}
-      queue-pod-name: {{ .name }}
   template:
     metadata:
       labels:
 {{ include "gitlab.standardLabels" $ | indent 8 }}
-        queue-pod-name: {{ .name }}
       annotations:
         checksum/configmap: {{ $configMapChecksum }}
         checksum/configmap-pod: {{ pluck ( .name | quote ) $queues | last | sha256sum }}
