@@ -21,7 +21,8 @@ spec:
     maintainers:
     - name: GitLab
       url: https://about.gitlab.com
-    links: {{ .Values.global.application.links }}
+    links: 
+{{ toYaml .Values.global.application.links | indent 6 }}
     notes: |-
       {{ if not .Values.global.hosts.externalIP -}}
       # Setting up DNS
