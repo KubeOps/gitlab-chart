@@ -12,7 +12,7 @@ spec:
     rollingUpdate: null
   selector:
     matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
       component: app
   template:
     metadata:

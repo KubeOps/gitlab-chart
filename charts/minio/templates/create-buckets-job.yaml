@@ -7,10 +7,6 @@ metadata:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
   activeDeadlineSeconds: 600
-  selector:
-    matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
-      component: create-buckets
   template:
     metadata:
       labels:

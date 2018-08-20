@@ -14,7 +14,8 @@ spec:
   minReadySeconds: {{ .Values.controller.minReadySeconds }}
   selector:
     matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
+      component: {{ .Values.controller.name | quote }}
   template:
     metadata:
       annotations:
@@ -26,7 +27,7 @@ spec:
 {{ include "gitlab.standardLabels" . | indent 8 }}
         component: "{{ .Values.controller.name }}"
         {{- if .Values.controller.podLabels }}
-{{ toYaml .Values.controller.podLabels | indent 8}}
+{{ toYaml .Values.controller.podLabels | indent 8 }}
         {{- end }}
     spec:
       dnsPolicy: {{ .Values.controller.dnsPolicy }}

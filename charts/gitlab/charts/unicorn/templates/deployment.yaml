@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
   template:
     metadata:
       labels:
@@ -27,17 +27,17 @@ spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: "kubernetes.io/hostname"
-              labelSelector:
-                matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 18 }}
+          - topologyKey: "kubernetes.io/hostname"
+            labelSelector:
+              matchLabels:
+{{ include "gitlab.immutableLabels" . | indent 16 }}
       {{- else if eq (default .Values.global.antiAffinity .Values.antiAffinity) "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
             podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
+              topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
 {{ include "gitlab.immutableLabels" . | indent 18 }}

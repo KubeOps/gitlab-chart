@@ -16,7 +16,7 @@ spec:
   replicas: {{ .Values.replicas.servers }}
   selector:
     matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
       name: "redis-server"
       redis-node: "true"
   template:

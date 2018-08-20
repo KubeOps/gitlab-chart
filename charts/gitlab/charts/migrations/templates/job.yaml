@@ -6,9 +6,6 @@ metadata:
   labels:
 {{ include "gitlab.standardLabels" . | indent 4 }}
 spec:
-  selector:
-    matchLabels:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
   template:
     metadata:
       labels:

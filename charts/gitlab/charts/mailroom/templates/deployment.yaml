@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-{{ include "gitlab.standardLabels" . | indent 8 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:

@@ -21,7 +21,7 @@ spec:
     metadata:
       {{- if .Values.controller.podAnnotations }}
       annotations:
-{{ toYaml .Values.controller.podAnnotations | indent 8}}
+{{ toYaml .Values.controller.podAnnotations | indent 8 }}
       {{- end }}
       labels:
 {{ include "gitlab.standardLabels" . | indent 8 }}

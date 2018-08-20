@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.replicas.sentinels }}
   selector:
     labelSelector:
-{{ include "gitlab.immutableLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
   template:
     metadata:
       labels:
