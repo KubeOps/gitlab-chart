@@ -5,7 +5,7 @@ global:
   # gitlabVersion: master
   application:
     create: false
-    links: {}
+    links: []
   hosts:
     domain: example.local
     https: true
