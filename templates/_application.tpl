@@ -1,5 +1,5 @@
 {{- define "gitlab.application.labels" -}}
-app.kubernetes.io/name: {{ .Values.global.application.name | quote }}
+app.kubernetes.io/name: {{ .Release.Name | quote }}
 {{- end -}}
 
 # Default labels include the immutable labels, and the mutable labels.
@@ -60,7 +60,7 @@ heritage: {{ .Release.Service | quote }}
      */ -}}
 {{- define "gitlab.mutableLabels" -}}
 version: {{ .Chart.Version | replace "+" "_" }}
-{{ if .Values.global.application.name -}}
+{{ if .Values.global.application.create -}}
 {{ include "gitlab.application.labels" . }}
 {{- end -}}
 {{- end -}}
