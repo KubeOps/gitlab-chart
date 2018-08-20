@@ -44,7 +44,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-{{ include "gitlab._depr_podSelectorLabels" . | indent 6 }}
+{{ include "gitlab._depr_podSelectorLabels" $ | indent 6 }}
   template:
     metadata:
       labels:
