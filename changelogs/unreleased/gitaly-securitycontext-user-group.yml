@@ -1,0 +1,5 @@
+---
+title: Allow to define under which user and group gitaly is running
+merge_request:
+author:
+type: added
