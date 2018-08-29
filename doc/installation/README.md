@@ -1,8 +1,5 @@
 # Installing GitLab using Helm
-
-> **Notes**:
-> * The chart is currently **beta**  This means that breaking changes could still be introduced on short notice but that the project is mostly stable
-> * There are [known issues and limitations](doc/architecture/beta.md#known-issues-and-limitations).
+> **Note**: There are currently [known limitations](../../README.md#known-issues-and-limitations) when using this chart, and not all features of GitLab are available.
 
 Install GitLab on Kubernetes with the cloud native GitLab Helm chart. Follow the instructions below to get started.
 
@@ -33,8 +30,19 @@ Follow the instructions to connect to the Kubernetes cluster of your choice.
 ### 3. Deploy
 
 With the environment setup and configuration generated,
-we can proceed to [deployment][].
+we can proceed to [deployment][]. Or if you are upgrading an existing
+installation follow [upgrade docs][]
+
+### 4. Migrate data from an existing GitLab
+
+To migrate your existing GitLab instance to your deployed Kubernetes GitLab instance, take a backup of your existing instance.
+Then proceed to the [restore documentation](../backup-restore/README.md#restoring-a-gitLab-installation).
+
+> To obtain a backup tarball of an existing GitLab instance that used other installation methods like an omnibus-gitlab package or GitLab-Omnibus helm chart, follow the instructions [given in documentation](https://docs.gitlab.com/ee/raketasks/backup_restore.html#creating-a-backup-of-the-gitlab-system)
+>
+> **Note**: If you are restoring a backup taken from another instance, you must migrate your existing instance to using object storage before taking the backup. See [issue 646](https://gitlab.com/charts/gitlab/issues/646)
 
 [Google Kubernetes Engine]: ../cloud/gke.md
 [resources]: resources.md
 [deployment]: deployment.md
+[upgrade docs]: upgrade.md

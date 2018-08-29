@@ -16,7 +16,7 @@ function generate_secret_if_needed(){
   else
     echo "secret \"$secret_name\" already exists"
   fi;
-{{- if not .Values.global.application.name }}
+{{- if not .Values.global.application.create }}
   # Remove application labels if they exist
   kubectl --namespace=$namespace label \
     secret $secret_name $(echo '{{ include "gitlab.application.labels" . | replace ": " "=" | replace "\n" " " }}' | sed -E 's/=[^ ]*/-/g')
@@ -79,3 +79,6 @@ ssh-keygen -A
 mkdir -p host_keys
 cp /etc/ssh/ssh_host_* host_keys/
 generate_secret_if_needed {{ template "gitlab.gitlab-shell.hostKeys.secret" . }} --from-file host_keys
+
+# Gitlab-workhorse secret
+generate_secret_if_needed {{ template "gitlab.workhorse.secret" . }} --from-literal={{ template "gitlab.workhorse.key" . }}=$(gen_random 'a-zA-Z0-9' 32 | base64)

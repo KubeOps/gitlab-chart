@@ -1,15 +1,8 @@
 # Cloud Native GitLab Helm Chart
 
-> **Notes**:
-> * The chart is currently **beta** This means that breaking changes could still be introduced on short notice but that the project is mostly stable
-> * There are [known issues and limitations](doc/architecture/beta.md#known-issues-and-limitations).
-
-
-We are working on a new cloud native method of deploying GitLab on Kubernetes, using the [Helm chart in this repository](#helm-charts) along with a [new set of Docker containers](https://gitlab.com/gitlab-org/build/CNG) that are specific to each component of GitLab.
-
 The `gitlab` chart is the best way to operate GitLab on Kubernetes. This chart contains all the required components to get started, and can scale to large deployments.
 
-Some of the key benefits of the new chart and containers are:
+Some of the key benefits of this chart and [corresponding containers](https://gitlab.com/gitlab-org/build/CNG) are:
 * Improved scalability and reliability
 * No requirement for root privileges
 * Utilization of object storage instead of NFS for storage
@@ -28,7 +21,17 @@ of this project goals and architecture.
 
 ## Known issues and limitations
 
-The current beta release of this chart contains a number of known issues and limitations. Please review our [beta documentation](doc/architecture/beta.md) for more details.
+Some features of GitLab are not currently available:
+
+* [GitLab Pages](https://gitlab.com/charts/gitlab/issues/37)
+* [GitLab Geo](https://gitlab.com/charts/gitlab/issues/8)
+* [No in-cluster HA database](https://gitlab.com/charts/gitlab/issues/48)
+* MySQL will not be supported, as support is [deprecated within GitLab](https://docs.gitlab.com/omnibus/settings/database.html#using-a-mysql-database-management-server-enterprise-edition-only)
+
+## Release Notes
+
+Check the [releases documentation](doc/releases/README.md) for information on important releases,
+and see the [changelog](CHANGELOG.md) for the full details on any release.   
 
 ## Quick-start installation
 

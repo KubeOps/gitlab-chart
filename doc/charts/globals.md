@@ -13,6 +13,7 @@ for more information on how the global variables work.
 - [Gitaly](#configure-gitaly-settings)
 - [Minio](#configure-minio-settings)
 - [appConfig](#configure-appconfig-settings)
+- [Custom Certificate Authorities](#custom-certificate-authorities)
 
 ## Configure Host settings
 
@@ -307,6 +308,19 @@ appConfig:
     connection: {}
   backups:
     bucket: gitlab-backups
+  incomingEmail:
+    enabled: false
+    address: ""
+    host: "imap.gmail.com"
+    port: 993
+    ssl: true
+    startTls: false
+    user: ""
+    password:
+      secret:
+      key: password
+    mailbox: inbox
+    idleTimeout: 60
 ```
 
 [unicorn]: gitlab/unicorn/README.md
@@ -401,9 +415,7 @@ Defaults shown above.
 #### connection
 
 The `connection` property has been transitioned to a Kubernetes Secret. The contents
-of this secret should be in accordance with the documentation present at
-[GitLab Job Artifacts Administration][artifactscon] documentation. This matches to
-[Fog](https://github.com/fog), and is different between provider modules.
+of this secret should be a yaml config file.
 
 Defaults to `{}` and will be ignored if `global.minio.enabled` is `true`.
 
@@ -411,4 +423,63 @@ This property has two sub-keys: `secret` and `key`.
 - `secret` is the name of a Kubernetes Secret. This value is required to use external object storage.
 - `key` is the name of the key in the secret which houses the YAML block. Defaults to `connection`.
 
-[artifactscon]: https://docs.gitlab.com/ee/administration/job_artifacts.html#object-storage-settings
+Valid configuration keys can be found at
+[GitLab Job Artifacts Administration][artifactscon] documentation. This matches to
+[Fog](https://github.com/fog), and is different between provider modules.
+
+Example contents to be placed in the secret:
+
+```
+provider: AWS
+aws_access_key_id: BOGUS_ACCESS_KEY
+aws_secret_access_key: BOGUS_SECRET_KEY
+region: us-east-1
+```
+
+[artifactscon]: https://docs.gitlab.com/ee/administration/job_artifacts.html#s3-compatible-connection-settings
+
+
+### Incoming email settings
+
+These settings are explained in [command line options page](../installation/command-line-options.md#incoming-email-configuration).
+
+## Custom Certificate Authorities
+
+> **NOTE**: These settings do not affect charts from outside of this repository, via requirements.yaml.
+
+Some users may need to add custom certificate authorities, such as when using internally issued SSL certificates for TLS services. To provide this functionaliy, we provide a mechanism for injecting these custom root CAs into the application via secrets.
+
+```
+global:
+  certificates:
+    customCAs:
+      - secret: internal-cas
+      - secret: other-custom-cas
+```
+
+A user can provide any number of secrets, each containing any number of keys that hold PEM encoded CA certificates. These are configured as entries under `global.certificates.customCAs`. All keys within the secret will be mounted, so all keys across all secrets must be unique.
+
+> **NOTE** These secrets can be named in any fashion, but they _must not_ contain key names that collide.
+
+To create a secret:
+
+`kubectl create secret generic custom-ca --from-file=unique_name=/path/to/cert`
+
+To configure:
+
+```
+helm install gitlab \
+  --set global.certificates.customCAs[0].secret=custom-ca
+```
+
+## Application Resource
+
+GitLab optionally includes an [Application resource](https://github.com/kubernetes-sigs/application), which can created to identify the GitLab application within the cluster. Requires the [Application CRD](https://github.com/kubernetes-sigs/application#installing-the-crd), version`v1beta1`, to already be deployed to the cluster.
+
+To enable, set to `global.application.create` to `true`:
+
+```yaml
+global:
+  application:
+    create: true
+```

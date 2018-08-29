@@ -33,6 +33,7 @@ Table below contains all the possible charts configurations that can be supplied
 | service.workhorseInternalPort    | Workhorse internal port                        | 8181                                             |
 | enabled                          | Unicorn enabled flag                           | true                                             |
 | workerProcesses                  | Unicorn number of workers                      | 2                                                |
+| hpa.targetAverageValue           | Set the autoscaling target value               | 400m                                             |
 | workerTimeout                    | Unicorn worker timeout                         | 60                                               |
 | metrics.enabled                  | Toggle Prometheus metrics exporter             | true                                             |
 | ldap.servers                     | LDAP user authentication servers               | nil                                              |
@@ -87,6 +88,7 @@ image:
 By default, the Helm charts use the Enterprise Edition of GitLab. If desired, you can instead use the Community Edition. Learn more about the [difference between the two](https://about.gitlab.com/installation/ce-or-ee/).
 
 In order to use the Community Edition, set `image.repository` to `registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce`
+and `workhorse.image` to `registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ce`
 
 ## Global Settings
 
